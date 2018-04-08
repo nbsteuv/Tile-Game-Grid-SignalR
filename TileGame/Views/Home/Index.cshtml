@@ -1,6 +1,9 @@
 ﻿<h1>Game Connection Test</h1>
 
 <form id="send-form" action="#">
+    Start connection:
+    <button id="start-connection-button">Start Connection</button>
+    <br />
     Send a message:
     <input type="text" id="message-textbox" disabled />
     <button id="send-button" type="submit" disabled>Send</button>
@@ -16,6 +19,7 @@
         var sendButton = document.getElementById('send-button');
         var messagesList = document.getElementById('messages-list');
         var messageTextBox = document.getElementById('message-textbox');
+        var startConnectionButton = document.getElementById('start-connection-button');
 
         function appendMessage(content) {
             var li = document.createElement('li');
@@ -31,6 +35,10 @@
             connection.send('Send', message);
         });
 
+        startConnectionButton.addEventListener('click', function () {
+            startConnection();
+        });
+
         connection.on('SendMessage', function (sender, message) {
             appendMessage(sender + ': ' + message);
         });
@@ -39,10 +47,12 @@
             appendMessage(sender + ' ' + action);
         });
 
-        connection.start().then(function () {
-            messageTextBox.disabled = false;
-            sendButton.disabled = false;
-        });
+        function startConnection() {
+            connection.start().then(function () {
+                messageTextBox.disabled = false;
+                sendButton.disabled = false;
+            });
+        }
 
     </script>
 }
