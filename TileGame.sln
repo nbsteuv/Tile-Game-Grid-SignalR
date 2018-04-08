@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TileGame", "TileGame\TileGame.csproj", "{B1420421-45F8-4425-BA6A-170C4BE08637}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TileGame.Business", "TileGame.Business\TileGame.Business.csproj", "{0A577CCE-7DEA-406B-90C7-D4759123655B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1420421-45F8-4425-BA6A-170C4BE08637}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1420421-45F8-4425-BA6A-170C4BE08637}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1420421-45F8-4425-BA6A-170C4BE08637}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1420421-45F8-4425-BA6A-170C4BE08637}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A577CCE-7DEA-406B-90C7-D4759123655B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A577CCE-7DEA-406B-90C7-D4759123655B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A577CCE-7DEA-406B-90C7-D4759123655B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A577CCE-7DEA-406B-90C7-D4759123655B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DCE9FE57-FB98-447C-80B9-D451A5AA0E59}
+	EndGlobalSection
+EndGlobal
