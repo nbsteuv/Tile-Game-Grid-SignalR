@@ -1,7 +1,8 @@
 ﻿<h1>Game Connection Test</h1>
 
 <form id="send-form" action="#">
-    Start connection:
+    Start connection with password:
+    <input type="text" id="hub-code" />
     <button id="start-connection-button">Start Connection</button>
     <br />
     Send a message:
@@ -20,6 +21,7 @@
         var messagesList = document.getElementById('messages-list');
         var messageTextBox = document.getElementById('message-textbox');
         var startConnectionButton = document.getElementById('start-connection-button');
+        var hubCode = document.getElementById('hub-code');
 
         function appendMessage(content) {
             var li = document.createElement('li');

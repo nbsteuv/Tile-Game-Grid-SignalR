@@ -12,6 +12,7 @@ using TileGame.Data;
 using TileGame.Models;
 using TileGame.Services;
 using TileGame.Business.Game;
+using Autofac;
 
 namespace TileGame
 {
@@ -23,6 +24,11 @@ namespace TileGame
         }
 
         public IConfiguration Configuration { get; }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule(new AutofacBindings());
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)

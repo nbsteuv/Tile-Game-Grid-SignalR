@@ -9,9 +9,18 @@ namespace TileGame.Business.Game
 {
     public class GameHub : Hub
     {
+        private readonly IGameManager _gameManager;
+
+        public GameHub(IGameManager gameManager)
+        {
+            _gameManager = gameManager;
+        }
+
         [Authorize]
         public override async Task OnConnectedAsync()
         {
+            _gameManager.TestBinding();
+
             await Clients.All.SendAsync("SendAction", Context.User.Identity.Name, "joined");
         }
 
