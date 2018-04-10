@@ -79,6 +79,8 @@ namespace TileGame
             {
                 routes.MapHub<GameHub>("/hubs/game");
             });
+
+            DbInitializer.Seed(app);
         }
     }
 }
