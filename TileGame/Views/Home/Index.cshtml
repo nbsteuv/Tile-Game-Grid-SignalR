@@ -62,7 +62,8 @@
         }
 
         function connectToPlayer() {
-            connection.send('MakeConnection', '');
+            var password = hubCode.value;
+            connection.send('MakeConnection', password);
         }
 
     </script>
