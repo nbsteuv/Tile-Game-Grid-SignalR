@@ -2,9 +2,8 @@
 
 namespace TileGame.Business.Game
 {
-    public interface IGameManager
+    public interface IGameData
     {
         Connection MakeConnection(string username, string connectionId, string password);
-        Enums.ConnectionStatus GetConnectionStatus (string connectionId, Connection connection);
     }
 }

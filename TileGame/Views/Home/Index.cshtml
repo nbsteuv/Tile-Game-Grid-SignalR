@@ -49,11 +49,20 @@
             appendMessage(sender + ' ' + action);
         });
 
+        connection.on('SetStatus', function (status) {
+            appendMessage('Status set to: ' + status);
+        });
+
         function startConnection() {
             connection.start().then(function () {
                 messageTextBox.disabled = false;
                 sendButton.disabled = false;
+                connectToPlayer();
             });
+        }
+
+        function connectToPlayer() {
+            connection.send('MakeConnection', '');
         }
 
     </script>
