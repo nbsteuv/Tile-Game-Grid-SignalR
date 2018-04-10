@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using System.Reflection;
+using TileGame.Business.Game;
 using AutofacModule = Autofac.Module;
 
 namespace TileGame
@@ -16,6 +17,9 @@ namespace TileGame
             builder.RegisterAssemblyTypes(assemblies)
                 .InstancePerLifetimeScope()
                 .AsImplementedInterfaces();
+
+            builder.RegisterType<GameData>().As<IGameData>()
+                .SingleInstance();
         }
     }
 }
