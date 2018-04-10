@@ -43,11 +43,11 @@ namespace TileGame.Business.Game
 
             connection.Watchers.ForEach(watcher => users.Add(watcher));
 
-            users.AsParallel().ForAll(async username =>
+            users.AsParallel().ForAll(async user =>
             {
-                var status = _gameManager.GetConnectionStatus(Context.ConnectionId, connection);
+                var status = _gameManager.GetConnectionStatus(user.ConnectionId, connection);
 
-                await Clients.Client(Context.ConnectionId).SendAsync("SetStatus", status);
+                await Clients.Client(user.ConnectionId).SendAsync("SetStatus", status);
             });
         }
     }
