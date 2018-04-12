@@ -5,18 +5,6 @@
     <UserSecretsId>aspnet-TileGame-88250A9E-F542-4871-BF65-C3FAD882A496</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Include="Data\WordLists\fiveletterlist.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\WordLists\fourletterlist.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\WordLists\threeletterlist.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.2" />

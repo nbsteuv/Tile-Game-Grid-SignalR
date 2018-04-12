@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using TileGame.Business.Models;
 
-namespace TileGame.Data
+namespace TileGame.Business.Data
 {
     public static class DbInitializer
     {

@@ -3,10 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
-using TileGame.Data;
+using TileGame.Business.Data;
 
 namespace TileGame.Data.Migrations
 {
@@ -143,7 +141,7 @@ namespace TileGame.Data.Migrations
                     b.ToTable("Words");
                 });
 
-            modelBuilder.Entity("TileGame.Models.ApplicationUser", b =>
+            modelBuilder.Entity("TileGame.Business.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -204,7 +202,7 @@ namespace TileGame.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("TileGame.Models.ApplicationUser")
+                    b.HasOne("TileGame.Business.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -212,7 +210,7 @@ namespace TileGame.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("TileGame.Models.ApplicationUser")
+                    b.HasOne("TileGame.Business.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -225,7 +223,7 @@ namespace TileGame.Data.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("TileGame.Models.ApplicationUser")
+                    b.HasOne("TileGame.Business.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -233,7 +231,7 @@ namespace TileGame.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("TileGame.Models.ApplicationUser")
+                    b.HasOne("TileGame.Business.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TileGame.Business.Models;
-using TileGame.Models;
 
-namespace TileGame.Data
+namespace TileGame.Business.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

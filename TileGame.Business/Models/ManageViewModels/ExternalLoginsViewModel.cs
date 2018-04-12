@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
-namespace TileGame.Models.ManageViewModels
+namespace TileGame.Business.Models.ManageViewModels
 {
     public class ExternalLoginsViewModel
     {
