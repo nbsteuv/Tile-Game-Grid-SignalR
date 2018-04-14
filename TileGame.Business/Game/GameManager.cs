@@ -14,8 +14,6 @@ namespace TileGame.Business.Game
 
         public Connection MakeConnection(string username, string connectionId, string password)
         {
-            var wordList = _gameData.GetWordList(5);
-
             var connection = _gameData.MakeConnection(username, connectionId, password);
 
             return connection;

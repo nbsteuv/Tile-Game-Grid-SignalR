@@ -1,14 +1,18 @@
-﻿using Autofac;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TileGame.Business.Data;
-using TileGame.Business.Game;
-using TileGame.Business.Models;
+using TileGame.Data;
+using TileGame.Models;
 using TileGame.Services;
+using TileGame.Business.Game;
+using Autofac;
 
 namespace TileGame
 {
@@ -76,7 +80,7 @@ namespace TileGame
                 routes.MapHub<GameHub>("/hubs/game");
             });
 
-            //DbInitializer.Seed(app);
+            DbInitializer.Seed(app);
         }
     }
 }

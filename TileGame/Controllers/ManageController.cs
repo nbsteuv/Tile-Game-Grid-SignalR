@@ -10,8 +10,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using TileGame.Business.Models;
-using TileGame.Business.Models.ManageViewModels;
+using TileGame.Models;
+using TileGame.Models.ManageViewModels;
 using TileGame.Services;
 
 namespace TileGame.Controllers

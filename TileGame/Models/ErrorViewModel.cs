@@ -1,4 +1,6 @@
-namespace TileGame.Business.Models
+using System;
+
+namespace TileGame.Models
 {
     public class ErrorViewModel
     {
