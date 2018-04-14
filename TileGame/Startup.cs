@@ -30,7 +30,7 @@ namespace TileGame
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly("TileGame")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -76,7 +76,7 @@ namespace TileGame
                 routes.MapHub<GameHub>("/hubs/game");
             });
 
-            DbInitializer.Seed(app);
+            //DbInitializer.Seed(app);
         }
     }
 }
