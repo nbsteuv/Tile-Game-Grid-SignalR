@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TileGame.Business.Data;
 using TileGame.Business.Models;
+using static TileGame.Business.Enums;
 
 namespace TileGame.Business.Game
 {
@@ -18,7 +19,7 @@ namespace TileGame.Business.Game
             _connections = new List<Connection>();
         }
 
-        public Connection MakeConnection(string username, string connectionId, string password)
+        public Connection MakeConnection(string username, string connectionId, string password, GameType gameType)
         {
             var user = new User
             {
@@ -41,7 +42,7 @@ namespace TileGame.Business.Game
 
                 var requestedConnection = _connections.First(connection => connection.Password == password);
 
-                if(requestedConnection.Players.Count == 1)
+                if(requestedConnection.Players.Count == 1 && requestedConnection.Multiplayer == true)
                 {
                     requestedConnection.Players.Add(user);
                 } else
@@ -52,7 +53,7 @@ namespace TileGame.Business.Game
                 return requestedConnection;
             }
 
-            if(string.IsNullOrEmpty(password) && _connections.Any(connection => connection.Players.Count == 1))
+            if(string.IsNullOrEmpty(password) && _connections.Any(connection => connection.Players.Count == 1 && connection.Multiplayer == true))
             {
                 //Connect request to the next waiting player
 
@@ -74,6 +75,8 @@ namespace TileGame.Business.Game
             newConnection.Players.Add(user);
 
             newConnection.Password = password;
+
+            newConnection.Multiplayer = gameType == GameType.Race;
 
             _connections.Add(newConnection);
 

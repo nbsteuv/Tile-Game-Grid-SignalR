@@ -8,5 +8,11 @@
             Waiting,
             Watching
         }
+
+        public enum GameType
+        {
+            Single = 1,
+            Race
+        }
     }
 }

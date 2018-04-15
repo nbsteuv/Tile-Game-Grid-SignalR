@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TileGame.Business.Models;
+using static TileGame.Business.Enums;
 
 namespace TileGame.Business.Game
 {
@@ -33,9 +34,9 @@ namespace TileGame.Business.Game
             await Clients.All.SendAsync("SendMessage", Context.User.Identity.Name, message);
         }
 
-        public void MakeConnection(string password)
+        public void MakeConnection(string password, GameType gameType)
         {
-            var connection = _gameManager.MakeConnection(Context.User.Identity.Name, Context.ConnectionId, password);
+            var connection = _gameManager.MakeConnection(Context.User.Identity.Name, Context.ConnectionId, password, gameType);
 
             var users = new List<User>();
 

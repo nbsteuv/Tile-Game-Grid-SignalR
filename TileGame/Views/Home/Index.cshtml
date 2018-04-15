@@ -57,13 +57,13 @@
             connection.start().then(function () {
                 messageTextBox.disabled = false;
                 sendButton.disabled = false;
-                connectToPlayer();
+                makeConnection();
             });
         }
 
-        function connectToPlayer() {
+        function makeConnection() {
             var password = hubCode.value;
-            connection.send('MakeConnection', password);
+            connection.send('MakeConnection', password, 2);
         }
 
     </script>
