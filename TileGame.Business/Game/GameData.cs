@@ -1,15 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using TileGame.Business.Data;
 using TileGame.Business.Models;
 
 namespace TileGame.Business.Game
 {
     public class GameData : IGameData
     {
+        private readonly IApplicationDbContext _context;
+
         private readonly List<Connection> _connections;
 
-        public GameData()
+        public GameData(IApplicationDbContext context)
         {
+            _context = context;
             _connections = new List<Connection>();
         }
 
@@ -73,6 +78,23 @@ namespace TileGame.Business.Game
             _connections.Add(newConnection);
 
             return newConnection;
+        }
+
+        public List<Word> GetWordList(int baseLength)
+        {
+            var fullWords = _context.Words
+                .Where(word => word.LetterCount == baseLength)
+                .OrderBy(random => Guid.NewGuid())
+                .Take(baseLength - 1);
+
+            var shortWord = _context.Words
+                .Where(word => word.LetterCount == baseLength - 1)
+                .OrderBy(random => Guid.NewGuid())
+                .Take(1);
+
+            var wordList = fullWords.Concat(shortWord).ToList();
+
+            return wordList;
         }
     }
 }
