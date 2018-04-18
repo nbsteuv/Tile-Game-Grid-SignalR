@@ -34,21 +34,41 @@ namespace TileGame.Business.Game
             await Clients.All.SendAsync("SendMessage", Context.User.Identity.Name, message);
         }
 
-        public void MakeConnection(string password, GameType gameType)
+        public void MakeConnection(string password, GameType gameType, int wordLength)
         {
             var connection = _gameManager.MakeConnection(Context.User.Identity.Name, Context.ConnectionId, password, gameType);
 
-            var users = new List<User>();
-
-            connection.Players.ForEach(player => users.Add(player));
-
-            connection.Watchers.ForEach(watcher => users.Add(watcher));
+            var users = _gameManager.GetConnectionUsers(connection);
 
             users.AsParallel().ForAll(async user =>
             {
                 var status = _gameManager.GetConnectionStatus(user.ConnectionId, connection);
 
                 await Clients.Client(user.ConnectionId).SendAsync("SetStatus", status);
+            });
+
+            TryStartGame(connection, wordLength);
+        }
+
+        private void TryStartGame(Connection connection, int wordLength)
+        {
+            if (!connection.Players.Any())
+            {
+                return;
+            }
+
+            if (_gameManager.GetConnectionStatus(connection.Players.FirstOrDefault().ConnectionId, connection) != ConnectionStatus.Ready)
+            {
+                return;
+            }
+
+            _gameManager.CreateGame(connection, wordLength);
+
+            var users = _gameManager.GetConnectionUsers(connection);
+
+            users.AsParallel().ForAll(async user =>
+            {
+                await Clients.Client(user.ConnectionId).SendAsync("StartGame", user.Puzzle);
             });
         }
     }

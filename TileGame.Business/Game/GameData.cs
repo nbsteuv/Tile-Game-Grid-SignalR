@@ -99,5 +99,14 @@ namespace TileGame.Business.Game
 
             return wordList;
         }
+
+        public Connection AddGameToConnection(Connection connection, List<Word> wordList, char[] key)
+        {
+            connection.WordList = wordList;
+
+            connection.Key = key;
+
+            return connection;
+        }
     }
 }

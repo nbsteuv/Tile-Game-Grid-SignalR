@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using TileGame.Business.Models;
 using static TileGame.Business.Enums;
 
@@ -15,8 +18,6 @@ namespace TileGame.Business.Game
 
         public Connection MakeConnection(string username, string connectionId, string password, GameType gameType)
         {
-            var wordList = _gameData.GetWordList(5);
-
             var connection = _gameData.MakeConnection(username, connectionId, password, gameType);
 
             return connection;
@@ -35,6 +36,69 @@ namespace TileGame.Business.Game
             }
 
             return ConnectionStatus.Watching;
+        }
+
+        public List<User> GetConnectionUsers(Connection connection)
+        {
+            var users = new List<User>();
+
+            connection.Players.ForEach(player => users.Add(player));
+
+            connection.Watchers.ForEach(watcher => users.Add(watcher));
+
+            return users;
+        }
+
+        public void CreateGame(Connection connection, int wordLength)
+        {
+            if(wordLength != 4 && wordLength != 5)
+            {
+                throw new Exception("Invalid game size");
+            }
+
+            var wordList = _gameData.GetWordList(wordLength);
+
+            var key = BuildCharArray(wordList);
+
+            var puzzle = ShuffleCharArray(key);
+
+            _gameData.AddGameToConnection(connection, wordList, key);
+
+            AddPuzzleToUsers(connection, puzzle);
+        }
+
+        private char[] BuildCharArray(List<Word> wordList)
+        {
+            var wordString = new StringBuilder("");
+
+            wordList.ForEach(word => wordString.Append(word.Text.Trim()));
+
+            var charArray = wordString.ToString().ToCharArray();
+
+            return charArray;
+        }
+
+        private char[] ShuffleCharArray(char[] charArray)
+        {
+            var shuffledCharArray = (char[])charArray.Clone();
+
+            for(var i = 0; i < shuffledCharArray.Length; i++)
+            {
+                var tmp = shuffledCharArray[i];
+                var random = new Random();
+                var j = random.Next(0, shuffledCharArray.Length);
+                shuffledCharArray[i] = shuffledCharArray[j];
+                shuffledCharArray[j] = tmp;
+            }
+
+            return shuffledCharArray;
+        }
+
+        private void AddPuzzleToUsers(Connection connection, char[] puzzle)
+        {
+            var users = GetConnectionUsers(connection);
+
+            users.ForEach(user => user.Puzzle = puzzle);
         }
     }
 }

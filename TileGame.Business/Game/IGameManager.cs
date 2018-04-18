@@ -1,4 +1,5 @@
-﻿using TileGame.Business.Models;
+﻿using System.Collections.Generic;
+using TileGame.Business.Models;
 using static TileGame.Business.Enums;
 
 namespace TileGame.Business.Game
@@ -7,5 +8,7 @@ namespace TileGame.Business.Game
     {
         Connection MakeConnection(string username, string connectionId, string password, GameType gameType);
         ConnectionStatus GetConnectionStatus (string connectionId, Connection connection);
+        void CreateGame(Connection connection, int wordLength);
+        List<User> GetConnectionUsers(Connection connection);
     }
 }

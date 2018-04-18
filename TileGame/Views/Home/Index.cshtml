@@ -53,6 +53,11 @@
             appendMessage('Status set to: ' + status);
         });
 
+        connection.on('StartGame', function (puzzleArray) {
+            console.log('Starting game');
+            puzzleArray.forEach(letter => console.log(letter));
+        });
+
         function startConnection() {
             connection.start().then(function () {
                 messageTextBox.disabled = false;
@@ -63,7 +68,7 @@
 
         function makeConnection() {
             var password = hubCode.value;
-            connection.send('MakeConnection', password, 2);
+            connection.send('MakeConnection', password, 1, 4);
         }
 
     </script>

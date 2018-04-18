@@ -8,5 +8,7 @@ namespace TileGame.Business.Models
         public bool Multiplayer { get; set; }
         public List<User> Players { get; set; }
         public List<User> Watchers { get; set; }
+        public List<Word> WordList { get; set; }
+        public char[] Key { get; set; }
     }
 }
