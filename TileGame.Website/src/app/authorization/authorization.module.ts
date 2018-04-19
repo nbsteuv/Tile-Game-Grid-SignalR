@@ -11,7 +11,7 @@ import {SignupComponent} from './signup/signup.component';
 
 const AuthorizationRoutes: Routes = [
     {
-        path: 'admin',
+        path: 'users',
         component: AuthorizationComponent,
         children: [
             {path: 'login', component: LoginComponent},
