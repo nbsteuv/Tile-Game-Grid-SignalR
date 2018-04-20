@@ -34,7 +34,7 @@ export class UserService implements CanActivate{
                 }
             ).catch(
                 () => {
-                    this.router.navigate(['/admin/login']);
+                    this.router.navigate(['/users/login']);
                     return Observable.of(false);
                 }
             )
@@ -50,7 +50,7 @@ export class UserService implements CanActivate{
         observable.subscribe(
             data => {
                 this.loggedIn = true;
-                this.router.navigate(['/admin']);
+                this.router.navigate(['/']);
             },
             err => {
                 console.log(err);
@@ -64,7 +64,7 @@ export class UserService implements CanActivate{
         observable.subscribe(
             data => {
                 this.loggedIn = true;
-                this.router.navigate(['/admin']);
+                this.router.navigate(['/']);
             },
             err => {
                 console.log(err);
@@ -78,11 +78,13 @@ export class UserService implements CanActivate{
         let observable = this.httpService.post('/api/account/logout');
         observable.subscribe(
             data => {
+                console.log('success');
                 console.log(data);
                 this.loggedIn = false;
                 this.router.navigate([''])
             },
             err => {
+                console.log('error');
                 console.log(err);
                 //TODO: Create error handler that can be injected
             }

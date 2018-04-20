@@ -8,11 +8,13 @@ import {AppRoutingModule} from './app.routing';
 import {HttpService} from './_shared/services';
 
 import {AppComponent} from './app.component';
+import {GameComponent} from './game/game.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    GameComponent
   ],
   imports: [
     BrowserModule,
