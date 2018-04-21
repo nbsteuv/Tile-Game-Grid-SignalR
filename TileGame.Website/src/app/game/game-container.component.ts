@@ -3,10 +3,10 @@ import {Component} from '@angular/core';
 import {UserService} from '../_shared/services';
 
 @Component({
-    selector: 'nbs-game',
-    templateUrl: './game.component.html'
+    selector: 'nbs-game-container',
+    templateUrl: './game-container.component.html'
 })
-export class GameComponent{
+export class GameContainerComponent{
 
     constructor(private userService: UserService){}
 
