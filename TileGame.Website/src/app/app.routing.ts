@@ -3,7 +3,7 @@ import {RouterModule} from '@angular/router';
 
 import {UserService} from './_shared/services';
 
-import {GameContainerComponent} from './game/game-container.component';
+import {GameContainerComponent} from './game-container/game-container.component';
 
 @NgModule({
     imports: [

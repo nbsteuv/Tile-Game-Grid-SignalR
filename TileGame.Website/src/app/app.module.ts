@@ -8,13 +8,15 @@ import {AppRoutingModule} from './app.routing';
 import {HttpService, SIGNALR_PROVIDER, ConnectionService} from './_shared/services';
 
 import {AppComponent} from './app.component';
-import {GameContainerComponent} from './game/game-container.component';
+import {GameContainerComponent} from './game-container/game-container.component';
+import {MenuComponent} from './game-container/menu/menu.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    GameContainerComponent
+    GameContainerComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
