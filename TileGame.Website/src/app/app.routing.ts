@@ -3,12 +3,12 @@ import {RouterModule} from '@angular/router';
 
 import {UserService} from './_shared/services';
 
-import {GameComponent} from './game/game.component';
+import {GameContainerComponent} from './game/game-container.component';
 
 @NgModule({
     imports: [
         RouterModule.forRoot([
-            {path: '', component: GameComponent, canActivate: [UserService]}
+            {path: '', component: GameContainerComponent, canActivate: [UserService]}
         ])
     ],
     exports: [RouterModule]

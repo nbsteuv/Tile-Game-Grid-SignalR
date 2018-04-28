@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 
-import {UserService} from '../_shared/services';
+import {UserService, ConnectionService} from '../_shared/services';
 
 @Component({
     selector: 'nbs-game-container',
@@ -8,10 +8,16 @@ import {UserService} from '../_shared/services';
 })
 export class GameContainerComponent{
 
-    constructor(private userService: UserService){}
+    connection: any;
+
+    constructor(private userService: UserService, private connectionService: ConnectionService){}
 
     logout(){
         this.userService.logout().subscribe(data => console.log(data));
+    }
+
+    connect(){
+        this.connectionService.startConnection();
     }
     
 }

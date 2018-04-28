@@ -5,7 +5,7 @@ import {HttpClientModule, HttpClient} from '@angular/common/http';
 import {AuthorizationModule} from './authorization/authorization.module';
 import {AppRoutingModule} from './app.routing';
 
-import {HttpService} from './_shared/services';
+import {HttpService, SIGNALR_PROVIDER, ConnectionService} from './_shared/services';
 
 import {AppComponent} from './app.component';
 import {GameContainerComponent} from './game/game-container.component';
@@ -22,7 +22,11 @@ import {GameContainerComponent} from './game/game-container.component';
     AuthorizationModule,
     AppRoutingModule
   ],
-  providers: [HttpService],
+  providers: [
+    HttpService,
+    SIGNALR_PROVIDER,
+    ConnectionService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
