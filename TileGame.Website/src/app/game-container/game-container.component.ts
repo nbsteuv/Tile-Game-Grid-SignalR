@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 
 import {UserService, ConnectionService} from '../_shared/services';
+import {GameOptions} from '../_shared/types';
 
 @Component({
     selector: 'nbs-game-container',
@@ -18,6 +19,10 @@ export class GameContainerComponent{
 
     connect(){
         this.connectionService.startConnection();
+    }
+
+    onGameOptionsSubmitted(gameOptions: GameOptions){
+        console.log(gameOptions);
     }
     
 }

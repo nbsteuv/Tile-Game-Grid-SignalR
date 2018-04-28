@@ -1,6 +1,6 @@
 import {GameType} from '../enums';
 
 export class GameOptions{
-    gameType: GameType;
+    gameType: GameType = GameType.Single;
     password: string;
 }

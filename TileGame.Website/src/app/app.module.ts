@@ -1,5 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 
 import {AuthorizationModule} from './authorization/authorization.module';
@@ -20,6 +21,7 @@ import {MenuComponent} from './game-container/menu/menu.component';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     AuthorizationModule,
     AppRoutingModule
