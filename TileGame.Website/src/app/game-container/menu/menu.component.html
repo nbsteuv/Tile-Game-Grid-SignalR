@@ -2,6 +2,18 @@
     <form #gameOptionsForm="ngForm" (submit)="submitGameOptions()" novalidate>
         <h3 style="margin-bottom: 25px; text-align: center;">Game Options</h3>
         <div class="form-check">
+            <input class="form-check-input" type="radio" name="gameSize" id="gameSize4" [value]="4" [(ngModel)]="gameOptions.gameSize">
+            <label class="form-check-label" for="gameSize4">
+                4 x 4
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="gameSize" id="gameSize5" [value]="5" [(ngModel)]="gameOptions.gameSize">
+            <label class="form-check-label" for="gameSize5">
+                5 x 5
+            </label>
+        </div>
+        <div class="form-check">
             <input class="form-check-input" type="radio" name="gameType" id="singlePlayerGame" [value]="singleGameType" [(ngModel)]="gameOptions.gameType">
             <label class="form-check-label" for="singlePlayerGame">
                 Single Player Game
