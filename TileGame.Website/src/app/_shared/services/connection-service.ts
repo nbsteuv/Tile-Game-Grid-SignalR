@@ -31,8 +31,10 @@ export class ConnectionService {
 
     startConnection(gameOptions: GameOptions) {
         console.log('starting connection');
-        this.hubConnection.start().then(() => {
-            this.makeConnection(gameOptions);
+        this.hubConnection.stop().then(() => {
+            this.hubConnection.start().then(() => {
+                this.makeConnection(gameOptions);
+            });
         });
     }
 
