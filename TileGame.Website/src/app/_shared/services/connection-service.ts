@@ -4,6 +4,8 @@ import {SIGNALR_TOKEN} from './signalr-provider'
 import {HubConnection} from '@aspnet/signalr';
 import {environment} from '../../../environments/environment';
 
+import {GameOptions} from '../types';
+
 @Injectable()
 export class ConnectionService {
 
@@ -27,16 +29,16 @@ export class ConnectionService {
         });
     }
 
-    startConnection() {
+    startConnection(gameOptions: GameOptions) {
         console.log('starting connection');
         this.hubConnection.start().then(() => {
-            this.makeConnection();
+            this.makeConnection(gameOptions);
         });
     }
 
-    makeConnection() {
+    makeConnection(gameOptions: GameOptions) {
         var password = '';
-        this.hubConnection.send('MakeConnection', password, 1, 4);
+        this.hubConnection.send('MakeConnection', gameOptions.password, gameOptions.gameType, gameOptions.gameSize);
     }
 
 }

@@ -17,12 +17,12 @@ export class GameContainerComponent{
         this.userService.logout().subscribe(data => console.log(data));
     }
 
-    connect(){
-        this.connectionService.startConnection();
+    connect(gameOptions: GameOptions){
+        this.connectionService.startConnection(gameOptions);
     }
 
     onGameOptionsSubmitted(gameOptions: GameOptions){
-        console.log(gameOptions);
+        this.connect(gameOptions);
     }
     
 }
