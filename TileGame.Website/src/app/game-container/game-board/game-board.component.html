@@ -1,7 +1,11 @@
 <div class="game-board-container">
     <div class="game-board" [ngStyle]="getGridStyle()">
         <div class="tile-pad-container" *ngFor="let character of puzzleArray">
-            <div class="tile-pad"></div>
+            <div class="tile-pad">
+                <div class="tile" *ngIf="character !== ' '">
+                    {{character}}
+                </div>
+            </div>
         </div>
     </div>
 </div>

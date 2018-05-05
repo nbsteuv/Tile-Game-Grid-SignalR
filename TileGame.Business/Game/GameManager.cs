@@ -73,6 +73,8 @@ namespace TileGame.Business.Game
 
             wordList.ForEach(word => wordString.Append(word.Text.Trim()));
 
+            wordString.Append(" ");
+
             var charArray = wordString.ToString().ToCharArray();
 
             return charArray;
@@ -82,11 +84,11 @@ namespace TileGame.Business.Game
         {
             var shuffledCharArray = (char[])charArray.Clone();
 
-            for(var i = 0; i < shuffledCharArray.Length; i++)
+            for(var i = 0; i < shuffledCharArray.Length - 1; i++)
             {
                 var tmp = shuffledCharArray[i];
                 var random = new Random();
-                var j = random.Next(0, shuffledCharArray.Length);
+                var j = random.Next(0, shuffledCharArray.Length - 1);
                 shuffledCharArray[i] = shuffledCharArray[j];
                 shuffledCharArray[j] = tmp;
             }
