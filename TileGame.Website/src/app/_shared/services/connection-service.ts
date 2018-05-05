@@ -14,6 +14,8 @@ export class ConnectionService {
     private hubConnection: HubConnection;
     private baseUrl: string = environment.baseUrl;
     private statusChanges: Subject<GameStatus> = new Subject<GameStatus>();
+    private puzzleChanges: Subject<string[]> = new Subject<string[]>();
+    private wordListChanges: Subject<string[]> = new Subject<string[]>();
 
     constructor(@Inject(SIGNALR_TOKEN) private signalR: any) {
         this.init();
@@ -27,9 +29,9 @@ export class ConnectionService {
             this.setStatus(status);
         });
 
-        this.hubConnection.on('StartGame', puzzleArray => {
+        this.hubConnection.on('StartGame', (puzzleArray, wordList) => {
             console.log('Starting game');
-            puzzleArray.forEach(letter => console.log(letter));
+            this.startGame(puzzleArray, wordList);
         });
     }
 
@@ -50,8 +52,21 @@ export class ConnectionService {
         return this.statusChanges;
     }
 
+    getPuzzleChanges(): Subject<string[]>{
+        return this.puzzleChanges;
+    }
+
+    getWordListChanges(): Subject<string[]>{
+        return this.wordListChanges;
+    }
+
     setStatus(status: GameStatus): void{
         this.statusChanges.next(status);
+    }
+
+    startGame(puzzleArray: string[], wordList: string[]){
+        this.puzzleChanges.next(puzzleArray);
+        this.wordListChanges.next(wordList);
     }
 
 }

@@ -68,7 +68,7 @@ namespace TileGame.Business.Game
 
             users.AsParallel().ForAll(async user =>
             {
-                await Clients.Client(user.ConnectionId).SendAsync("StartGame", user.Puzzle);
+                await Clients.Client(user.ConnectionId).SendAsync("StartGame", user.Puzzle, connection.WordList.Select<Word, string>(word => word.Text));
             });
         }
     }

@@ -11,6 +11,8 @@ import {GameStatus} from '../_shared/enums';
 export class GameContainerComponent implements OnInit{
 
     currentGameStatus: GameStatus = GameStatus.NoGame;
+    puzzleArray: string[] = [];
+    wordList: string[] = [];
 
     gameStatus = {
         noGame: GameStatus.NoGame,
@@ -26,6 +28,28 @@ export class GameContainerComponent implements OnInit{
             data => {
                 console.log('Status changed to ' + data);
                 this.currentGameStatus = data;
+            },
+            err => {
+                console.log(err);
+            }
+        )
+
+        this.connectionService.getPuzzleChanges().subscribe(
+            data => {
+                console.log('Puzzle array:');
+                console.log(data);
+                this.puzzleArray = data;
+            },
+            err => {
+                console.log(err);
+            }
+        )
+
+        this.connectionService.getWordListChanges().subscribe(
+            data => {
+                console.log('Word list:');
+                console.log(data);
+                this.wordList = data;
             },
             err => {
                 console.log(err);
