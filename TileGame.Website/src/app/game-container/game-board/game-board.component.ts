@@ -7,6 +7,8 @@ import {Component, Input} from '@angular/core';
 export class GameBoardComponent{
     private _puzzleArray: string[] = [];
 
+    @Input() gameSize: number;
+
     @Input() set puzzleArray(puzzleArray: string[]){
         this._puzzleArray = puzzleArray;
     }
@@ -14,4 +16,12 @@ export class GameBoardComponent{
     get puzzleArray(): string[]{
         return this._puzzleArray;
     }
+
+    getGridStyle(): object{
+        let gridTemplateColumns = `repeat(${this.gameSize}, 1fr)`;
+        let gridStyle = {
+            'grid-template-columns': gridTemplateColumns
+        }
+        return gridStyle;
+    } 
 }

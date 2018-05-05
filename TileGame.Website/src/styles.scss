@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+.game-board-container {
+    width: 100%;
+    padding-bottom: 100%;
+}
+
+.game-board {
+    width: 100%;
+    position: absolute;
+    background-color: gray;
+    display: grid;
+    grid-gap: 2%;
+}
+
+.tile-pad {
+    background-color: blue;
+    width: 100%;
+    padding-bottom: 100%;
+}

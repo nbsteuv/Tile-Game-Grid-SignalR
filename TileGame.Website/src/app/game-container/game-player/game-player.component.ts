@@ -16,4 +16,8 @@ export class GamePlayerComponent{
     get puzzleArray(): string[]{
         return this._puzzleArray;
     }
+
+    getGameSize(): number{
+        return this.wordList.length;
+    }
 }
