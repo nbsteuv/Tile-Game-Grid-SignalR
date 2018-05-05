@@ -1,6 +1,7 @@
 <a routerLink="" (click)="logout()">Logout</a>
 <br>
-<nbs-menu-component (gameOptionsSubmitted)="onGameOptionsSubmitted($event)" *ngIf="currentGameStatus == gameStatus.noGame" ></nbs-menu-component>
+
+<nbs-menu-component (gameOptionsSubmitted)="onGameOptionsSubmitted($event)" *ngIf="currentGameStatus == gameStatus.noGame"></nbs-menu-component>
 
 <div *ngIf="currentGameStatus == gameStatus.waiting">Testing waiting</div>
 

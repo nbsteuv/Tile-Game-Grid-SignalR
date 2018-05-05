@@ -1,41 +1,45 @@
-<div class="col-">
-    <form #gameOptionsForm="ngForm" (submit)="submitGameOptions()" novalidate>
-        <h3 style="margin-bottom: 25px; text-align: center;">Game Options</h3>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="gameSize" id="gameSize4" [value]="4" [(ngModel)]="gameOptions.gameSize">
-            <label class="form-check-label" for="gameSize4">
-                4 x 4
-            </label>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-xs-2 col-sm-5">
+            <form #gameOptionsForm="ngForm" (submit)="submitGameOptions()" novalidate>
+                <h3 style="margin-bottom: 25px; text-align: center;">Game Options</h3>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gameSize" id="gameSize4" [value]="4" [(ngModel)]="gameOptions.gameSize">
+                    <label class="form-check-label" for="gameSize4">
+                        4 x 4
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gameSize" id="gameSize5" [value]="5" [(ngModel)]="gameOptions.gameSize">
+                    <label class="form-check-label" for="gameSize5">
+                        5 x 5
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gameType" id="singlePlayerGame" [value]="singleGameType" [(ngModel)]="gameOptions.gameType">
+                    <label class="form-check-label" for="singlePlayerGame">
+                        Single Player Game
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gameType" id="multiplayerRace" [value]="raceGameType" [(ngModel)]="gameOptions.gameType">
+                    <label class="form-check-label" for="multiplayerRace">
+                        Multiplayer Race
+                    </label>
+                </div>
+                <div class="Checkbox" *ngIf="gameOptions.gameType == raceGameType">
+                    <label>
+                        <input #usePassword="ngModel" type="checkbox" name="usePassword" [(ngModel)]="requirePassword"> Connect with pass phrase
+                    </label>
+                </div>
+                <div class="form-group" [ngClass]="{'has-error': password.dirty && password.invalid}" *ngIf="requirePassword && gameOptions.gameType == raceGameType">
+                    <label for="password">Pass Phrase</label>
+                    <input #password="ngModel" type="text" class="form-control" name="password" id="password" [(ngModel)]="gameOptions.password"
+                        required>
+                    <div class="alert alert-danger" *ngIf="password.dirty && password.invalid">This field is required</div>
+                </div>
+                <button type="submit" id="submit" name="submit" class="btn btn-success float-right" [disabled]="gameOptionsForm.invalid">Submit</button>
+            </form>
         </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="gameSize" id="gameSize5" [value]="5" [(ngModel)]="gameOptions.gameSize">
-            <label class="form-check-label" for="gameSize5">
-                5 x 5
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="gameType" id="singlePlayerGame" [value]="singleGameType" [(ngModel)]="gameOptions.gameType">
-            <label class="form-check-label" for="singlePlayerGame">
-                Single Player Game
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="gameType" id="multiplayerRace" [value]="raceGameType" [(ngModel)]="gameOptions.gameType">
-            <label class="form-check-label" for="multiplayerRace">
-                Multiplayer Race
-            </label>
-        </div>
-        <div class="Checkbox" *ngIf="gameOptions.gameType == raceGameType">
-            <label>
-                <input #usePassword="ngModel" type="checkbox" name="usePassword" [(ngModel)]="requirePassword"> Connect with pass phrase
-            </label>
-        </div>
-        <div class="form-group" [ngClass]="{'has-error': password.dirty && password.invalid}" *ngIf="requirePassword && gameOptions.gameType == raceGameType">
-            <label for="password">Pass Phrase</label>
-            <input #password="ngModel" type="text" class="form-control" name="password" id="password" [(ngModel)]="gameOptions.password"
-                required>
-            <div class="alert alert-danger" *ngIf="password.dirty && password.invalid">This field is required</div>
-        </div>
-        <button type="submit" id="submit" name="submit" class="btn btn-success float-right" [disabled]="gameOptionsForm.invalid">Submit</button>
-    </form>
+    </div>
 </div>
