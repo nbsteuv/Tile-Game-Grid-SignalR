@@ -11,13 +11,17 @@ import {HttpService, SIGNALR_PROVIDER, ConnectionService} from './_shared/servic
 import {AppComponent} from './app.component';
 import {GameContainerComponent} from './game-container/game-container.component';
 import {MenuComponent} from './game-container/menu/menu.component';
+import {GameBoardComponent} from './game-container/game-board/game-board.component';
+import {GamePlayerComponent} from './game-container/game-player/game-player.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     GameContainerComponent,
-    MenuComponent
+    MenuComponent,
+    GameBoardComponent,
+    GamePlayerComponent
   ],
   imports: [
     BrowserModule,
