@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 
 import {UserService, ConnectionService} from '../_shared/services';
 import {GameOptions} from '../_shared/types';
-import {GameState} from '../_shared/enums';
+import {GameStatus} from '../_shared/enums';
 
 @Component({
     selector: 'nbs-game-container',
@@ -10,22 +10,22 @@ import {GameState} from '../_shared/enums';
 })
 export class GameContainerComponent implements OnInit{
 
-    currentGameState: GameState = GameState.NoGame;
+    currentGameStatus: GameStatus = GameStatus.NoGame;
 
-    gameState = {
-        noGame: GameState.NoGame,
-        ready: GameState.Ready,
-        waiting: GameState.Waiting,
-        watching: GameState.Watching
+    gameStatus = {
+        noGame: GameStatus.NoGame,
+        ready: GameStatus.Ready,
+        waiting: GameStatus.Waiting,
+        watching: GameStatus.Watching
     }
 
     constructor(private userService: UserService, private connectionService: ConnectionService){}
 
     ngOnInit(): void{
-        this.connectionService.getStateChanges().subscribe(
+        this.connectionService.getStatusChanges().subscribe(
             data => {
-                console.log('State changed to ' + data);
-                this.currentGameState = data;
+                console.log('Status changed to ' + data);
+                this.currentGameStatus = data;
             },
             err => {
                 console.log(err);

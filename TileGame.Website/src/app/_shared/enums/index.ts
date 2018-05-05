@@ -1,2 +1,2 @@
 export * from './game-type';
-export * from './game-state';
+export * from './game-status';

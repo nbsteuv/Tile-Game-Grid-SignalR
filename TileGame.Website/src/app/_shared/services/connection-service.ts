@@ -6,14 +6,14 @@ import {HubConnection} from '@aspnet/signalr';
 import {environment} from '../../../environments/environment';
 
 import {GameOptions} from '../types';
-import {GameState} from '../enums';
+import {GameStatus} from '../enums';
 
 @Injectable()
 export class ConnectionService {
 
     private hubConnection: HubConnection;
     private baseUrl: string = environment.baseUrl;
-    private stateChanges: Subject<GameState> = new Subject<GameState>();
+    private statusChanges: Subject<GameStatus> = new Subject<GameStatus>();
 
     constructor(@Inject(SIGNALR_TOKEN) private signalR: any) {
         this.init();
@@ -24,7 +24,7 @@ export class ConnectionService {
 
         this.hubConnection.on('SetStatus', status => {
             console.log('Status set to: ' + status);
-            this.setState(status);
+            this.setStatus(status);
         });
 
         this.hubConnection.on('StartGame', puzzleArray => {
@@ -46,12 +46,12 @@ export class ConnectionService {
         this.hubConnection.send('MakeConnection', gameOptions.password, gameOptions.gameType, gameOptions.gameSize);
     }
 
-    getStateChanges(): Subject<GameState>{
-        return this.stateChanges;
+    getStatusChanges(): Subject<GameStatus>{
+        return this.statusChanges;
     }
 
-    setState(gameState: GameState): void{
-        this.stateChanges.next(gameState);
+    setStatus(status: GameStatus): void{
+        this.statusChanges.next(status);
     }
 
 }
