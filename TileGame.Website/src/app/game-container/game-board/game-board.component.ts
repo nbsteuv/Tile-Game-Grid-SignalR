@@ -21,14 +21,18 @@ export class GameBoardComponent implements OnInit{
         return this._puzzleArray;
     }
 
-    ngOnInit(){
+    ngOnInit(): void{
         this._puzzleArray.forEach(() => {
             this.positionArray.push(new Position());
         });
     }
 
-    onTilePositionRetrieved(index: number, position: Position){
+    onTilePositionRetrieved(index: number, position: Position): void{
         this.positionArray[index] = position;
+    }
+
+    onTileClick(tileIndex: number): void{
+        this.moveTileToEmptySpace(tileIndex);
     }
 
     getGridStyle(): object{
@@ -38,4 +42,37 @@ export class GameBoardComponent implements OnInit{
         }
         return gridStyle;
     } 
+
+    moveTileToEmptySpace(tileIndex: number): void{
+        let emptySpacePosition = this.getEmptySpacePosition();
+        let tilePosition = this.getTilePosition(tileIndex);
+        this.setTilePosition(tileIndex, emptySpacePosition);
+        this.setEmptySpacePosition(tilePosition);
+        console.log(this.positionArray);
+    }
+
+    getEmptySpaceTileIndex(): number{
+        let emptySpaceTileIndex = this.positionArray.length - 1;
+        return emptySpaceTileIndex;
+    }
+
+    getEmptySpacePosition(): Position{
+        let emptySpaceTileIndex = this.getEmptySpaceTileIndex();
+        let emptySpacePosition = this.getTilePosition(emptySpaceTileIndex);
+        return emptySpacePosition;
+    }
+
+    setEmptySpacePosition(position: Position): void{
+        let emptySpaceTileIndex = this.getEmptySpaceTileIndex();
+        this.setTilePosition(emptySpaceTileIndex, position);
+    }
+
+    getTilePosition(tileIndex: number): Position{
+        let tilePosition = this.positionArray[tileIndex];
+        return tilePosition;
+    }
+
+    setTilePosition(tileIndex: number, position: Position): void{
+        this.positionArray[tileIndex] = position;
+    }
 }
