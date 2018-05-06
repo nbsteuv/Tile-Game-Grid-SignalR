@@ -15,8 +15,8 @@ export class GameTileComponent implements OnInit{
     ngOnInit(){
         let rect = this.elementRef.nativeElement.getBoundingClientRect();
         let position: Position = {
-            x: rect.x,
-            y: rect.y
+            x: rect.left,
+            y: rect.top
         };
         this.tilePositionRetrieved.emit(position);
     }
