@@ -1,13 +1,17 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+
+import {Position} from '../../_shared/types';
 
 @Component({
     selector: 'nbs-game-board',
     templateUrl: './game-board.component.html'
 })
-export class GameBoardComponent{
+export class GameBoardComponent implements OnInit{
     private _puzzleArray: string[] = [];
 
     @Input() gameSize: number;
+
+    positionArray: Position[] = [];
 
     @Input() set puzzleArray(puzzleArray: string[]){
         this._puzzleArray = puzzleArray;
@@ -15,6 +19,16 @@ export class GameBoardComponent{
 
     get puzzleArray(): string[]{
         return this._puzzleArray;
+    }
+
+    ngOnInit(){
+        this._puzzleArray.forEach(() => {
+            this.positionArray.push(new Position());
+        });
+    }
+
+    onTilePositionRetrieved(index: number, position: Position){
+        this.positionArray[index] = position;
     }
 
     getGridStyle(): object{
