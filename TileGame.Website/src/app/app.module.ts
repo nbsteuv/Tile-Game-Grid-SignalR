@@ -12,6 +12,7 @@ import {AppComponent} from './app.component';
 import {GameContainerComponent} from './game-container/game-container.component';
 import {MenuComponent} from './game-container/menu/menu.component';
 import {GameBoardComponent} from './game-container/game-board/game-board.component';
+import {GameTileComponent} from './game-container/game-board/game-tile/game-tile.component';
 import {GamePlayerComponent} from './game-container/game-player/game-player.component';
 
 
@@ -20,6 +21,7 @@ import {GamePlayerComponent} from './game-container/game-player/game-player.comp
     AppComponent,
     GameContainerComponent,
     MenuComponent,
+    GameTileComponent,
     GameBoardComponent,
     GamePlayerComponent
   ],
