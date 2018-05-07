@@ -48,6 +48,7 @@ export class GameBoardComponent implements OnInit{
         let tilePosition = this.getTilePosition(tileIndex);
         this.setTilePosition(tileIndex, emptySpacePosition);
         this.setEmptySpacePosition(tilePosition);
+        console.log(this.positionArray);
     }
 
     getEmptySpaceTileIndex(): number{

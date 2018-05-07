@@ -1,4 +1,5 @@
-import {Component, Input, Output, EventEmitter, OnInit, ElementRef} from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {AnimationBuilder, AnimationPlayer, style, animate} from '@angular/animations';
 
 import {Position} from '../../../_shared/types';
 
@@ -10,7 +11,11 @@ export class GameTileComponent implements OnInit{
     @Input() character: string;
     @Output() tilePositionRetrieved: EventEmitter<Position> = new EventEmitter<Position>();
 
-    constructor(private elementRef: ElementRef){}
+    @ViewChild('tile') tile;
+    animationPlayer: AnimationPlayer;
+    private _position: Position;
+
+    constructor(private elementRef: ElementRef, private animationBuilder: AnimationBuilder){}
 
     ngOnInit(){
         let rect = this.elementRef.nativeElement.getBoundingClientRect();
@@ -18,6 +23,30 @@ export class GameTileComponent implements OnInit{
             x: rect.left,
             y: rect.top
         };
+        this._position = position;
         this.tilePositionRetrieved.emit(position);
+    }
+
+    @Input() set position(position: Position){
+
+        if(!this._position){
+            //We haven't set the tile's position yet for comparison
+            return;
+        }
+
+        let translateX = position.x - this._position.x;
+        let translateY = position.y - this._position.y;
+
+        if(this.animationPlayer){
+            this.animationPlayer.destroy();
+        }
+
+        const factory = this.animationBuilder.build([
+            style({transform: '*'}),
+            animate('500ms ease-out', style({transform: `translateX(${translateX}, ${translateY})`}))
+        ]);
+
+        this.animationPlayer = factory.create(this.tile.nativeElement, {});
+        this.animationPlayer.play();
     }
 }

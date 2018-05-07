@@ -2,6 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule, HttpClient} from '@angular/common/http';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 import {AuthorizationModule} from './authorization/authorization.module';
 import {AppRoutingModule} from './app.routing';
@@ -29,6 +30,7 @@ import {GamePlayerComponent} from './game-container/game-player/game-player.comp
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     AuthorizationModule,
     AppRoutingModule
   ],
