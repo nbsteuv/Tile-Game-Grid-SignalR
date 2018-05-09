@@ -1,51 +1,51 @@
-import {Injectable} from '@angular/core';
-import {CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/catch';
+import { Injectable } from '@angular/core';
+import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
-import {User} from '../types';
-import {HttpService} from './http-service';
+import { User } from '../types';
+import { HttpService } from './http-service';
 
 @Injectable()
-export class UserService implements CanActivate{
-    
+export class UserService implements CanActivate {
+
     loggedIn: boolean = false;
 
-    constructor(private router: Router, private httpService: HttpService){}
+    constructor(private router: Router, private httpService: HttpService) { }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
         let url: string = state.url;
-        //TODO: Carry url through for redirect
         return this.checkAccess(url, true);
     }
 
-    checkAccess(url: string, redirect: boolean): Observable<boolean>{
-        if(this.loggedIn){
-            return Observable.of(true);
+    checkAccess(url: string, redirect: boolean): Observable<boolean> {
+        if (this.loggedIn) {
+            return of(true);
         }
         let observable = this.httpService.post('/api/account/checkaccess')
-            .map(
-                data => {
-                    console.log(data);
-                    this.loggedIn = true;
-                    return true;
-                }
-            ).catch(
-                () => {
-                    this.router.navigate(['/users/login']);
-                    return Observable.of(false);
-                }
-            )
+            .pipe(
+                map(
+                    data => {
+                        console.log(data);
+                        this.loggedIn = true;
+                        return true;
+                    }
+                ),
+                catchError(
+                    () => {
+                        this.router.navigate(['/users/login']);
+                        return of(false);
+                    }
+                )
+            );
         return observable;
     }
 
-    isLoggedIn(){
+    isLoggedIn() {
         return this.loggedIn;
     }
 
-    register(user: User): Observable<void>{
+    register(user: User): Observable<void> {
         let observable = this.httpService.post('/api/account/register', user);
         observable.subscribe(
             data => {
@@ -59,7 +59,7 @@ export class UserService implements CanActivate{
         return observable;
     }
 
-    login(user: User): Observable<void>{
+    login(user: User): Observable<void> {
         let observable = this.httpService.post('/api/account/login', user);
         observable.subscribe(
             data => {
@@ -73,7 +73,7 @@ export class UserService implements CanActivate{
         return observable;
     }
 
-    logout(): Observable<void>{
+    logout(): Observable<void> {
         console.log('trying to log out');
         let observable = this.httpService.post('/api/account/logout');
         observable.subscribe(

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/share';
+import {Observable} from 'rxjs';
+import {share} from 'rxjs/operators';
 
 import {environment} from '../../../environments/environment';
 
@@ -17,7 +17,7 @@ export class HttpService{
             withCredentials: true
         };
         let requestUrl: string = this.baseUrl + url;
-        let observable: Observable<any> = this.httpClient.get(requestUrl, options).share();
+        let observable: Observable<any> = this.httpClient.get(requestUrl, options).pipe(share());
         return observable;
     }
 
@@ -26,7 +26,7 @@ export class HttpService{
             withCredentials: true
         };
         let requestUrl: string = this.baseUrl + url;
-        let observable: Observable<any> = this.httpClient.post(requestUrl, T, options).share();
+        let observable: Observable<any> = this.httpClient.post(requestUrl, T, options).pipe(share());
         return observable;
     }
     
