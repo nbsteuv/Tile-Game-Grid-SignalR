@@ -10,6 +10,7 @@ import {Position} from '../../../_shared/types';
 export class GameTileComponent implements OnInit{
     @Input() character: string;
     @Output() tilePositionRetrieved: EventEmitter<Position> = new EventEmitter<Position>();
+    @Output() tileClicked: EventEmitter<void> = new EventEmitter<void>();
 
     @ViewChild('tile') tile;
     animationPlayer: AnimationPlayer;
@@ -17,7 +18,7 @@ export class GameTileComponent implements OnInit{
 
     translateX: string = '';
     translateY: string = '';
-    isMoving: boolean = true;
+    isMoving: boolean = false;
 
     constructor(private elementRef: ElementRef, private animationBuilder: AnimationBuilder){}
 
@@ -33,8 +34,6 @@ export class GameTileComponent implements OnInit{
 
     @Input() set position(position: Position){
 
-        this.isMoving = true;
-
         if(!this._position || this._position === position || !this.tile){
             //We haven't set the tile's position yet for comparison, the position is not changed, or this is the empty tile space
             return;
@@ -42,8 +41,6 @@ export class GameTileComponent implements OnInit{
 
         let translateX = position.x - this._position.x;
         let translateY = position.y - this._position.y;
-
-        // this._position = position;
 
         if(this.animationPlayer){
             this.animationPlayer.destroy();
@@ -54,6 +51,8 @@ export class GameTileComponent implements OnInit{
             animate('500ms ease-out', style({transform: `translate(${translateX}px, ${translateY}px)`}))
         ]);
 
+        this.isMoving = true;
+
         this.animationPlayer = factory.create(this.tile.nativeElement, {});
         this.animationPlayer.onDone(() => {
             //Prevent animating from same beginning spot each time
@@ -62,5 +61,13 @@ export class GameTileComponent implements OnInit{
             this.isMoving = false;
         })
         this.animationPlayer.play();
+    }
+
+    onTileClick(){
+        console.log(this.isMoving);
+        if(this.isMoving){
+            return;
+        }
+        this.tileClicked.emit();
     }
 }
