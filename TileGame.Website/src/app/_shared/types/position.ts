@@ -1,4 +1,6 @@
 export class Position{
-    x: number;
-    y: number;
+    constructor(
+        public x: number,
+        public y: number
+    ){}
 }

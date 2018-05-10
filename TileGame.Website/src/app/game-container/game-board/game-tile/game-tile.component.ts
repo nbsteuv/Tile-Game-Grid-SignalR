@@ -15,6 +15,10 @@ export class GameTileComponent implements OnInit{
     animationPlayer: AnimationPlayer;
     private _position: Position;
 
+    translateX: string = '';
+    translateY: string = '';
+    isMoving: boolean = true;
+
     constructor(private elementRef: ElementRef, private animationBuilder: AnimationBuilder){}
 
     ngOnInit(){
@@ -29,13 +33,17 @@ export class GameTileComponent implements OnInit{
 
     @Input() set position(position: Position){
 
-        if(!this._position){
-            //We haven't set the tile's position yet for comparison
+        this.isMoving = true;
+
+        if(!this._position || this._position === position || !this.tile){
+            //We haven't set the tile's position yet for comparison, the position is not changed, or this is the empty tile space
             return;
         }
 
         let translateX = position.x - this._position.x;
         let translateY = position.y - this._position.y;
+
+        // this._position = position;
 
         if(this.animationPlayer){
             this.animationPlayer.destroy();
@@ -43,10 +51,16 @@ export class GameTileComponent implements OnInit{
 
         const factory = this.animationBuilder.build([
             style({transform: '*'}),
-            animate('500ms ease-out', style({transform: `translateX(${translateX}, ${translateY})`}))
+            animate('500ms ease-out', style({transform: `translate(${translateX}px, ${translateY}px)`}))
         ]);
 
         this.animationPlayer = factory.create(this.tile.nativeElement, {});
+        this.animationPlayer.onDone(() => {
+            //Prevent animating from same beginning spot each time
+            this.translateX = translateX + 'px';
+            this.translateY = translateY + 'px';
+            this.isMoving = false;
+        })
         this.animationPlayer.play();
     }
 }

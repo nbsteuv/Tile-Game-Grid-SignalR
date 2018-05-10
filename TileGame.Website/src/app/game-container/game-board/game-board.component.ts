@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 
-import {Position} from '../../_shared/types';
+import {Position, Tile} from '../../_shared/types';
+import { emptyScheduled } from 'rxjs/internal/observable/empty';
 
 @Component({
     selector: 'nbs-game-board',
@@ -13,6 +14,8 @@ export class GameBoardComponent implements OnInit{
 
     positionArray: Position[] = [];
 
+    tileArray: Tile[] = [];
+
     @Input() set puzzleArray(puzzleArray: string[]){
         this._puzzleArray = puzzleArray;
     }
@@ -23,15 +26,27 @@ export class GameBoardComponent implements OnInit{
 
     ngOnInit(): void{
         this._puzzleArray.forEach(() => {
-            this.positionArray.push(new Position());
+            let coordinateX = this.tileArray.length % (this.gameSize);
+            let coordinateY = Math.floor(this.tileArray.length / (this.gameSize));
+            let tile = {
+                position: new Position(0, 0),
+                coordinates: new Position(coordinateX, coordinateY)
+            }
+            this.tileArray.push(tile);
         });
     }
 
     onTilePositionRetrieved(index: number, position: Position): void{
-        this.positionArray[index] = position;
+        this.tileArray[index].position = position;
     }
 
     onTileClick(tileIndex: number): void{
+        let emptySpaceTileIndex = this.getEmptySpaceTileIndex();
+        let coordinateDifferenceX = Math.abs(this.tileArray[tileIndex].coordinates.x - this.tileArray[emptySpaceTileIndex].coordinates.x);
+        let coordinateDifferenceY = Math.abs(this.tileArray[tileIndex].coordinates.y - this.tileArray[emptySpaceTileIndex].coordinates.y);
+        if(coordinateDifferenceX + coordinateDifferenceY !== 1){
+            return;
+        }
         this.moveTileToEmptySpace(tileIndex);
     }
 
@@ -44,35 +59,38 @@ export class GameBoardComponent implements OnInit{
     } 
 
     moveTileToEmptySpace(tileIndex: number): void{
-        let emptySpacePosition = this.getEmptySpacePosition();
-        let tilePosition = this.getTilePosition(tileIndex);
-        this.setTilePosition(tileIndex, emptySpacePosition);
-        this.setEmptySpacePosition(tilePosition);
-        console.log(this.positionArray);
+        let emptySpace = this.getEmptySpace();
+        let tile = this.getTile(tileIndex);
+        this.setTile(tileIndex, emptySpace);
+        this.setEmptySpace(tile);
     }
 
     getEmptySpaceTileIndex(): number{
-        let emptySpaceTileIndex = this.positionArray.length - 1;
+        let emptySpaceTileIndex = this.tileArray.length - 1;
         return emptySpaceTileIndex;
     }
 
-    getEmptySpacePosition(): Position{
+    getEmptySpace(): Tile{
         let emptySpaceTileIndex = this.getEmptySpaceTileIndex();
-        let emptySpacePosition = this.getTilePosition(emptySpaceTileIndex);
+        let emptySpacePosition = this.getTile(emptySpaceTileIndex);
         return emptySpacePosition;
     }
 
-    setEmptySpacePosition(position: Position): void{
+    setEmptySpace(tile: Tile): void{
         let emptySpaceTileIndex = this.getEmptySpaceTileIndex();
-        this.setTilePosition(emptySpaceTileIndex, position);
+        this.setTile(emptySpaceTileIndex, tile);
     }
 
-    getTilePosition(tileIndex: number): Position{
-        let tilePosition = this.positionArray[tileIndex];
-        return tilePosition;
+    getTile(tileIndex: number): Tile{
+        let tile = this.tileArray[tileIndex];
+        return tile;
     }
 
-    setTilePosition(tileIndex: number, position: Position): void{
-        this.positionArray[tileIndex] = position;
+    setTile(tileIndex: number, tile: Tile): void{
+        let newTile = {
+            position: new Position(tile.position.x, tile.position.y),
+            coordinates: new Position(tile.coordinates.x, tile.coordinates.y)
+        };
+        this.tileArray[tileIndex] = newTile;
     }
 }
