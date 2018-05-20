@@ -1,14 +1,18 @@
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-xs-3 col-sm-3">
+        <div class="col-4 col-sm-3 nbs-center">
             <nbs-move-counter [moves]="moves"></nbs-move-counter>
         </div>
-        <div class="col-xs-3 col-sm-6">
+        <div class="col-4 col-sm-6">
             <nbs-word-display [wordList]="wordList"></nbs-word-display>
-            <nbs-game-board [puzzleArray]="puzzleArray" [gameSize]="getGameSize()" (move)="onMove()"></nbs-game-board>
         </div>
-        <div class="col-xs-3 col-sm-3">
+        <div class="col-4 col-sm-3 nbs-center">
             <nbs-timer></nbs-timer>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-7 col-lg-6">
+            <nbs-game-board [puzzleArray]="puzzleArray" [gameSize]="getGameSize()" (move)="onMove()"></nbs-game-board>
         </div>
     </div>
 </div>
