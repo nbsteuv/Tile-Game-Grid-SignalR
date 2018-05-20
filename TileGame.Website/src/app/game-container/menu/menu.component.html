@@ -1,44 +1,78 @@
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-xs-2 col-sm-5">
+        <div class="col-xs-12 col-md-10">
             <form #gameOptionsForm="ngForm" (submit)="submitGameOptions()" novalidate>
-                <h3 style="margin-bottom: 25px; text-align: center;">Game Options</h3>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gameSize" id="gameSize4" [value]="4" [(ngModel)]="gameOptions.gameSize">
-                    <label class="form-check-label" for="gameSize4">
-                        4 x 4
+
+                <h1>
+                    <strong class="nbs-noselect">Game Options</strong>
+                </h1>
+
+                <div class="nbs-center-form-group">
+                    <div class="nbs-center-form-group-inner-container">
+                        <div class="form-check form-check-inline">
+                            <input class="nbs-form-check-input nbs-hidden" type="radio" name="gameSize" id="gameSize4" [value]="4" [(ngModel)]="gameOptions.gameSize">
+                            <label class="form-check-label" for="gameSize4">
+                                <div class="nbs-menu-option-container nbs-noselect">4x4</div>
+                            </label>
+                        </div>
+                        <div class="nbs-form-check form-check-inline">
+                            <input class="nbs-form-check-input nbs-hidden" type="radio" name="gameSize" id="gameSize5" [value]="5" [(ngModel)]="gameOptions.gameSize">
+                            <label class="form-check-label" for="gameSize5">
+                                <div class="nbs-menu-option-container nbs-noselect">5x5</div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nbs-center-form-group">
+                    <div class="nbs-center-form-group-inner-container">
+                        <div class="form-check">
+                            <input class="nbs-form-check-input nbs-hidden" type="radio" name="gameType" id="singlePlayerGame" [value]="singleGameType"
+                                [(ngModel)]="gameOptions.gameType">
+                            <label class="nbs-form-check-label" for="singlePlayerGame">
+                                <div class="nbs-menu-option-container nbs-noselect">Single</div>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="nbs-form-check-input nbs-hidden" type="radio" name="gameType" id="multiplayerRace" [value]="raceGameType" [(ngModel)]="gameOptions.gameType">
+                            <label class="form-check-label" for="multiplayerRace">
+                                <div class="nbs-menu-option-container nbs-noselect">Multiplayer</div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nbs-center-form-group" *ngIf="gameOptions.gameType == raceGameType">
+                    <div class="nbs-center-form-group-inner-container nbs-inner-container-wide">
+                        <div class="form-check">
+                            <input class="nbs-form-check-input nbs-hidden" type="radio" name="usePassword" id="randomPlayer" [value]="false" [(ngModel)]="requirePassword">
+                            <label class="nbs-form-check-label" for="randomPlayer">
+                                <div class="nbs-menu-option-container nbs-noselect">Random Player</div>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="nbs-form-check-input nbs-hidden" type="radio" name="usePassword" id="passwordGame" [value]="true" [(ngModel)]="requirePassword">
+                            <label class="form-check-label" for="passwordGame">
+                                <div class="nbs-menu-option-container nbs-noselect">Pass Phrase</div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nbs-center-form-group" *ngIf="requirePassword && gameOptions.gameType == raceGameType">
+                    <div class="nbs-center-form-group-inner-container">
+                        <input #password="ngModel" type="text" class="form-control nbs-password-input" name="password" id="password" [(ngModel)]="gameOptions.password"
+                            placeholder="Type in your pass phrase to connect.">
+                    </div>
+                </div>
+
+                <div class="nbs-center-form-group">
+                    <label class="nbs-form-check-label" for="submit">
+                        <div class="nbs-menu-option-container nbs-game-option-submit nbs-noselect">Start Game</div>
                     </label>
+                    <input type="submit" id="submit" name="submit" class="nbs-hidden">
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gameSize" id="gameSize5" [value]="5" [(ngModel)]="gameOptions.gameSize">
-                    <label class="form-check-label" for="gameSize5">
-                        5 x 5
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gameType" id="singlePlayerGame" [value]="singleGameType" [(ngModel)]="gameOptions.gameType">
-                    <label class="form-check-label" for="singlePlayerGame">
-                        Single Player Game
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gameType" id="multiplayerRace" [value]="raceGameType" [(ngModel)]="gameOptions.gameType">
-                    <label class="form-check-label" for="multiplayerRace">
-                        Multiplayer Race
-                    </label>
-                </div>
-                <div class="Checkbox" *ngIf="gameOptions.gameType == raceGameType">
-                    <label>
-                        <input #usePassword="ngModel" type="checkbox" name="usePassword" [(ngModel)]="requirePassword"> Connect with pass phrase
-                    </label>
-                </div>
-                <div class="form-group" [ngClass]="{'has-error': password.dirty && password.invalid}" *ngIf="requirePassword && gameOptions.gameType == raceGameType">
-                    <label for="password">Pass Phrase</label>
-                    <input #password="ngModel" type="text" class="form-control" name="password" id="password" [(ngModel)]="gameOptions.password"
-                        required>
-                    <div class="alert alert-danger" *ngIf="password.dirty && password.invalid">This field is required</div>
-                </div>
-                <button type="submit" id="submit" name="submit" class="btn btn-success float-right" [disabled]="gameOptionsForm.invalid">Submit</button>
+
             </form>
         </div>
     </div>

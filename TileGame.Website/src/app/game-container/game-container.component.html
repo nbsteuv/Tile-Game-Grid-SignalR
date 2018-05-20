@@ -1,12 +1,16 @@
 <a routerLink="" (click)="logout()">Logout</a>
 <br>
 
-<nbs-menu-component (gameOptionsSubmitted)="onGameOptionsSubmitted($event)" *ngIf="currentGameStatus == gameStatus.noGame"></nbs-menu-component>
+<div class="center-container">
 
-<div *ngIf="currentGameStatus == gameStatus.waiting">Testing waiting</div>
+    <nbs-menu-component class="full-width up-third" (gameOptionsSubmitted)="onGameOptionsSubmitted($event)" *ngIf="currentGameStatus == gameStatus.noGame"></nbs-menu-component>
 
-<div *ngIf="currentGameStatus == gameStatus.ready">
-    <nbs-game-player [wordList]="wordList" [puzzleArray]="puzzleArray"></nbs-game-player>
+    <div *ngIf="currentGameStatus == gameStatus.waiting">Testing waiting</div>
+
+    <div *ngIf="currentGameStatus == gameStatus.ready">
+        <nbs-game-player [wordList]="wordList" [puzzleArray]="puzzleArray"></nbs-game-player>
+    </div>
+
+    <div *ngIf="currentGameStatus == gameStatus.watching">Testing watching</div>
+
 </div>
-
-<div *ngIf="currentGameStatus == gameStatus.watching">Testing watching</div>
