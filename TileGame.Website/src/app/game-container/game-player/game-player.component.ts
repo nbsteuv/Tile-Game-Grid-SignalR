@@ -6,6 +6,7 @@ import {Component, Input} from '@angular/core';
 })
 export class GamePlayerComponent{
     private _puzzleArray: string[] = [];
+    moves: number = 0;
 
     @Input() wordList: string[];
 
@@ -19,5 +20,9 @@ export class GamePlayerComponent{
 
     getGameSize(): number{
         return this.wordList.length;
+    }
+
+    onMove(): void{
+        this.moves = this.moves + 1;
     }
 }

@@ -123,6 +123,23 @@ label {
     text-transform: uppercase;
 }
 
+.nbs-move-counter-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+    font-size: 3em;
+}
+
+.nbs-move-counter {
+    text-transform: uppercase;
+}
+
+.nbs-move-count {
+    display: flex;
+    justify-content: center;
+}
+
+
 .nbs-game-board-container {
     position: relative; /*Necessary because width percentages are based on nearest positioned ancestor*/
     width: 100%;

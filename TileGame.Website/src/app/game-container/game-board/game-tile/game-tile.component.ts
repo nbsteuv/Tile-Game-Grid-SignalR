@@ -64,7 +64,6 @@ export class GameTileComponent implements OnInit{
     }
 
     onTileClick(){
-        console.log(this.isMoving);
         if(this.isMoving){
             return;
         }

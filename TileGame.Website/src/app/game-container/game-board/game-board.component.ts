@@ -1,7 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 
 import {Position, Tile} from '../../_shared/types';
-import { emptyScheduled } from 'rxjs/internal/observable/empty';
 
 @Component({
     selector: 'nbs-game-board',
@@ -11,6 +10,7 @@ export class GameBoardComponent implements OnInit{
     private _puzzleArray: string[] = [];
 
     @Input() gameSize: number;
+    @Output() move: EventEmitter<void> = new EventEmitter<void>();
 
     positionArray: Position[] = [];
 
@@ -47,6 +47,7 @@ export class GameBoardComponent implements OnInit{
         if(coordinateDifferenceX + coordinateDifferenceY !== 1){
             return;
         }
+        this.move.emit();
         this.moveTileToEmptySpace(tileIndex);
     }
 
