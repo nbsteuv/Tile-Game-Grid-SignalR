@@ -12,6 +12,7 @@ import {HttpService, SIGNALR_PROVIDER, ConnectionService} from './_shared/servic
 import {AppComponent} from './app.component';
 import {GameContainerComponent} from './game-container/game-container.component';
 import {WordDisplayComponent} from './game-container/word-display/word-display.component';
+import {TimerComponent} from './game-container/timer/timer.component';
 import {MenuComponent} from './game-container/menu/menu.component';
 import {GameBoardComponent} from './game-container/game-board/game-board.component';
 import {GameTileComponent} from './game-container/game-board/game-tile/game-tile.component';
@@ -23,6 +24,7 @@ import {GamePlayerComponent} from './game-container/game-player/game-player.comp
     AppComponent,
     GameContainerComponent,
     WordDisplayComponent,
+    TimerComponent,
     MenuComponent,
     GameTileComponent,
     GameBoardComponent,

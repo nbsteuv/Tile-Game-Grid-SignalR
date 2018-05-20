@@ -112,6 +112,17 @@ label {
     text-transform: uppercase;
 }
 
+.nbs-timer-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+    font-size: 3em;
+}
+
+.nbs-timer {
+    text-transform: uppercase;
+}
+
 .nbs-game-board-container {
     position: relative; /*Necessary because width percentages are based on nearest positioned ancestor*/
     width: 100%;
