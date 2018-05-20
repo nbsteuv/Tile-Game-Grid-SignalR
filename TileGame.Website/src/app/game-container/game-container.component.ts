@@ -10,7 +10,7 @@ import {GameStatus} from '../_shared/enums';
 })
 export class GameContainerComponent implements OnInit{
 
-    currentGameStatus: GameStatus = GameStatus.NoGame;
+    currentGameStatus: GameStatus = GameStatus.Ready;
     puzzleArray: string[] = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o',' '];
     wordList: string[] = ['abcd', 'efgh', 'ijkl', 'mno'];
 
