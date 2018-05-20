@@ -88,6 +88,30 @@ label {
     padding-bottom: 30vh;
 }
 
+.nbs-word-list-container {
+    display: flex;
+    justify-content: center;
+    font-size: 4em;
+    line-height: 1;
+    margin-bottom: 1em;
+}
+
+.nbs-word-list {
+    display: inline-block;
+}
+
+.nbs-word {
+    display: flex;
+    justify-content: left;
+}
+
+.nbs-letter {
+    width: 1em;
+    display: flex;
+    justify-content: center;
+    text-transform: uppercase;
+}
+
 .nbs-game-board-container {
     position: relative; /*Necessary because width percentages are based on nearest positioned ancestor*/
     width: 100%;
@@ -97,7 +121,6 @@ label {
 .nbs-game-board {
     width: 100%;
     position: absolute;
-    background-color: gray;
     display: grid;
     grid-gap: 0.5rem;
 }
@@ -107,7 +130,6 @@ label {
 }
 
 .nbs-tile-pad {
-    background-color: blue;
     width: 100%;
     padding-bottom: 100%;
 }
@@ -116,12 +138,12 @@ label {
     width: 100%;
     height: 100%;
     position: absolute;
-    background-color: #ffffff;
+    background-color: #eee4da;
     color: #000000;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 3em;
+    font-size: 4em;
     text-transform: uppercase;
     z-index: 2;
 }

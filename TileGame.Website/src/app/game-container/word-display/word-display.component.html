@@ -1,0 +1,7 @@
+<div class="nbs-word-list-container">
+    <div class="nbs-word-list">
+        <div class="nbs-word" *ngFor="let word of wordList">
+            <span class="nbs-letter" *ngFor="let letter of word.split('')">{{letter}}</span> 
+        </div>
+    </div>
+</div>
