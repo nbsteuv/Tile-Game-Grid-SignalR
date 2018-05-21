@@ -22,17 +22,19 @@ export class ConnectionService {
     }
 
     init(): void{
-        // this.hubConnection = new this.signalR.HubConnection(`${this.baseUrl}/hubs/game`);
+        this.hubConnection = new this.signalR.HubConnectionBuilder()
+        .withUrl(`${this.baseUrl}/hubs/game`)
+        .build();
 
-        // this.hubConnection.on('SetStatus', status => {
-        //     console.log('Status set to: ' + status);
-        //     this.setStatus(status);
-        // });
+        this.hubConnection.on('SetStatus', status => {
+            console.log('Status set to: ' + status);
+            this.setStatus(status);
+        });
 
-        // this.hubConnection.on('StartGame', (puzzleArray, wordList) => {
-        //     console.log('Starting game');
-        //     this.startGame(puzzleArray, wordList);
-        // });
+        this.hubConnection.on('StartGame', (puzzleArray, wordList) => {
+            console.log('Starting game');
+            this.startGame(puzzleArray, wordList);
+        });
     }
 
     startConnection(gameOptions: GameOptions): void{

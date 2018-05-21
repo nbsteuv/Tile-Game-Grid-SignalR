@@ -10,7 +10,7 @@ import {GameStatus} from '../_shared/enums';
 })
 export class GameContainerComponent implements OnInit{
 
-    currentGameStatus: GameStatus = GameStatus.Ready;
+    currentGameStatus: GameStatus = GameStatus.NoGame;
     puzzleArray: string[] = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o',' '];
     wordList: string[] = ['abcd', 'efgh', 'ijkl', 'mno'];
 
@@ -24,37 +24,37 @@ export class GameContainerComponent implements OnInit{
     constructor(private userService: UserService, private connectionService: ConnectionService){}
 
     ngOnInit(): void{
-        // this.connectionService.getStatusChanges().subscribe(
-        //     data => {
-        //         console.log('Status changed to ' + data);
-        //         this.currentGameStatus = data;
-        //     },
-        //     err => {
-        //         console.log(err);
-        //     }
-        // )
+        this.connectionService.getStatusChanges().subscribe(
+            data => {
+                console.log('Status changed to ' + data);
+                this.currentGameStatus = data;
+            },
+            err => {
+                console.log(err);
+            }
+        )
 
-        // this.connectionService.getPuzzleChanges().subscribe(
-        //     data => {
-        //         console.log('Puzzle array:');
-        //         console.log(data);
-        //         this.puzzleArray = data;
-        //     },
-        //     err => {
-        //         console.log(err);
-        //     }
-        // )
+        this.connectionService.getPuzzleChanges().subscribe(
+            data => {
+                console.log('Puzzle array:');
+                console.log(data);
+                this.puzzleArray = data;
+            },
+            err => {
+                console.log(err);
+            }
+        )
 
-        // this.connectionService.getWordListChanges().subscribe(
-        //     data => {
-        //         console.log('Word list:');
-        //         console.log(data);
-        //         this.wordList = data;
-        //     },
-        //     err => {
-        //         console.log(err);
-        //     }
-        // )
+        this.connectionService.getWordListChanges().subscribe(
+            data => {
+                console.log('Word list:');
+                console.log(data);
+                this.wordList = data;
+            },
+            err => {
+                console.log(err);
+            }
+        )
     }
 
     logout(): void{
