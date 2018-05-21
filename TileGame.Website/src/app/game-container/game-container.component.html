@@ -7,7 +7,7 @@
 
     <div *ngIf="currentGameStatus == gameStatus.waiting">Testing waiting</div>
 
-    <div *ngIf="currentGameStatus == gameStatus.ready">
+    <div *ngIf="currentGameStatus == gameStatus.ready && puzzleArray.length > 0">
         <nbs-game-player [wordList]="wordList" [puzzleArray]="puzzleArray"></nbs-game-player>
     </div>
 
