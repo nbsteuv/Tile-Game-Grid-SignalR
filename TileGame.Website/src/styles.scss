@@ -52,6 +52,7 @@ h1 {
 
 .nbs-inner-container-wide {
     width: 100%;
+    justify-content: center;
 }
 
 .nbs-menu-option-container {
@@ -69,6 +70,10 @@ h1 {
     margin-top: 1em;
     text-transform: uppercase;
     font-size: 1.5em;
+}
+
+.nbs-medium-label {
+    font-size: 2.5em;
 }
 
 .nbs-game-option-submit:active {

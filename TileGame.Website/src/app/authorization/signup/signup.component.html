@@ -2,34 +2,33 @@
     <div class="row justify-content-center">
         <div class="col-xs-2 col-sm-5">
             <form #signupForm="ngForm" (submit)="createAccount()" novalidate>
-                <h3 style="margin-bottom: 25px; text-align: center;">Create an Account</h3>
                 <div class="form-group" [ngClass]="{'has-error': username.dirty && username.invalid}">
-                    <label for="username">Username</label>
+                    <label class="nbs-medium-label" for="username">Username</label>
                     <input #username="ngModel" type="text" class="form-control" name="username" id="username"[(ngModel)]="user.username" required>
                     <div class="alert alert-danger" *ngIf="username.dirty && username.invalid">This field is required</div>
                 </div>
                 <div class="form-group" [ngClass]="{'has-error': email.dirty && email.invalid}">
-                    <label for="email">Email Address</label>
+                    <label class="nbs-medium-label" for="email">Email Address</label>
                     <input #email="ngModel" type="text" class="form-control" name="email" id="email"[(ngModel)]="user.email" required>
                     <div class="alert alert-danger" *ngIf="email.dirty && email.invalid">This field is required</div>
                     </div>
                 <div class="form-group" [ngClass]="{'has-error': (password.dirty && password.invalid) || passwordMismatch}">
-                    <label for="password">Password</label>
+                    <label class="nbs-medium-label" for="password">Password</label>
                     <input #password="ngModel" type="password" class="form-control" name="password" id="password" [(ngModel)]="user.password" required>
                     <div class="alert alert-danger" *ngIf="password.dirty && password.invalid">This field is required</div>
                 </div>
                 <div class="form-group" [ngClass]="{'has-error': (password2.dirty && password2.invalid) || passwordMismatch}">
-                    <label for="password2">Confirm Password</label>
+                    <label class="nbs-medium-label" for="password2">Confirm Password</label>
                     <input #password2="ngModel" type="password" class="form-control" name="password2" id="password2" [(ngModel)]="user.password2" required>
                     <div class="alert alert-danger" *ngIf="password2.dirty && password2.invalid">This field is required</div>
                 </div>
                 <div class="alert alert-danger" *ngIf="passwordMismatch">Password and confirmation do not match.</div>
-                <div class="checkbox">
-                    <label>
-                        <input #rememberMe="ngModel" type="checkbox" name="rememberMe" [(ngModel)]="user.rememberMe"> Remember Me
+                <div class="nbs-center-form-group">
+                    <label class="nbs-form-check-label" for="submit">
+                        <div class="nbs-menu-option-container nbs-noselect">Submit</div>
                     </label>
+                    <input type="submit" id="submit" name="submit" class="nbs-hidden">
                 </div>
-                <button type="submit" id="submit" name="submit" class="btn btn-success float-right" [disabled]="signupForm.invalid">Submit</button>
             </form>
         </div>
     </div>

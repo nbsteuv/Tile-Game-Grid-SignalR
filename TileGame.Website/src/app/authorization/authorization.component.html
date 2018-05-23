@@ -1,1 +1,24 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-xs-12 col-md-10">
+            <div class="nbs-center-form-group">
+                <div class="nbs-center-form-group-inner-container nbs-inner-container-wide">
+                    <div class="form-check form-check-inline">
+                        <input class="nbs-form-check-input nbs-hidden" type="radio" name="loginRoute" id="loginRoute" [value]="'/users/login'" [(ngModel)]="currentRoute">
+                        <label class="form-check-label" for="loginRoute" (click)="navigateTo('/users/login')">
+                            <div class="nbs-menu-option-container nbs-noselect">LOGIN</div>
+                        </label>
+                    </div>
+                    <div class="nbs-form-check form-check-inline">
+                        <input class="nbs-form-check-input nbs-hidden" type="radio" name="signupRoute" id="signupRoute" [value]="'/users/signup'"
+                            [(ngModel)]="currentRoute">
+                        <label class="form-check-label" for="signupRoute" (click)="navigateTo('/users/signup')">
+                            <div class="nbs-menu-option-container nbs-noselect">NEW USER</div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <router-outlet></router-outlet>
