@@ -1,35 +1,52 @@
-import {Component} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
-import {UserService} from '../../_shared/services';
-import {User} from '../../_shared/types';
+import { UserService } from '../../_shared/services';
+import { User } from '../../_shared/types';
 
 @Component({
     templateUrl: './signup.component.html'
 })
-export class SignupComponent{
+export class SignupComponent {
     user: User = new User();
     passwordMismatch: boolean = false;
+    requiredFieldsFail: boolean = false;
     accountCreationFailMessage: string = '';
 
-    constructor(private userService: UserService){}
+    constructor(private userService: UserService) { }
 
-    createAccount(){
-        this.accountCreationFailMessage = '';
-        if(this.user.password !== this.user.password2){
-            this.passwordMismatch = true;
-        } else {
-            this.passwordMismatch = false;
-            this.userService.register(this.user)
-                .subscribe(
-                    data => {
-                        console.log("Account creation success.");
-                    },
-                    err => {
-                        this.accountCreationFailMessage = 'Account creation failed.';
-                    }
-                );
+    createAccount() {
+        //TODO: Validate password and email
+
+        this.clearErrorMessages();
+
+        if(!this.user.username || !this.user.email || !this.user.password || !this.user.password2){
+            this.requiredFieldsFail = true;
+            return;
         }
+
+        if (this.user.password !== this.user.password2) {
+            this.passwordMismatch = true;
+            return;
+        }
+
+        this.userService.register(this.user)
+            .subscribe(
+                data => {
+                    console.log("Account creation success.");
+                },
+                err => {
+                    this.accountCreationFailMessage = 'Account creation failed.';
+                }
+            );
     }
+
+
+    clearErrorMessages(): void {
+        this.accountCreationFailMessage = '';
+        this.passwordMismatch = false;
+        this.requiredFieldsFail = false;
+    }
+
 }
 

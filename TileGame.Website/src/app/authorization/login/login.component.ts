@@ -10,12 +10,19 @@ import {User} from '../../_shared/types';
 export class LoginComponent{
     user: User = new User();
     loginFail: boolean = false;
+    requiredFieldsFail: boolean = false;
 
     constructor(private userService: UserService){}
 
-    login(){
-        //TODO: Validate password and email
-        this.loginFail = false;
+    login(): void{
+
+        this.clearErrorMessages();
+
+        if(!this.user.username || !this.user.password){
+            this.requiredFieldsFail = true;
+            return;
+        }
+
         this.userService.login(this.user)
             .subscribe(
                 data => {
@@ -25,5 +32,10 @@ export class LoginComponent{
                     this.loginFail = true;
                 }
             );
+    }
+
+    clearErrorMessages(): void{
+        this.loginFail = false;
+        this.requiredFieldsFail = false;
     }
 }

@@ -14,6 +14,7 @@
                     <div class="alert alert-danger" *ngIf="password.dirty && password.invalid">This field is required</div>
                 </div>
                 <div class="alert alert-danger" *ngIf="loginFail">Invalid credentials.</div>
+                <div class="alert alert-danger" *ngIf="requiredFieldsFail">All fields are required.</div>
                 <div class="nbs-center-form-group">
                     <label class="nbs-form-check-label" for="submit">
                         <div class="nbs-menu-option-container nbs-noselect">Submit</div>
