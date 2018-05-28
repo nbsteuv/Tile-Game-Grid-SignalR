@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 
-import {Position, Tile} from '../../_shared/types';
+import {Position, Tile, Move} from '../../_shared/types';
 
 @Component({
     selector: 'nbs-game-board',
@@ -8,16 +8,19 @@ import {Position, Tile} from '../../_shared/types';
 })
 export class GameBoardComponent implements OnInit{
     private _puzzleArray: string[] = [];
+    private currentPuzzle: string[] = [];
 
     @Input() gameSize: number;
-    @Output() move: EventEmitter<void> = new EventEmitter<void>();
+    @Output() move: EventEmitter<Move> = new EventEmitter<Move>();
 
     positionArray: Position[] = [];
 
     tileArray: Tile[] = [];
 
     @Input() set puzzleArray(puzzleArray: string[]){
+        console.log('Setting puzzle array');
         this._puzzleArray = puzzleArray;
+        this.currentPuzzle = puzzleArray;
     }
 
     get puzzleArray(): string[]{
@@ -47,7 +50,14 @@ export class GameBoardComponent implements OnInit{
         if(coordinateDifferenceX + coordinateDifferenceY !== 1){
             return;
         }
-        this.move.emit();
+
+        this.currentPuzzle[emptySpaceTileIndex] = this.currentPuzzle[tileIndex];
+        this.currentPuzzle[tileIndex] = ' ';
+        console.log('Current puzzle:');
+        console.log(this.currentPuzzle);
+        let move = new Move(this.currentPuzzle, tileIndex);
+        this.move.emit(move);
+
         this.moveTileToEmptySpace(tileIndex);
     }
 

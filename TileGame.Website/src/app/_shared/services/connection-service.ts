@@ -5,7 +5,7 @@ import {SIGNALR_TOKEN} from './signalr-provider'
 import {HubConnection} from '@aspnet/signalr';
 import {environment} from '../../../environments/environment';
 
-import {GameOptions} from '../types';
+import {GameOptions, Move} from '../types';
 import {GameStatus} from '../enums';
 
 @Injectable()
@@ -48,6 +48,10 @@ export class ConnectionService {
 
     makeConnection(gameOptions: GameOptions): void{
         this.hubConnection.send('MakeConnection', gameOptions.password, gameOptions.gameType, gameOptions.gameSize);
+    }
+
+    move(move: Move): void{
+        this.hubConnection.send('Move', move);
     }
 
     getStatusChanges(): Subject<GameStatus>{

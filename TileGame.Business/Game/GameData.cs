@@ -12,11 +12,13 @@ namespace TileGame.Business.Game
         private readonly IApplicationDbContext _context;
 
         private readonly List<Connection> _connections;
+        private readonly List<User> _users;
 
         public GameData(IApplicationDbContext context)
         {
             _context = context;
             _connections = new List<Connection>();
+            _users = new List<User>();
         }
 
         public Connection MakeConnection(string username, string connectionId, string password, GameType gameType)
@@ -80,6 +82,8 @@ namespace TileGame.Business.Game
 
             _connections.Add(newConnection);
 
+            _users.Add(user);
+
             return newConnection;
         }
 
@@ -105,6 +109,23 @@ namespace TileGame.Business.Game
             connection.WordList = wordList;
 
             connection.Key = key;
+
+            return connection;
+        }
+
+        public User GetUser(string connectionId, string username)
+        {
+            var user = _users.Find(u => u.ConnectionId == connectionId && u.Username == username);
+
+            return user;
+        }
+
+        public Connection GetConnectionByPlayer(User user)
+        {
+            var connection = _connections.Find(c =>
+            {
+                return c.Players.Any(p => p.Username == user.Username && p.ConnectionId == user.ConnectionId);
+            });
 
             return connection;
         }

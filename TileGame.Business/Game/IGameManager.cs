@@ -10,5 +10,6 @@ namespace TileGame.Business.Game
         ConnectionStatus GetConnectionStatus (string connectionId, Connection connection);
         void CreateGame(Connection connection, int wordLength);
         List<User> GetConnectionUsers(Connection connection);
+        void Move(Move move, string username, string connectionId);
     }
 }

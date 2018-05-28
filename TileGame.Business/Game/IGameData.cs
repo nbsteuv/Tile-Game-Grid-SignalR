@@ -9,5 +9,7 @@ namespace TileGame.Business.Game
         Connection MakeConnection(string username, string connectionId, string password, GameType gameType);
         List<Word> GetWordList(int baseLength);
         Connection AddGameToConnection(Connection connection, List<Word> wordList, char[] key);
+        User GetUser(string connectionId, string username);
+        Connection GetConnectionByPlayer(User user);
     }
 }

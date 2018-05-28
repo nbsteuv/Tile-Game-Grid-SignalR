@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 import {UserService, ConnectionService} from '../_shared/services';
-import {GameOptions} from '../_shared/types';
+import {GameOptions, Move} from '../_shared/types';
 import {GameStatus} from '../_shared/enums';
 
 @Component({
@@ -67,6 +67,10 @@ export class GameContainerComponent implements OnInit{
 
     onGameOptionsSubmitted(gameOptions: GameOptions){
         this.connect(gameOptions);
+    }
+
+    onMove(move: Move){
+        this.connectionService.move(move);
     }
     
 }

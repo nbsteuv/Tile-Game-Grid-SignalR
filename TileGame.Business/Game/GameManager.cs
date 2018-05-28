@@ -10,10 +10,12 @@ namespace TileGame.Business.Game
     public class GameManager : IGameManager
     {
         private readonly IGameData _gameData;
+        private readonly IMoveHandlerFactory _moveHandlerFactory;
 
-        public GameManager(IGameData gameData)
+        public GameManager(IGameData gameData, IMoveHandlerFactory moveHandlerFactory)
         {
             _gameData = gameData;
+            _moveHandlerFactory = moveHandlerFactory;
         }
 
         public Connection MakeConnection(string username, string connectionId, string password, GameType gameType)
@@ -67,6 +69,8 @@ namespace TileGame.Business.Game
             AddPuzzleToUsers(connection, puzzle);
         }
 
+        //TODO: Put these puzzle methods into a puzzle service
+
         private char[] BuildCharArray(List<Word> wordList)
         {
             var wordString = new StringBuilder("");
@@ -101,6 +105,19 @@ namespace TileGame.Business.Game
             var users = GetConnectionUsers(connection);
 
             users.ForEach(user => user.Puzzle = puzzle);
+        }
+
+        public void Move(Move move, string username, string connectionId)
+        {
+            var user = _gameData.GetUser(connectionId, username);
+
+            user.Puzzle = move.CurrentPuzzle;
+
+            var connection = _gameData.GetConnectionByPlayer(user);
+
+            var moveHandler = _moveHandlerFactory.CreateMoveHandler(connection, user);
+
+            moveHandler.HandleMove(move);
         }
     }
 }

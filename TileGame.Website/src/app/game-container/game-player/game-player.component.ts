@@ -1,4 +1,6 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
+
+import {Move} from '../../_shared/types';
 
 @Component({
     selector: 'nbs-game-player',
@@ -9,6 +11,7 @@ export class GamePlayerComponent{
     moves: number = 0;
 
     @Input() wordList: string[];
+    @Output() move: EventEmitter<Move> = new EventEmitter<Move>();
 
     @Input() set puzzleArray(puzzleArray: string[]){
         this._puzzleArray = puzzleArray;
@@ -22,7 +25,8 @@ export class GamePlayerComponent{
         return this.wordList.length;
     }
 
-    onMove(): void{
+    onMove(move: Move): void{
+        this.move.emit(move);
         this.moves = this.moves + 1;
     }
 }

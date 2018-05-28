@@ -9,7 +9,7 @@ using static TileGame.Business.Enums;
 
 namespace TileGame.Business.Game
 {
-    public class GameHub : Hub
+    public class GameHub : Hub, IGameHub
     {
         private readonly IGameManager _gameManager;
 
@@ -33,6 +33,8 @@ namespace TileGame.Business.Game
         {
             await Clients.All.SendAsync("SendMessage", Context.User.Identity.Name, message);
         }
+
+        //TODO: GameHub should handle passing messages only -- any logic should be in GameManager
 
         public void MakeConnection(string password, GameType gameType, int wordLength)
         {
@@ -70,6 +72,16 @@ namespace TileGame.Business.Game
             {
                 await Clients.Client(user.ConnectionId).SendAsync("StartGame", user.Puzzle, connection.WordList.Select<Word, string>(word => word.Text));
             });
+        }
+
+        public void Move(Move move)
+        {
+            _gameManager.Move(move, Context.User.Identity.Name, Context.ConnectionId);
+        }
+
+        public void SendWinNotification(User user)
+        {
+            throw new NotImplementedException();
         }
     }
 }
