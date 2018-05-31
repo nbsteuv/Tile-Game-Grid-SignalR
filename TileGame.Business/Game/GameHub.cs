@@ -6,16 +6,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using TileGame.Business.Models;
 using static TileGame.Business.Enums;
+using MediatR;
+using TileGame.Business.Models.Requests;
 
 namespace TileGame.Business.Game
 {
     public class GameHub : Hub, IGameHub
     {
-        private readonly IGameManager _gameManager;
+        IMediator _mediator;
 
-        public GameHub(IGameManager gameManager)
+        public GameHub(IMediator mediator)
         {
-            _gameManager = gameManager;
+            _mediator = mediator;
         }
 
         [Authorize]
@@ -34,49 +36,58 @@ namespace TileGame.Business.Game
             await Clients.All.SendAsync("SendMessage", Context.User.Identity.Name, message);
         }
 
-        //TODO: GameHub should handle passing messages only -- any logic should be in GameManager
-
         public void MakeConnection(string password, GameType gameType, int wordLength)
         {
-            var connection = _gameManager.MakeConnection(Context.User.Identity.Name, Context.ConnectionId, password, gameType);
-
-            var users = _gameManager.GetConnectionUsers(connection);
-
-            users.AsParallel().ForAll(async user =>
+            _mediator.Send(new MakeConnectionRequest
             {
-                var status = _gameManager.GetConnectionStatus(user.ConnectionId, connection);
-
-                await Clients.Client(user.ConnectionId).SendAsync("SetStatus", status);
+                GameType = gameType,
+                Username = Context.User.Identity.Name,
+                ConnectionId = Context.ConnectionId,
+                Password = password,
+                WordLength = wordLength
             });
 
-            TryStartGame(connection, wordLength);
+            //var connection = _gameManager.MakeConnection(Context.User.Identity.Name, Context.ConnectionId, password, gameType);
+
+            //var users = _gameManager.GetConnectionUsers(connection);
+
+            //users.AsParallel().ForAll(async user =>
+            //{
+            //    var status = _gameManager.GetConnectionStatus(user.ConnectionId, connection);
+
+            //    await Clients.Client(user.ConnectionId).SendAsync("SetStatus", status);
+            //});
+
+            //TryStartGame(connection, wordLength);
+
+            var x = 17;
         }
 
         private void TryStartGame(Connection connection, int wordLength)
         {
-            if (!connection.Players.Any())
-            {
-                return;
-            }
+            //if (!connection.Players.Any())
+            //{
+            //    return;
+            //}
 
-            if (_gameManager.GetConnectionStatus(connection.Players.FirstOrDefault().ConnectionId, connection) != ConnectionStatus.Ready)
-            {
-                return;
-            }
+            //if (_gameManager.GetConnectionStatus(connection.Players.FirstOrDefault().ConnectionId, connection) != ConnectionStatus.Ready)
+            //{
+            //    return;
+            //}
 
-            _gameManager.CreateGame(connection, wordLength);
+            //_gameManager.CreateGame(connection, wordLength);
 
-            var users = _gameManager.GetConnectionUsers(connection);
+            //var users = _gameManager.GetConnectionUsers(connection);
 
-            users.AsParallel().ForAll(async user =>
-            {
-                await Clients.Client(user.ConnectionId).SendAsync("StartGame", user.Puzzle, connection.WordList.Select<Word, string>(word => word.Text));
-            });
+            //users.AsParallel().ForAll(async user =>
+            //{
+            //    await Clients.Client(user.ConnectionId).SendAsync("StartGame", user.Puzzle, connection.WordList.Select<Word, string>(word => word.Text));
+            //});
         }
 
         public void Move(Move move)
         {
-            _gameManager.Move(move, Context.User.Identity.Name, Context.ConnectionId);
+            //_gameManager.Move(move, Context.User.Identity.Name, Context.ConnectionId);
         }
 
         public void SendWinNotification(User user)
