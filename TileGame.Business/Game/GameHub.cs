@@ -47,42 +47,9 @@ namespace TileGame.Business.Game
                 WordLength = wordLength
             });
 
-            //var connection = _gameManager.MakeConnection(Context.User.Identity.Name, Context.ConnectionId, password, gameType);
-
-            //var users = _gameManager.GetConnectionUsers(connection);
-
-            //users.AsParallel().ForAll(async user =>
-            //{
-            //    var status = _gameManager.GetConnectionStatus(user.ConnectionId, connection);
-
-            //    await Clients.Client(user.ConnectionId).SendAsync("SetStatus", status);
-            //});
-
             //TryStartGame(connection, wordLength);
 
             var x = 17;
-        }
-
-        private void TryStartGame(Connection connection, int wordLength)
-        {
-            //if (!connection.Players.Any())
-            //{
-            //    return;
-            //}
-
-            //if (_gameManager.GetConnectionStatus(connection.Players.FirstOrDefault().ConnectionId, connection) != ConnectionStatus.Ready)
-            //{
-            //    return;
-            //}
-
-            //_gameManager.CreateGame(connection, wordLength);
-
-            //var users = _gameManager.GetConnectionUsers(connection);
-
-            //users.AsParallel().ForAll(async user =>
-            //{
-            //    await Clients.Client(user.ConnectionId).SendAsync("StartGame", user.Puzzle, connection.WordList.Select<Word, string>(word => word.Text));
-            //});
         }
 
         public void Move(Move move)
@@ -90,7 +57,17 @@ namespace TileGame.Business.Game
             //_gameManager.Move(move, Context.User.Identity.Name, Context.ConnectionId);
         }
 
-        public void SendWinNotification(User user)
+        public async Task SendStatus(string connectionId, ConnectionStatus status)
+        {
+            await Clients.Client(connectionId).SendAsync("SetStatus", status);
+        }
+
+        public async Task SendStartGame(string connectionId, char[] puzzle, IEnumerable<string> wordList)
+        {
+            await Clients.Client(connectionId).SendAsync("SetStatus", puzzle, wordList);
+        }
+
+        public async Task SendWinNotification(User user)
         {
             throw new NotImplementedException();
         }

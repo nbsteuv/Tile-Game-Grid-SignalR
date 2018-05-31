@@ -10,22 +10,58 @@ namespace TileGame.Business.Game
     public class GameManager : IGameManager
     {
         private readonly IGameData _gameData;
+        private readonly IGameHub _gameHub;
         private readonly IMoveHandlerFactory _moveHandlerFactory;
 
-        public GameManager(IGameData gameData, IMoveHandlerFactory moveHandlerFactory)
+        public GameManager(IGameData gameData, IGameHub gameHub, IMoveHandlerFactory moveHandlerFactory)
         {
             _gameData = gameData;
+            _gameHub = gameHub;
             _moveHandlerFactory = moveHandlerFactory;
         }
 
-        public Connection MakeConnection(string username, string connectionId, string password, GameType gameType)
+        public void MakeConnection(string username, string connectionId, string password, GameType gameType, int wordLength)
         {
             var connection = _gameData.MakeConnection(username, connectionId, password, gameType);
 
-            return connection;
+            var users = GetConnectionUsers(connection);
+
+            //TODO: Implement another method to ensure completion for all users before game starts
+            users.AsParallel().ForAll(async user =>
+            {
+                var status = GetConnectionStatus(user.ConnectionId, connection);
+
+                await _gameHub.SendStatus(user.ConnectionId, status);
+            });
+
+            TryStartGame(connection, wordLength);
         }
 
-        public ConnectionStatus GetConnectionStatus(string connectionId, Connection connection)
+        private void TryStartGame(Connection connection, int wordLength)
+        {
+            if (!connection.Players.Any())
+            {
+                return;
+            }
+
+            if (GetConnectionStatus(connection.Players.FirstOrDefault().ConnectionId, connection) != ConnectionStatus.Ready)
+            {
+                return;
+            }
+
+            CreateGame(connection, wordLength);
+
+            var users = GetConnectionUsers(connection);
+
+            var wordList = connection.WordList.Select<Word, string>(word => word.Text);
+
+            users.AsParallel().ForAll(async user =>
+            {
+                await _gameHub.SendStartGame(user.ConnectionId, user.Puzzle, wordList);
+            });
+        }
+
+        private ConnectionStatus GetConnectionStatus(string connectionId, Connection connection)
         {
             if(connection.Players.Count < 2 && connection.Multiplayer == true)
             {
@@ -40,7 +76,7 @@ namespace TileGame.Business.Game
             return ConnectionStatus.Watching;
         }
 
-        public List<User> GetConnectionUsers(Connection connection)
+        private List<User> GetConnectionUsers(Connection connection)
         {
             var users = new List<User>();
 

@@ -6,10 +6,7 @@ namespace TileGame.Business.Game
 {
     public interface IGameManager
     {
-        Connection MakeConnection(string username, string connectionId, string password, GameType gameType);
-        ConnectionStatus GetConnectionStatus (string connectionId, Connection connection);
-        void CreateGame(Connection connection, int wordLength);
-        List<User> GetConnectionUsers(Connection connection);
+        void MakeConnection(string username, string connectionId, string password, GameType gameType, int wordLength);
         void Move(Move move, string username, string connectionId);
     }
 }
