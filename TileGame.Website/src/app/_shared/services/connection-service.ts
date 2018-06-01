@@ -13,9 +13,10 @@ export class ConnectionService {
 
     private hubConnection: HubConnection;
     private baseUrl: string = environment.baseUrl;
-    private statusChanges: Subject<GameStatus> = new Subject<GameStatus>();
-    private puzzleChanges: Subject<string[]> = new Subject<string[]>();
-    private wordListChanges: Subject<string[]> = new Subject<string[]>();
+    private statusSource: Subject<GameStatus> = new Subject<GameStatus>();
+    private puzzleSource: Subject<string[]> = new Subject<string[]>();
+    private wordListSource: Subject<string[]> = new Subject<string[]>();
+    private winConfirmedSource: Subject<void> = new Subject<void>();
 
     constructor(@Inject(SIGNALR_TOKEN) private signalR: any) {
         this.init();
@@ -34,6 +35,11 @@ export class ConnectionService {
         this.hubConnection.on('StartGame', (puzzleArray, wordList) => {
             console.log('Starting game');
             this.startGame(puzzleArray, wordList);
+        });
+
+        this.hubConnection.on('WinConfirmed', () => {
+            console.log('You win');
+            this.winConfirmed();
         });
     }
 
@@ -55,24 +61,32 @@ export class ConnectionService {
     }
 
     getStatusChanges(): Subject<GameStatus>{
-        return this.statusChanges;
+        return this.statusSource;
     }
 
     getPuzzleChanges(): Subject<string[]>{
-        return this.puzzleChanges;
+        return this.puzzleSource;
     }
 
     getWordListChanges(): Subject<string[]>{
-        return this.wordListChanges;
+        return this.wordListSource;
+    }
+
+    getWinConfirmedChanges(): Subject<void>{
+        return this.winConfirmedSource;
     }
 
     setStatus(status: GameStatus): void{
-        this.statusChanges.next(status);
+        this.statusSource.next(status);
     }
 
-    startGame(puzzleArray: string[], wordList: string[]){
-        this.puzzleChanges.next(puzzleArray);
-        this.wordListChanges.next(wordList);
+    startGame(puzzleArray: string[], wordList: string[]): void{
+        this.puzzleSource.next(puzzleArray);
+        this.wordListSource.next(wordList);
+    }
+
+    winConfirmed(): void {
+        this.winConfirmedSource.next();
     }
 
 }

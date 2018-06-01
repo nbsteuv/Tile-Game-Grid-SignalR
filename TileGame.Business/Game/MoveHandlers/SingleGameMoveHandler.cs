@@ -20,7 +20,7 @@ namespace TileGame.Business.Game.MoveHandlers
         {
             if (IsWinningMove())
             {
-                _gameHubContext.SendWinNotification(_user);
+                _gameHubContext.SendWinNotification(_user.ConnectionId);
             }
         }
 
