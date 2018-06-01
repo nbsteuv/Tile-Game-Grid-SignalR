@@ -14,7 +14,7 @@ namespace TileGame.Business.Game.RequestHandlers
 
         protected override void HandleCore(MakeConnectionRequest request)
         {
-            _gameManager.MakeConnection(request.Username, request.ConnectionId, request.Password, request.GameType, request.WordLength);
+            _gameManager.MakeConnectionAsync(request.Username, request.ConnectionId, request.Password, request.GameType, request.WordLength);
         }
     }
 }

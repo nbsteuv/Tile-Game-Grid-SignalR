@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using TileGame.Business.Game.HubContext;
 using TileGame.Business.Models;
 using static TileGame.Business.Enums;
@@ -22,25 +23,25 @@ namespace TileGame.Business.Game
             _moveHandlerFactory = moveHandlerFactory;
         }
 
-        public void MakeConnection(string username, string connectionId, string password, GameType gameType, int wordLength)
+        public async Task MakeConnectionAsync(string username, string connectionId, string password, GameType gameType, int wordLength)
         {
             var connection = _gameData.MakeConnection(username, connectionId, password, gameType);
 
             var users = GetConnectionUsers(connection);
 
-            //TODO: Implement another method to ensure completion for all users before game starts
-            users.AsParallel().ForAll(async user =>
+            var sendStatusTasks = users.Select(async user =>
             {
                 var status = GetConnectionStatus(connectionId, connection);
 
                 await _gameHubContext.SendStatus(connectionId, status);
-
             });
 
-            TryStartGame(connection, wordLength);
+            await Task.WhenAll(sendStatusTasks);
+
+            await TryStartGameAsync(connection, wordLength);
         }
 
-        private void TryStartGame(Connection connection, int wordLength)
+        private async Task TryStartGameAsync(Connection connection, int wordLength)
         {
             if (!connection.Players.Any())
             {
@@ -58,10 +59,12 @@ namespace TileGame.Business.Game
 
             var wordList = connection.WordList.Select<Word, string>(word => word.Text);
 
-            users.AsParallel().ForAll(async user =>
+            var startGameTasks = users.Select(async user =>
             {
                 await _gameHubContext.SendStartGame(user.ConnectionId, user.Puzzle, wordList);
             });
+
+            await Task.WhenAll(startGameTasks);
         }
 
         private ConnectionStatus GetConnectionStatus(string connectionId, Connection connection)
