@@ -20,7 +20,7 @@ export class GameBoardComponent implements OnInit{
     @Input() set puzzleArray(puzzleArray: string[]){
         console.log('Setting puzzle array');
         this._puzzleArray = puzzleArray;
-        this.currentPuzzle = puzzleArray;
+        this.currentPuzzle = puzzleArray.slice();
     }
 
     get puzzleArray(): string[]{
