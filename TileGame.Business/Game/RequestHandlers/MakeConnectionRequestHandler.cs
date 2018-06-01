@@ -5,7 +5,7 @@ namespace TileGame.Business.Game.RequestHandlers
 {
     public class MakeConnectionRequestHandler : RequestHandler<MakeConnectionRequest>
     {
-        IGameManager _gameManager;
+        private readonly IGameManager _gameManager;
 
         public MakeConnectionRequestHandler(IGameManager gameManager)
         {

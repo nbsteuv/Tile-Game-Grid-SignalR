@@ -46,15 +46,16 @@ namespace TileGame.Business.Game.HubContext
                 Password = password,
                 WordLength = wordLength
             });
-
-            //TryStartGame(connection, wordLength);
-
-            var x = 17;
         }
 
         public void Move(Move move)
         {
-            //_gameManager.Move(move, Context.User.Identity.Name, Context.ConnectionId);
+            _mediator.Send(new MoveRequest
+            {
+                Username = Context.User.Identity.Name,
+                ConnectionId = Context.ConnectionId,
+                Move = move
+            });
         }
     }
 }

@@ -8,6 +8,6 @@ namespace TileGame.Business.Game
     public interface IGameManager
     {
         Task MakeConnectionAsync(string username, string connectionId, string password, GameType gameType, int wordLength);
-        void Move(Move move, string username, string connectionId);
+        void Move(string username, string connectionId, Move move);
     }
 }

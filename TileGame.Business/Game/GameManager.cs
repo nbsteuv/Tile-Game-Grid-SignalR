@@ -149,7 +149,7 @@ namespace TileGame.Business.Game
             users.ForEach(user => user.Puzzle = puzzle);
         }
 
-        public void Move(Move move, string username, string connectionId)
+        public void Move(string username, string connectionId, Move move)
         {
             var user = _gameData.GetUser(connectionId, username);
 
@@ -157,9 +157,9 @@ namespace TileGame.Business.Game
 
             var connection = _gameData.GetConnectionByPlayer(user);
 
-            //var moveHandler = _moveHandlerFactory.CreateMoveHandler(connection, user);
+            var moveHandler = _moveHandlerFactory.CreateMoveHandler(connection, user, _gameHubContext);
 
-            //moveHandler.HandleMove(move);
+            moveHandler.HandleMove(move);
         }
     }
 }
