@@ -9,9 +9,9 @@ using static TileGame.Business.Enums;
 using MediatR;
 using TileGame.Business.Models.Requests;
 
-namespace TileGame.Business.Game
+namespace TileGame.Business.Game.HubContext
 {
-    public class GameHub : Hub, IGameHub
+    public class GameHub : Hub
     {
         IMediator _mediator;
 
@@ -55,21 +55,6 @@ namespace TileGame.Business.Game
         public void Move(Move move)
         {
             //_gameManager.Move(move, Context.User.Identity.Name, Context.ConnectionId);
-        }
-
-        public async Task SendStatus(string connectionId, ConnectionStatus status)
-        {
-            await Clients.Client(connectionId).SendAsync("SetStatus", status);
-        }
-
-        public async Task SendStartGame(string connectionId, char[] puzzle, IEnumerable<string> wordList)
-        {
-            await Clients.Client(connectionId).SendAsync("SetStatus", puzzle, wordList);
-        }
-
-        public async Task SendWinNotification(User user)
-        {
-            throw new NotImplementedException();
         }
     }
 }

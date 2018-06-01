@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.SignalR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TileGame.Business.Game.HubContext;
 using TileGame.Business.Models;
 using static TileGame.Business.Enums;
 
@@ -10,13 +12,13 @@ namespace TileGame.Business.Game
     public class GameManager : IGameManager
     {
         private readonly IGameData _gameData;
-        private readonly IGameHub _gameHub;
+        private readonly IGameHubContext _gameHubContext;
         private readonly IMoveHandlerFactory _moveHandlerFactory;
 
-        public GameManager(IGameData gameData, IGameHub gameHub, IMoveHandlerFactory moveHandlerFactory)
+        public GameManager(IGameData gameData, IGameHubContext gameHubContext, IMoveHandlerFactory moveHandlerFactory)
         {
             _gameData = gameData;
-            _gameHub = gameHub;
+            _gameHubContext = gameHubContext;
             _moveHandlerFactory = moveHandlerFactory;
         }
 
@@ -29,9 +31,10 @@ namespace TileGame.Business.Game
             //TODO: Implement another method to ensure completion for all users before game starts
             users.AsParallel().ForAll(async user =>
             {
-                var status = GetConnectionStatus(user.ConnectionId, connection);
+                var status = GetConnectionStatus(connectionId, connection);
 
-                await _gameHub.SendStatus(user.ConnectionId, status);
+                await _gameHubContext.SendStatus(connectionId, status);
+
             });
 
             TryStartGame(connection, wordLength);
@@ -57,7 +60,7 @@ namespace TileGame.Business.Game
 
             users.AsParallel().ForAll(async user =>
             {
-                await _gameHub.SendStartGame(user.ConnectionId, user.Puzzle, wordList);
+                await _gameHubContext.SendStartGame(user.ConnectionId, user.Puzzle, wordList);
             });
         }
 

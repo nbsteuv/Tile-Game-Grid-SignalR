@@ -1,4 +1,5 @@
-﻿using TileGame.Business.Models;
+﻿using TileGame.Business.Game.HubContext;
+using TileGame.Business.Models;
 
 namespace TileGame.Business.Game.MoveHandlers
 {
@@ -6,20 +7,20 @@ namespace TileGame.Business.Game.MoveHandlers
     {
         private readonly Connection _connection;
         private readonly User _user;
-        private readonly IGameHub _gameHub;
+        private readonly IGameHubContext _gameHubContext;
 
-        public SingleGameMoveHandler(Connection connection, User user, IGameHub gameHub)
+        public SingleGameMoveHandler(Connection connection, User user, IGameHubContext gameHubContext)
         {
             _connection = connection;
             _user = user;
-            _gameHub = gameHub;
+            _gameHubContext = gameHubContext;
         }
 
         public void HandleMove(Move move)
         {
             if (IsWinningMove())
             {
-                _gameHub.SendWinNotification(_user);
+                _gameHubContext.SendWinNotification(_user);
             }
         }
 
