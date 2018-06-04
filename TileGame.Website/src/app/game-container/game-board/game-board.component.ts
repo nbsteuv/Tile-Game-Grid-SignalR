@@ -19,6 +19,7 @@ export class GameBoardComponent implements OnInit{
     positionArray: Position[] = [];
     tileArray: Tile[] = [];
     puzzleKey: string[] = [];
+    lockTiles: boolean = false;
 
     @Input() set puzzleArray(puzzleArray: string[]){
         console.log('Setting puzzle array');
@@ -50,6 +51,10 @@ export class GameBoardComponent implements OnInit{
     }
 
     onTileClick(tileIndex: number): void{
+        if(this.lockTiles){
+            return;
+        }
+
         let emptySpaceTileIndex = this.getEmptySpaceTileIndex();
         let coordinateDifferenceX = Math.abs(this.tileArray[tileIndex].coordinates.x - this.tileArray[emptySpaceTileIndex].coordinates.x);
         let coordinateDifferenceY = Math.abs(this.tileArray[tileIndex].coordinates.y - this.tileArray[emptySpaceTileIndex].coordinates.y);
@@ -147,6 +152,7 @@ export class GameBoardComponent implements OnInit{
                 return;
             }
         }
-        console.log('Browser detects win.');
+        console.log('Browser detects win');
+        this.lockTiles = true;
     }
 }
