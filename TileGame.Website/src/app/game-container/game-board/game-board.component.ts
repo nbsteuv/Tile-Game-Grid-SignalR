@@ -152,7 +152,6 @@ export class GameBoardComponent implements OnInit{
                 return;
             }
         }
-        console.log('Browser detects win');
         this.lockTiles = true;
     }
 }
