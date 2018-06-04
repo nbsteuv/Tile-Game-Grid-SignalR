@@ -28,12 +28,13 @@ export class GameBoardComponent implements OnInit{
     }
 
     ngOnInit(): void{
-        this._puzzleArray.forEach(() => {
+        this._puzzleArray.forEach((character, index) => {
             let coordinateX = this.tileArray.length % (this.gameSize);
             let coordinateY = Math.floor(this.tileArray.length / (this.gameSize));
             let tile = {
                 position: new Position(0, 0),
-                coordinates: new Position(coordinateX, coordinateY)
+                coordinates: new Position(coordinateX, coordinateY),
+                currentPuzzleIndex: index
             }
             this.tileArray.push(tile);
         });
@@ -48,17 +49,36 @@ export class GameBoardComponent implements OnInit{
         let coordinateDifferenceX = Math.abs(this.tileArray[tileIndex].coordinates.x - this.tileArray[emptySpaceTileIndex].coordinates.x);
         let coordinateDifferenceY = Math.abs(this.tileArray[tileIndex].coordinates.y - this.tileArray[emptySpaceTileIndex].coordinates.y);
         if(coordinateDifferenceX + coordinateDifferenceY !== 1){
-            return;
+            // return;
         }
 
-        this.currentPuzzle[emptySpaceTileIndex] = this.currentPuzzle[tileIndex];
-        this.currentPuzzle[tileIndex] = ' ';
+        let currentPuzzleEmptySpaceIndex = this.getCurrentPuzzleEmptySpaceIndex();
+
+        console.log('Empty space index:');
+        console.log(currentPuzzleEmptySpaceIndex);
+        console.log('Tile index:');
+        console.log(this.tileArray[tileIndex].currentPuzzleIndex);
+
+        this.currentPuzzle[currentPuzzleEmptySpaceIndex] = this.currentPuzzle[this.tileArray[tileIndex].currentPuzzleIndex];
+        this.currentPuzzle[this.tileArray[tileIndex].currentPuzzleIndex] = ' ';
+
         console.log('Current puzzle:');
-        console.log(this.currentPuzzle);
+        for(let i = 0; i < this.currentPuzzle.length; i++){
+            console.log(this.currentPuzzle[i]);
+        }
+
         let move = new Move(this.currentPuzzle, tileIndex);
         this.move.emit(move);
 
         this.moveTileToEmptySpace(tileIndex);
+    }
+
+    getCurrentPuzzleEmptySpaceIndex(): number{
+        for(let i = 0; i < this.currentPuzzle.length; i++){
+            if(this.currentPuzzle[i] === ' '){
+                return i;
+            }
+        }
     }
 
     getGridStyle(): object{
@@ -77,6 +97,8 @@ export class GameBoardComponent implements OnInit{
     }
 
     getEmptySpaceTileIndex(): number{
+        //TODO: It's confusing to keep track of multiple types of indexes (animation and current puzzle state)
+        //Should be solved in the DDD rewrite
         let emptySpaceTileIndex = this.tileArray.length - 1;
         return emptySpaceTileIndex;
     }
@@ -100,7 +122,8 @@ export class GameBoardComponent implements OnInit{
     setTile(tileIndex: number, tile: Tile): void{
         let newTile = {
             position: new Position(tile.position.x, tile.position.y),
-            coordinates: new Position(tile.coordinates.x, tile.coordinates.y)
+            coordinates: new Position(tile.coordinates.x, tile.coordinates.y),
+            currentPuzzleIndex: tile.currentPuzzleIndex
         };
         this.tileArray[tileIndex] = newTile;
     }
