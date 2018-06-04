@@ -1,18 +1,22 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import {UserService, ConnectionService} from '../_shared/services';
-import {GameOptions, Move} from '../_shared/types';
-import {GameStatus} from '../_shared/enums';
+import { interval } from 'rxjs';
+
+import { UserService, ConnectionService } from '../_shared/services';
+import { GameOptions, Move } from '../_shared/types';
+import { GameStatus } from '../_shared/enums';
 
 @Component({
     selector: 'nbs-game-container',
     templateUrl: './game-container.component.html'
 })
-export class GameContainerComponent implements OnInit{
+export class GameContainerComponent implements OnInit {
 
     currentGameStatus: GameStatus = GameStatus.NoGame;
     puzzleArray: string[] = [];
     wordList: string[] = [];
+    movingTiles: number = 0;
+    winCondition: boolean = false;
 
     gameStatus = {
         noGame: GameStatus.NoGame,
@@ -22,9 +26,9 @@ export class GameContainerComponent implements OnInit{
         win: GameStatus.Win
     }
 
-    constructor(private userService: UserService, private connectionService: ConnectionService){}
+    constructor(private userService: UserService, private connectionService: ConnectionService) { }
 
-    ngOnInit(): void{
+    ngOnInit(): void {
         this.connectionService.getStatusChanges().subscribe(
             data => {
                 console.log('Status changed to ' + data);
@@ -59,7 +63,7 @@ export class GameContainerComponent implements OnInit{
 
         this.connectionService.getWinConfirmedChanges().subscribe(
             data => {
-                this.currentGameStatus = GameStatus.Win;
+                this.winCondition = true;
             },
             err => {
                 console.log(err);
@@ -67,20 +71,34 @@ export class GameContainerComponent implements OnInit{
         )
     }
 
-    logout(): void{
+    logout(): void {
         this.userService.logout().subscribe(data => console.log(data));
     }
 
-    connect(gameOptions: GameOptions): void{
+    connect(gameOptions: GameOptions): void {
         this.connectionService.startConnection(gameOptions);
     }
 
-    onGameOptionsSubmitted(gameOptions: GameOptions){
+    onGameOptionsSubmitted(gameOptions: GameOptions): void {
         this.connect(gameOptions);
     }
 
-    onMove(move: Move){
+    onMove(move: Move): void {
         this.connectionService.move(move);
     }
-    
+
+    onTileStartedMoving(): void {
+        this.movingTiles++;
+    }
+
+    onTileStoppedMoving(): void {
+        this.movingTiles--;
+        //TODO: Put all cosmetic variables like delays and transition speeds into separate constants file for quick adjustment
+        if (this.winCondition && this.movingTiles === 0) {
+            interval(500).subscribe(() => {
+                this.currentGameStatus = GameStatus.Win;
+            });
+        }
+    }
+
 }

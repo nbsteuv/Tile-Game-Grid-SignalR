@@ -2,7 +2,7 @@
     <div class="nbs-game-board" [ngStyle]="getGridStyle()">
         <div class="nbs-tile-pad-container" *ngFor="let character of puzzleArray; let i = index;">
             <div class="nbs-tile-pad">
-                <nbs-game-tile [character]="character" [position]="getTile(i).position" (tilePositionRetrieved)="onTilePositionRetrieved(i, $event)" (tileClicked)="onTileClick(i)"></nbs-game-tile>
+                <nbs-game-tile [character]="character" [position]="getTile(i).position" (tilePositionRetrieved)="onTilePositionRetrieved(i, $event)" (tileClicked)="onTileClick(i)" (tileStartedMoving)="onTileStartedMoving()" (tileStoppedMoving)="onTileStoppedMoving()"></nbs-game-tile>
             </div>
         </div>
     </div>

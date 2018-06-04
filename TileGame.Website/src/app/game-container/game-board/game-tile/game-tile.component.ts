@@ -11,6 +11,8 @@ export class GameTileComponent implements OnInit{
     @Input() character: string;
     @Output() tilePositionRetrieved: EventEmitter<Position> = new EventEmitter<Position>();
     @Output() tileClicked: EventEmitter<void> = new EventEmitter<void>();
+    @Output() tileStartedMoving: EventEmitter<void> = new EventEmitter<void>();
+    @Output() tileStoppedMoving: EventEmitter<void> = new EventEmitter<void>();
 
     @ViewChild('tile') tile;
     animationPlayer: AnimationPlayer;
@@ -52,6 +54,7 @@ export class GameTileComponent implements OnInit{
         ]);
 
         this.isMoving = true;
+        this.tileStartedMoving.emit();
 
         this.animationPlayer = factory.create(this.tile.nativeElement, {});
         this.animationPlayer.onDone(() => {
@@ -59,6 +62,7 @@ export class GameTileComponent implements OnInit{
             this.translateX = translateX + 'px';
             this.translateY = translateY + 'px';
             this.isMoving = false;
+            this.tileStoppedMoving.emit();
         })
         this.animationPlayer.play();
     }

@@ -12,6 +12,8 @@ export class GamePlayerComponent{
 
     @Input() wordList: string[];
     @Output() move: EventEmitter<Move> = new EventEmitter<Move>();
+    @Output() tileStartedMoving: EventEmitter<void> = new EventEmitter<void>();
+    @Output() tileStoppedMoving: EventEmitter<void> = new EventEmitter<void>();
 
     @Input() set puzzleArray(puzzleArray: string[]){
         this._puzzleArray = puzzleArray;
@@ -28,5 +30,13 @@ export class GamePlayerComponent{
     onMove(move: Move): void{
         this.move.emit(move);
         this.moves = this.moves + 1;
+    }
+
+    onTileStartedMoving(): void{
+        this.tileStartedMoving.emit();
+    }
+
+    onTileStoppedMoving(): void{
+        this.tileStoppedMoving.emit();
     }
 }

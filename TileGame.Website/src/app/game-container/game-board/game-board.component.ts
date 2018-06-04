@@ -12,6 +12,8 @@ export class GameBoardComponent implements OnInit{
 
     @Input() gameSize: number;
     @Output() move: EventEmitter<Move> = new EventEmitter<Move>();
+    @Output() tileStartedMoving: EventEmitter<void> = new EventEmitter<void>();
+    @Output() tileStoppedMoving: EventEmitter<void> = new EventEmitter<void>();
 
     positionArray: Position[] = [];
 
@@ -54,18 +56,8 @@ export class GameBoardComponent implements OnInit{
 
         let currentPuzzleEmptySpaceIndex = this.getCurrentPuzzleEmptySpaceIndex();
 
-        console.log('Empty space index:');
-        console.log(currentPuzzleEmptySpaceIndex);
-        console.log('Tile index:');
-        console.log(this.tileArray[tileIndex].currentPuzzleIndex);
-
         this.currentPuzzle[currentPuzzleEmptySpaceIndex] = this.currentPuzzle[this.tileArray[tileIndex].currentPuzzleIndex];
         this.currentPuzzle[this.tileArray[tileIndex].currentPuzzleIndex] = ' ';
-
-        console.log('Current puzzle:');
-        for(let i = 0; i < this.currentPuzzle.length; i++){
-            console.log(this.currentPuzzle[i]);
-        }
 
         let move = new Move(this.currentPuzzle, tileIndex);
         this.move.emit(move);
@@ -126,5 +118,13 @@ export class GameBoardComponent implements OnInit{
             currentPuzzleIndex: tile.currentPuzzleIndex
         };
         this.tileArray[tileIndex] = newTile;
+    }
+
+    onTileStartedMoving(): void{
+        this.tileStartedMoving.emit();
+    }
+
+    onTileStoppedMoving(): void{
+        this.tileStoppedMoving.emit();
     }
 }
