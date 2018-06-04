@@ -13,4 +13,8 @@
 
     <div *ngIf="currentGameStatus == gameStatus.watching">Testing watching</div>
 
+    <div *ngIf="currentGameStatus == gameStatus.win">
+        <nbs-win-screen></nbs-win-screen>
+    </div>
+
 </div>

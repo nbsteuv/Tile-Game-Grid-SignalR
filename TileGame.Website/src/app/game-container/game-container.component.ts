@@ -18,7 +18,8 @@ export class GameContainerComponent implements OnInit{
         noGame: GameStatus.NoGame,
         ready: GameStatus.Ready,
         waiting: GameStatus.Waiting,
-        watching: GameStatus.Watching
+        watching: GameStatus.Watching,
+        win: GameStatus.Win
     }
 
     constructor(private userService: UserService, private connectionService: ConnectionService){}
@@ -50,6 +51,15 @@ export class GameContainerComponent implements OnInit{
                 console.log('Word list:');
                 console.log(data);
                 this.wordList = data;
+            },
+            err => {
+                console.log(err);
+            }
+        )
+
+        this.connectionService.getWinConfirmedChanges().subscribe(
+            data => {
+                this.currentGameStatus = GameStatus.Win;
             },
             err => {
                 console.log(err);

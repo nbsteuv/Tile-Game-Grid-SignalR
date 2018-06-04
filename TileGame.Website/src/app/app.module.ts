@@ -18,6 +18,7 @@ import {MenuComponent} from './game-container/menu/menu.component';
 import {GameBoardComponent} from './game-container/game-board/game-board.component';
 import {GameTileComponent} from './game-container/game-board/game-tile/game-tile.component';
 import {GamePlayerComponent} from './game-container/game-player/game-player.component';
+import {WinScreenComponent} from './game-container/win-screen/win-screen.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import {GamePlayerComponent} from './game-container/game-player/game-player.comp
     MenuComponent,
     GameTileComponent,
     GameBoardComponent,
-    GamePlayerComponent
+    GamePlayerComponent,
+    WinScreenComponent
   ],
   imports: [
     BrowserModule,
