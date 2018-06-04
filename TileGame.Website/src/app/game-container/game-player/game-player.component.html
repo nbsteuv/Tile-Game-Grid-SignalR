@@ -12,7 +12,7 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-sm-12 col-md-7 col-lg-6">
-            <nbs-game-board [puzzleArray]="puzzleArray" [gameSize]="getGameSize()" (move)="onMove($event)" (tileStartedMoving)="onTileStartedMoving()" (tileStoppedMoving)="onTileStoppedMoving()"></nbs-game-board>
+            <nbs-game-board [puzzleArray]="puzzleArray" [gameSize]="getGameSize()" [wordList]="wordList" (move)="onMove($event)" (tileStartedMoving)="onTileStartedMoving()" (tileStoppedMoving)="onTileStoppedMoving()"></nbs-game-board>
         </div>
     </div>
 </div>

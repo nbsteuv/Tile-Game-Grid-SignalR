@@ -11,13 +11,14 @@ export class GameBoardComponent implements OnInit{
     private currentPuzzle: string[] = [];
 
     @Input() gameSize: number;
+    @Input() wordList: string[];
     @Output() move: EventEmitter<Move> = new EventEmitter<Move>();
     @Output() tileStartedMoving: EventEmitter<void> = new EventEmitter<void>();
     @Output() tileStoppedMoving: EventEmitter<void> = new EventEmitter<void>();
 
     positionArray: Position[] = [];
-
     tileArray: Tile[] = [];
+    puzzleKey: string[] = [];
 
     @Input() set puzzleArray(puzzleArray: string[]){
         console.log('Setting puzzle array');
@@ -30,6 +31,8 @@ export class GameBoardComponent implements OnInit{
     }
 
     ngOnInit(): void{
+        this.puzzleKey = this.createKey(this.wordList);
+
         this._puzzleArray.forEach((character, index) => {
             let coordinateX = this.tileArray.length % (this.gameSize);
             let coordinateY = Math.floor(this.tileArray.length / (this.gameSize));
@@ -58,6 +61,8 @@ export class GameBoardComponent implements OnInit{
 
         this.currentPuzzle[currentPuzzleEmptySpaceIndex] = this.currentPuzzle[this.tileArray[tileIndex].currentPuzzleIndex];
         this.currentPuzzle[this.tileArray[tileIndex].currentPuzzleIndex] = ' ';
+
+        this.checkPuzzle();
 
         let move = new Move(this.currentPuzzle, tileIndex);
         this.move.emit(move);
@@ -126,5 +131,22 @@ export class GameBoardComponent implements OnInit{
 
     onTileStoppedMoving(): void{
         this.tileStoppedMoving.emit();
+    }
+
+    createKey(wordList: string[]): string[] {
+        var wordString = wordList.join('').replace(/\s/g, '');
+        var key = wordString.split('');
+        key.push(' ');
+        return key;
+    }
+
+    checkPuzzle(): void {
+        //Detect win here to freeze the browser until server confirms
+        for(let i = 0; i < this.currentPuzzle.length; i++){
+            if(this.currentPuzzle[i] !== this.puzzleKey[i]){
+                return;
+            }
+        }
+        console.log('Browser detects win.');
     }
 }
