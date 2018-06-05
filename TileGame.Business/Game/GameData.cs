@@ -47,10 +47,13 @@ namespace TileGame.Business.Game
                 if(requestedConnection.Players.Count == 1 && requestedConnection.Multiplayer == true)
                 {
                     requestedConnection.Players.Add(user);
-                } else
+                }
+                else
                 {
                     requestedConnection.Watchers.Add(user);
                 }
+
+                _users.Add(user);
 
                 return requestedConnection;
             }
@@ -62,6 +65,8 @@ namespace TileGame.Business.Game
                 var waitingConnection = _connections.First(connection => connection.Players.Count == 1);
 
                 waitingConnection.Players.Add(user);
+
+                _users.Add(user);
 
                 return waitingConnection;
             }
