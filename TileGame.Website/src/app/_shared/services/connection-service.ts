@@ -91,6 +91,7 @@ export class ConnectionService {
     }
 
     startGame(puzzleArray: string[], wordList: string[]): void{
+        this.setStatus(GameStatus.Ready);
         this.puzzleSource.next(puzzleArray);
         this.wordListSource.next(wordList);
     }
