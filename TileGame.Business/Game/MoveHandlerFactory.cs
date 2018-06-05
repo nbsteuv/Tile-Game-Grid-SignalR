@@ -10,7 +10,14 @@ namespace TileGame.Business.Game
         {
             IMoveHandler moveHandler;
 
-            moveHandler = new SingleGameMoveHandler(connection, user, gameHubContext);
+            if (connection.Multiplayer)
+            {
+                moveHandler = new MultiplayerGameMoveHandler(connection, user, gameHubContext);
+            }
+            else
+            {
+                moveHandler = new SingleGameMoveHandler(connection, user, gameHubContext);
+            }
 
             return moveHandler;
         }
