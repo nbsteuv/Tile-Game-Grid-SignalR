@@ -4,7 +4,7 @@ import { interval } from 'rxjs';
 
 import { UserService, ConnectionService } from '../_shared/services';
 import { GameOptions, Move } from '../_shared/types';
-import { GameStatus } from '../_shared/enums';
+import { GameStatus, GameType } from '../_shared/enums';
 
 @Component({
     selector: 'nbs-game-container',
@@ -14,6 +14,7 @@ export class GameContainerComponent implements OnInit {
 
     currentGameStatus: GameStatus = GameStatus.NoGame;
     playerGameStatus: GameStatus = GameStatus.NoGame;
+    currentGameType: GameType = GameType.Single;
     puzzleArray: string[] = [];
     wordList: string[] = [];
     movingTiles: number = 0;
@@ -93,6 +94,7 @@ export class GameContainerComponent implements OnInit {
     }
 
     onGameOptionsSubmitted(gameOptions: GameOptions): void {
+        this.currentGameType = gameOptions.gameType;
         this.connect(gameOptions);
     }
 

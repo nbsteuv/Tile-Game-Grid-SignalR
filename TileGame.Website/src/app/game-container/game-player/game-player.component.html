@@ -1,7 +1,10 @@
 <div *ngIf="currentGameStatus == gameStatus.ready" class="container">
     <div class="row justify-content-center">
-        <div class="col-4 col-sm-3 nbs-center">
+        <div *ngIf="currentGameType == gameType.single" class="col-4 col-sm-3 nbs-center">
             <nbs-move-counter [moves]="moves"></nbs-move-counter>
+        </div>
+        <div *ngIf="currentGameType == gameType.race" class="col-4 col-sm-3 nbs-center">
+            <nbs-game-board [puzzleArray]="puzzleArray" [gameSize]="getGameSize()" [wordList]="wordList"></nbs-game-board>
         </div>
         <div class="col-4 col-sm-6">
             <nbs-word-display [wordList]="wordList"></nbs-word-display>
