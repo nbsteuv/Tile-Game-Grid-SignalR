@@ -1,4 +1,4 @@
-<div class="container">
+<div *ngIf="currentGameStatus == gameStatus.ready" class="container">
     <div class="row justify-content-center">
         <div class="col-4 col-sm-3 nbs-center">
             <nbs-move-counter [moves]="moves"></nbs-move-counter>
@@ -15,4 +15,12 @@
             <nbs-game-board [puzzleArray]="puzzleArray" [gameSize]="getGameSize()" [wordList]="wordList" (move)="onMove($event)" (tileStartedMoving)="onTileStartedMoving()" (tileStoppedMoving)="onTileStoppedMoving()"></nbs-game-board>
         </div>
     </div>
+</div>
+
+<div *ngIf="currentGameStatus == gameStatus.win">
+    <nbs-win-screen></nbs-win-screen>
+</div>
+
+<div *ngIf="currentGameStatus == gameStatus.lose">
+    <nbs-lose-screen></nbs-lose-screen>
 </div>

@@ -13,6 +13,7 @@ import { GameStatus } from '../_shared/enums';
 export class GameContainerComponent implements OnInit {
 
     currentGameStatus: GameStatus = GameStatus.NoGame;
+    playerGameStatus: GameStatus = GameStatus.NoGame;
     puzzleArray: string[] = [];
     wordList: string[] = [];
     movingTiles: number = 0;
@@ -34,6 +35,7 @@ export class GameContainerComponent implements OnInit {
             data => {
                 console.log('Status changed to ' + data);
                 this.currentGameStatus = data;
+                this.playerGameStatus = data;
             },
             err => {
                 console.log(err);
@@ -74,7 +76,7 @@ export class GameContainerComponent implements OnInit {
         this.connectionService.getPlayerWinChanges().subscribe(
             data => {
                 console.log(data);
-                this.currentGameStatus = GameStatus.Lose
+                this.playerGameStatus = GameStatus.Lose
             },
             err => {
                 console.log(err);
@@ -107,7 +109,7 @@ export class GameContainerComponent implements OnInit {
         //TODO: Put all cosmetic variables like delays and transition speeds into separate constants file for quick adjustment
         if (this.winCondition && this.movingTiles === 0) {
             interval(500).subscribe(() => {
-                this.currentGameStatus = GameStatus.Win;
+                this.playerGameStatus = GameStatus.Win;
             });
         }
     }
