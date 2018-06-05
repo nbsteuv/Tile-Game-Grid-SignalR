@@ -17,4 +17,8 @@
         <nbs-win-screen></nbs-win-screen>
     </div>
 
+    <div *ngIf="currentGameStatus == gameStatus.lose">
+        <nbs-lose-screen></nbs-lose-screen>
+    </div>
+
 </div>
