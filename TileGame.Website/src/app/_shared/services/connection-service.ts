@@ -17,6 +17,7 @@ export class ConnectionService {
     private puzzleSource: Subject<string[]> = new Subject<string[]>();
     private wordListSource: Subject<string[]> = new Subject<string[]>();
     private winConfirmedSource: Subject<void> = new Subject<void>();
+    private playerWinSource: Subject<string> = new Subject<string>();
 
     constructor(@Inject(SIGNALR_TOKEN) private signalR: any) {
         this.init();
@@ -40,6 +41,11 @@ export class ConnectionService {
         this.hubConnection.on('WinConfirmed', () => {
             console.log('You win');
             this.winConfirmed();
+        });
+
+        this.hubConnection.on('PlayerWin', username => {
+            console.log('Other player win');
+            this.playerWin(username);
         });
     }
 
@@ -76,6 +82,10 @@ export class ConnectionService {
         return this.winConfirmedSource;
     }
 
+    getPlayerWinChanges(): Subject<string>{
+        return this.playerWinSource;
+    }
+
     setStatus(status: GameStatus): void{
         this.statusSource.next(status);
     }
@@ -87,6 +97,10 @@ export class ConnectionService {
 
     winConfirmed(): void {
         this.winConfirmedSource.next();
+    }
+
+    playerWin(username: string){
+        this.playerWinSource.next(username);
     }
 
 }

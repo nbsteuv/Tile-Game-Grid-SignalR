@@ -23,7 +23,8 @@ export class GameContainerComponent implements OnInit {
         ready: GameStatus.Ready,
         waiting: GameStatus.Waiting,
         watching: GameStatus.Watching,
-        win: GameStatus.Win
+        win: GameStatus.Win,
+        lose: GameStatus.Lose
     }
 
     constructor(private userService: UserService, private connectionService: ConnectionService) { }
@@ -64,6 +65,16 @@ export class GameContainerComponent implements OnInit {
         this.connectionService.getWinConfirmedChanges().subscribe(
             data => {
                 this.winCondition = true;
+            },
+            err => {
+                console.log(err);
+            }
+        )
+
+        this.connectionService.getPlayerWinChanges().subscribe(
+            data => {
+                console.log(data);
+                this.currentGameStatus = GameStatus.Lose
             },
             err => {
                 console.log(err);

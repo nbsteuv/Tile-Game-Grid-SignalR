@@ -19,6 +19,7 @@ import {GameBoardComponent} from './game-container/game-board/game-board.compone
 import {GameTileComponent} from './game-container/game-board/game-tile/game-tile.component';
 import {GamePlayerComponent} from './game-container/game-player/game-player.component';
 import {WinScreenComponent} from './game-container/win-screen/win-screen.component';
+import {LoseScreenComponent} from './game-container/lose-screen/lose-screen.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import {WinScreenComponent} from './game-container/win-screen/win-screen.compone
     GameTileComponent,
     GameBoardComponent,
     GamePlayerComponent,
-    WinScreenComponent
+    WinScreenComponent,
+    LoseScreenComponent
   ],
   imports: [
     BrowserModule,

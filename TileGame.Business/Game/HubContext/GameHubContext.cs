@@ -27,9 +27,14 @@ namespace TileGame.Business.Game.HubContext
             await _gameHubContext.Clients.Client(connectionId).SendAsync("StartGame", puzzle, wordList);
         }
 
-        public async Task SendWinNotification(string connectionId)
+        public async Task SendWinConfirmedNotification(string connectionId)
         {
             await _gameHubContext.Clients.Client(connectionId).SendAsync("WinConfirmed");
+        }
+
+        public async Task SendPlayerWinNotification(string connectionId, string username)
+        {
+            await _gameHubContext.Clients.Client(connectionId).SendAsync("PlayerWin", username);
         }
     }
 }
