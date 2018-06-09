@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef, ViewChild, ElementRef} from '@angular/core';
 import {AnimationBuilder, AnimationPlayer, style, animate} from '@angular/animations';
 
 import {Position} from '../../../_shared/types';
@@ -7,7 +7,7 @@ import {Position} from '../../../_shared/types';
     selector: 'nbs-game-tile',
     templateUrl: './game-tile.component.html'
 })
-export class GameTileComponent implements OnInit{
+export class GameTileComponent implements OnInit, AfterViewInit{
     @Input() character: string;
     @Output() tilePositionRetrieved: EventEmitter<Position> = new EventEmitter<Position>();
     @Output() tileClicked: EventEmitter<void> = new EventEmitter<void>();
@@ -18,13 +18,15 @@ export class GameTileComponent implements OnInit{
     animationPlayer: AnimationPlayer;
     private _position: Position;
 
+    fontSize: string = '';
     translateX: string = '';
     translateY: string = '';
     isMoving: boolean = false;
 
-    constructor(private elementRef: ElementRef, private animationBuilder: AnimationBuilder){}
+    constructor(private elementRef: ElementRef, private changeDectectorRef: ChangeDetectorRef, private animationBuilder: AnimationBuilder){}
 
-    ngOnInit(){
+    ngOnInit(): void {
+        // Register position with parent container
         let rect = this.elementRef.nativeElement.getBoundingClientRect();
         let position: Position = {
             x: rect.left,
@@ -32,6 +34,17 @@ export class GameTileComponent implements OnInit{
         };
         this._position = position;
         this.tilePositionRetrieved.emit(position);
+    }
+
+    ngAfterViewInit(): void {
+        if(!this.tile){
+            return;
+        }
+        // Set font size relative to tile width -- need to get tile component, since Angular element doesn't have dimensions
+        let tileRect = this.elementRef.nativeElement.children[0].getBoundingClientRect();
+        let tileHeight = tileRect.height;
+        this.fontSize = `${tileHeight / 2}px`;
+        this.changeDectectorRef.detectChanges();
     }
 
     @Input() set position(position: Position){
@@ -67,7 +80,7 @@ export class GameTileComponent implements OnInit{
         this.animationPlayer.play();
     }
 
-    onTileClick(){
+    onTileClick(): void {
         if(this.isMoving){
             return;
         }
