@@ -9,6 +9,7 @@ namespace TileGame.Business.Game.HubContext
     {
         Task SendStatus(string connectionId, ConnectionStatus status);
         Task SendStartGame(string connectionId, char[] puzzle, IEnumerable<string> wordList);
+        Task SendPlayerMove(string connectionId, Move move);
         Task SendWinConfirmedNotification(string connectionId);
         Task SendPlayerWinNotification(string connectionId, string username);
     }

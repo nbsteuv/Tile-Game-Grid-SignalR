@@ -15,6 +15,7 @@ export class GameContainerComponent implements OnInit {
     currentGameStatus: GameStatus = GameStatus.NoGame;
     playerGameStatus: GameStatus = GameStatus.NoGame;
     currentGameType: GameType = GameType.Single;
+    incomingMove: Move;
     puzzleArray: string[] = [];
     wordList: string[] = [];
     movingTiles: number = 0;
@@ -41,7 +42,7 @@ export class GameContainerComponent implements OnInit {
             err => {
                 console.log(err);
             }
-        )
+        );
 
         this.connectionService.getPuzzleChanges().subscribe(
             data => {
@@ -52,13 +53,22 @@ export class GameContainerComponent implements OnInit {
             err => {
                 console.log(err);
             }
-        )
+        );
 
         this.connectionService.getWordListChanges().subscribe(
             data => {
                 console.log('Word list:');
                 console.log(data);
                 this.wordList = data;
+            },
+            err => {
+                console.log(err);
+            }
+        );
+
+        this.connectionService.getPlayerMoveChanges().subscribe(
+            data => {
+                this.incomingMove = data;
             },
             err => {
                 console.log(err);
@@ -72,7 +82,7 @@ export class GameContainerComponent implements OnInit {
             err => {
                 console.log(err);
             }
-        )
+        );
 
         this.connectionService.getPlayerWinChanges().subscribe(
             data => {
@@ -82,7 +92,7 @@ export class GameContainerComponent implements OnInit {
             err => {
                 console.log(err);
             }
-        )
+        );
     }
 
     logout(): void {

@@ -18,6 +18,16 @@ namespace TileGame.Business.Game.MoveHandlers
 
         public void HandleMove(Move move)
         {
+            move.Username = _user.Username;
+
+            foreach(var user in _connection.Players)
+            {
+                if(user.ConnectionId != _user.ConnectionId)
+                {
+                    _gameHubContext.SendPlayerMove(user.ConnectionId, move);
+                }
+            }
+
             if (IsWinningMove())
             {
                 _gameHubContext.SendWinConfirmedNotification(_user.ConnectionId);
