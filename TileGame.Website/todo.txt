@@ -2,3 +2,6 @@ Todos:
 
 -Refactor with domain driven design (especially game setup on server end)
 -Refactor using Bootstrap 4 utility classes for flexbox effects
+-Store game data in the database rather than in memory
+-Database cleanup when player leaves game
+-Fix extra space in word list

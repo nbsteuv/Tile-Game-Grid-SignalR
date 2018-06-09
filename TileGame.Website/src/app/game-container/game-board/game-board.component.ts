@@ -12,6 +12,7 @@ export class GameBoardComponent implements OnInit{
 
     @Input() gameSize: number;
     @Input() wordList: string[];
+    @Input() clickDisabled: boolean;
     @Output() move: EventEmitter<Move> = new EventEmitter<Move>();
     @Output() tileStartedMoving: EventEmitter<void> = new EventEmitter<void>();
     @Output() tileStoppedMoving: EventEmitter<void> = new EventEmitter<void>();
@@ -51,7 +52,7 @@ export class GameBoardComponent implements OnInit{
     }
 
     onTileClick(tileIndex: number): void{
-        if(this.lockTiles){
+        if(this.lockTiles || this.clickDisabled){
             return;
         }
 
