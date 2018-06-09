@@ -1,1 +1,1 @@
-A multiplayer tile puzzle game using Grid CSS and SignalR
+A multiplayer tile puzzle game using SignalR
