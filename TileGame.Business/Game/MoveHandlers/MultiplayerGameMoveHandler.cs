@@ -18,13 +18,13 @@ namespace TileGame.Business.Game.MoveHandlers
 
         public void HandleMove(Move move)
         {
-            move.Username = _user.Username;
+            _user.MoveHistory.Add(move.MovedTileIndex);
 
             foreach(var user in _connection.Players)
             {
                 if(user.ConnectionId != _user.ConnectionId)
                 {
-                    _gameHubContext.SendPlayerMove(user.ConnectionId, move);
+                    _gameHubContext.SendPlayerMove(user.ConnectionId, _user.MoveHistory);
                 }
             }
 

@@ -153,6 +153,7 @@ namespace TileGame.Business.Game
         {
             var user = _gameData.GetUser(connectionId, username);
 
+            //TODO: Build user's puzzle based on most recent move--this is a security vulnerability
             user.Puzzle = move.CurrentPuzzle;
 
             var connection = _gameData.GetConnectionByPlayer(user);

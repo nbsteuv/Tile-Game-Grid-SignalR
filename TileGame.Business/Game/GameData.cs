@@ -26,7 +26,8 @@ namespace TileGame.Business.Game
             var user = new User
             {
                 Username = username,
-                ConnectionId = connectionId
+                ConnectionId = connectionId,
+                MoveHistory = new List<int>()
             };
 
             if(_connections.Any(connection => connection.Players.Any(player => player.ConnectionId == connectionId)))

@@ -17,6 +17,7 @@ export class GameBoardComponent implements OnInit {
     @Output() tileStartedMoving: EventEmitter<void> = new EventEmitter<void>();
     @Output() tileStoppedMoving: EventEmitter<void> = new EventEmitter<void>();
 
+    moveIndex = 0;
     positionArray: Position[] = [];
     tileArray: Tile[] = [];
     puzzleKey: string[] = [];
@@ -32,9 +33,13 @@ export class GameBoardComponent implements OnInit {
         return this._puzzleArray;
     }
 
-    @Input() set incomingMove(move: Move) {
-        if (move) {
-            this.moveTileToEmptySpace(move.movedTileIndex);
+    @Input() set incomingMove(moveHistory: number[]) {
+        if (moveHistory) {
+            while(moveHistory.length > this.moveIndex){
+                this.moveTileToEmptySpace(moveHistory[this.moveIndex]);
+                this.moveIndex++;
+            }
+            
         }
     }
 

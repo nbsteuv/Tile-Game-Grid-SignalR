@@ -16,7 +16,7 @@ export class ConnectionService {
     private statusSource: Subject<GameStatus> = new Subject<GameStatus>();
     private puzzleSource: Subject<string[]> = new Subject<string[]>();
     private wordListSource: Subject<string[]> = new Subject<string[]>();
-    private playerMoveSource: Subject<Move> = new Subject<Move>();
+    private playerMoveSource: Subject<number[]> = new Subject<number[]>();
     private winConfirmedSource: Subject<void> = new Subject<void>();
     private playerWinSource: Subject<string> = new Subject<string>();
 
@@ -39,9 +39,9 @@ export class ConnectionService {
             this.startGame(puzzleArray, wordList);
         });
 
-        this.hubConnection.on('PlayerMove', (move) => {
+        this.hubConnection.on('PlayerMove', (moveHistory) => {
             console.log('Player move');
-            this.playerMove(move);
+            this.playerMove(moveHistory);
         })
 
         this.hubConnection.on('WinConfirmed', () => {
@@ -84,7 +84,7 @@ export class ConnectionService {
         return this.wordListSource;
     }
 
-    getPlayerMoveChanges(): Subject<Move>{
+    getPlayerMoveChanges(): Subject<number[]>{
         return this.playerMoveSource;
     }
 
@@ -106,8 +106,8 @@ export class ConnectionService {
         this.wordListSource.next(wordList);
     }
 
-    playerMove(move: Move): void{
-        this.playerMoveSource.next(move);
+    playerMove(moveHistory: number[]): void{
+        this.playerMoveSource.next(moveHistory);
     }
 
     winConfirmed(): void {

@@ -25,7 +25,7 @@ export class GamePlayerComponent {
     @Input() wordList: string[];
     @Input() currentGameStatus: GameStatus;
     @Input() currentGameType: GameType;
-    @Input() incomingMove: Move;
+    @Input() incomingMove: number[];
     @Output() move: EventEmitter<Move> = new EventEmitter<Move>();
     @Output() tileStartedMoving: EventEmitter<void> = new EventEmitter<void>();
     @Output() tileStoppedMoving: EventEmitter<void> = new EventEmitter<void>();

@@ -15,7 +15,7 @@ export class GameContainerComponent implements OnInit {
     currentGameStatus: GameStatus = GameStatus.NoGame;
     playerGameStatus: GameStatus = GameStatus.NoGame;
     currentGameType: GameType = GameType.Single;
-    incomingMove: Move;
+    incomingMove: number[];
     puzzleArray: string[] = [];
     wordList: string[] = [];
     movingTiles: number = 0;

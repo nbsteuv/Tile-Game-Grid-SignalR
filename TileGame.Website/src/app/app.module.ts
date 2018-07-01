@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {HttpClientModule, HttpClient} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 import {AuthorizationModule} from './authorization/authorization.module';
@@ -20,6 +20,7 @@ import {GameTileComponent} from './game-container/game-board/game-tile/game-tile
 import {GamePlayerComponent} from './game-container/game-player/game-player.component';
 import {WinScreenComponent} from './game-container/win-screen/win-screen.component';
 import {LoseScreenComponent} from './game-container/lose-screen/lose-screen.component';
+import {GameWatcherComponent} from './game-container/game-watcher/game-watcher.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import {LoseScreenComponent} from './game-container/lose-screen/lose-screen.comp
     GameBoardComponent,
     GamePlayerComponent,
     WinScreenComponent,
-    LoseScreenComponent
+    LoseScreenComponent,
+    GameWatcherComponent
   ],
   imports: [
     BrowserModule,
