@@ -18,6 +18,7 @@ export class GameContainerComponent implements OnInit {
     incomingMove: number[];
     puzzleArray: string[] = [];
     wordList: string[] = [];
+    playerList: string[] = [];
     movingTiles: number = 0;
     winCondition: boolean = false;
 
@@ -65,6 +66,17 @@ export class GameContainerComponent implements OnInit {
                 console.log(err);
             }
         );
+        
+        this.connectionService.getPlayerListChanges().subscribe(
+            data => {
+                console.log('Player list:');
+                console.log(data);
+                this.playerList = data;
+            },
+            err => {
+                console.log(err);
+            }
+        )
 
         this.connectionService.getPlayerMoveChanges().subscribe(
             data => {

@@ -5,7 +5,7 @@ import {SIGNALR_TOKEN} from './signalr-provider'
 import {HubConnection} from '@aspnet/signalr';
 import {environment} from '../../../environments/environment';
 
-import {GameOptions, Move} from '../types';
+import {GameOptions, Move, GameSetup} from '../types';
 import {GameStatus} from '../enums';
 
 @Injectable()
@@ -16,6 +16,7 @@ export class ConnectionService {
     private statusSource: Subject<GameStatus> = new Subject<GameStatus>();
     private puzzleSource: Subject<string[]> = new Subject<string[]>();
     private wordListSource: Subject<string[]> = new Subject<string[]>();
+    private playerListSource: Subject<string[]> = new Subject<string[]>();
     private playerMoveSource: Subject<number[]> = new Subject<number[]>();
     private winConfirmedSource: Subject<void> = new Subject<void>();
     private playerWinSource: Subject<string> = new Subject<string>();
@@ -34,9 +35,9 @@ export class ConnectionService {
             this.setStatus(status);
         });
 
-        this.hubConnection.on('StartGame', (puzzleArray, wordList) => {
+        this.hubConnection.on('StartGame', (gameSetup) => {
             console.log('Starting game');
-            this.startGame(puzzleArray, wordList);
+            this.startGame(gameSetup);
         });
 
         this.hubConnection.on('PlayerMove', (moveHistory) => {
@@ -84,6 +85,10 @@ export class ConnectionService {
         return this.wordListSource;
     }
 
+    getPlayerListChanges(): Subject<string[]>{
+        return this.playerListSource;
+    }
+
     getPlayerMoveChanges(): Subject<number[]>{
         return this.playerMoveSource;
     }
@@ -100,10 +105,11 @@ export class ConnectionService {
         this.statusSource.next(status);
     }
 
-    startGame(puzzleArray: string[], wordList: string[]): void{
+    startGame(gameSetup: GameSetup): void{
         this.setStatus(GameStatus.Ready);
-        this.puzzleSource.next(puzzleArray);
-        this.wordListSource.next(wordList);
+        this.puzzleSource.next(gameSetup.puzzleArray);
+        this.wordListSource.next(gameSetup.wordList);
+        this.playerListSource.next(gameSetup.playerList);
     }
 
     playerMove(moveHistory: number[]): void{

@@ -61,7 +61,14 @@ namespace TileGame.Business.Game
 
             var startGameTasks = users.Select(async user =>
             {
-                await _gameHubContext.SendStartGame(user.ConnectionId, user.Puzzle, wordList);
+                var gameSetup = new GameSetup
+                {
+                    PuzzleArray = user.Puzzle,
+                    WordList = wordList,
+                    PlayerList = connection.Players.Select(player => player.Username)
+                };
+
+                await _gameHubContext.SendStartGame(user.ConnectionId, gameSetup);
             });
 
             await Task.WhenAll(startGameTasks);

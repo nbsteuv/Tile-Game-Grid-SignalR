@@ -22,9 +22,9 @@ namespace TileGame.Business.Game.HubContext
             await _gameHubContext.Clients.Client(connectionId).SendAsync("SetStatus", status);
         }
 
-        public async Task SendStartGame(string connectionId, char[] puzzle, IEnumerable<string> wordList)
+        public async Task SendStartGame(string connectionId, GameSetup gameSetup)
         {
-            await _gameHubContext.Clients.Client(connectionId).SendAsync("StartGame", puzzle, wordList);
+            await _gameHubContext.Clients.Client(connectionId).SendAsync("StartGame", gameSetup);
         }
 
         public async Task SendPlayerMove(string connectionId, List<int> moveHistory)

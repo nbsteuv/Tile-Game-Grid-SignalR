@@ -8,7 +8,7 @@ namespace TileGame.Business.Game.HubContext
     public interface IGameHubContext
     {
         Task SendStatus(string connectionId, ConnectionStatus status);
-        Task SendStartGame(string connectionId, char[] puzzle, IEnumerable<string> wordList);
+        Task SendStartGame(string connectionId, GameSetup gameSetup);
         Task SendPlayerMove(string connectionId, List<int> moveHistory);
         Task SendWinConfirmedNotification(string connectionId);
         Task SendPlayerWinNotification(string connectionId, string username);
