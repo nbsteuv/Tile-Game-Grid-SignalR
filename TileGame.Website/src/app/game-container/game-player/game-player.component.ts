@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-import { Move } from '../../_shared/types';
+import { Move, IncomingMove } from '../../_shared/types';
 import { GameStatus, GameType } from '../../_shared/enums';
 
 @Component({
@@ -25,7 +25,7 @@ export class GamePlayerComponent {
     @Input() wordList: string[];
     @Input() currentGameStatus: GameStatus;
     @Input() currentGameType: GameType;
-    @Input() incomingMove: number[];
+    @Input() incomingMove: IncomingMove;
     @Output() move: EventEmitter<Move> = new EventEmitter<Move>();
     @Output() tileStartedMoving: EventEmitter<void> = new EventEmitter<void>();
     @Output() tileStoppedMoving: EventEmitter<void> = new EventEmitter<void>();

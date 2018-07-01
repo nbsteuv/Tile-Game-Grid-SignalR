@@ -27,9 +27,9 @@ namespace TileGame.Business.Game.HubContext
             await _gameHubContext.Clients.Client(connectionId).SendAsync("StartGame", gameSetup);
         }
 
-        public async Task SendPlayerMove(string connectionId, List<int> moveHistory)
+        public async Task SendPlayerMove(string connectionId, IncomingMove incomingMove)
         {
-            await _gameHubContext.Clients.Client(connectionId).SendAsync("PlayerMove", moveHistory);
+            await _gameHubContext.Clients.Client(connectionId).SendAsync("PlayerMove", incomingMove);
         }
 
         public async Task SendWinConfirmedNotification(string connectionId)

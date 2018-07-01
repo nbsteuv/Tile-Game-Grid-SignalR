@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
-import { Position, Tile, Move } from '../../_shared/types';
+import { Position, Tile, Move, IncomingMove } from '../../_shared/types';
 
 @Component({
     selector: 'nbs-game-board',
@@ -33,10 +33,10 @@ export class GameBoardComponent implements OnInit {
         return this._puzzleArray;
     }
 
-    @Input() set incomingMove(moveHistory: number[]) {
-        if (moveHistory) {
-            while(moveHistory.length > this.moveIndex){
-                this.moveTileToEmptySpace(moveHistory[this.moveIndex]);
+    @Input() set incomingMove(incomingMove: IncomingMove) {
+        if (incomingMove) {
+            while(incomingMove.moveHistory.length > this.moveIndex){
+                this.moveTileToEmptySpace(incomingMove.moveHistory[this.moveIndex]);
                 this.moveIndex++;
             }
             

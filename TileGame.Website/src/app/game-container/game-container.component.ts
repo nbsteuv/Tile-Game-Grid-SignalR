@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { interval } from 'rxjs';
 
 import { UserService, ConnectionService } from '../_shared/services';
-import { GameOptions, Move } from '../_shared/types';
+import { GameOptions, Move, IncomingMove } from '../_shared/types';
 import { GameStatus, GameType } from '../_shared/enums';
 
 @Component({
@@ -15,7 +15,7 @@ export class GameContainerComponent implements OnInit {
     currentGameStatus: GameStatus = GameStatus.NoGame;
     playerGameStatus: GameStatus = GameStatus.NoGame;
     currentGameType: GameType = GameType.Single;
-    incomingMove: number[];
+    incomingMove: IncomingMove;
     puzzleArray: string[] = [];
     wordList: string[] = [];
     playerList: string[] = [];

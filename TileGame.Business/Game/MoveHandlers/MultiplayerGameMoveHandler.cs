@@ -1,4 +1,5 @@
-﻿using TileGame.Business.Game.HubContext;
+﻿using System.Linq;
+using TileGame.Business.Game.HubContext;
 using TileGame.Business.Models;
 
 namespace TileGame.Business.Game.MoveHandlers
@@ -20,11 +21,19 @@ namespace TileGame.Business.Game.MoveHandlers
         {
             _user.MoveHistory.Add(move.MovedTileIndex);
 
-            foreach(var user in _connection.Players)
+            var incomingMove = new IncomingMove
+            {
+                MoveHistory = _user.MoveHistory,
+                Username = _user.Username
+            };
+
+            var users = _connection.Players.Concat(_connection.Watchers);
+
+            foreach(var user in users)
             {
                 if(user.ConnectionId != _user.ConnectionId)
                 {
-                    _gameHubContext.SendPlayerMove(user.ConnectionId, _user.MoveHistory);
+                    _gameHubContext.SendPlayerMove(user.ConnectionId, incomingMove);
                 }
             }
 

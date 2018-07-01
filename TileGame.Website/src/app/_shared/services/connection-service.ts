@@ -5,7 +5,7 @@ import {SIGNALR_TOKEN} from './signalr-provider'
 import {HubConnection} from '@aspnet/signalr';
 import {environment} from '../../../environments/environment';
 
-import {GameOptions, Move, GameSetup} from '../types';
+import {GameOptions, Move, GameSetup, IncomingMove} from '../types';
 import {GameStatus} from '../enums';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class ConnectionService {
     private puzzleSource: Subject<string[]> = new Subject<string[]>();
     private wordListSource: Subject<string[]> = new Subject<string[]>();
     private playerListSource: Subject<string[]> = new Subject<string[]>();
-    private playerMoveSource: Subject<number[]> = new Subject<number[]>();
+    private playerMoveSource: Subject<IncomingMove> = new Subject<IncomingMove>();
     private winConfirmedSource: Subject<void> = new Subject<void>();
     private playerWinSource: Subject<string> = new Subject<string>();
 
@@ -35,14 +35,14 @@ export class ConnectionService {
             this.setStatus(status);
         });
 
-        this.hubConnection.on('StartGame', (gameSetup) => {
+        this.hubConnection.on('StartGame', gameSetup => {
             console.log('Starting game');
             this.startGame(gameSetup);
         });
 
-        this.hubConnection.on('PlayerMove', (moveHistory) => {
+        this.hubConnection.on('PlayerMove', incomingMove => {
             console.log('Player move');
-            this.playerMove(moveHistory);
+            this.playerMove(incomingMove);
         })
 
         this.hubConnection.on('WinConfirmed', () => {
@@ -89,7 +89,7 @@ export class ConnectionService {
         return this.playerListSource;
     }
 
-    getPlayerMoveChanges(): Subject<number[]>{
+    getPlayerMoveChanges(): Subject<IncomingMove>{
         return this.playerMoveSource;
     }
 
@@ -112,8 +112,8 @@ export class ConnectionService {
         this.playerListSource.next(gameSetup.playerList);
     }
 
-    playerMove(moveHistory: number[]): void{
-        this.playerMoveSource.next(moveHistory);
+    playerMove(incomingMove: IncomingMove): void{
+        this.playerMoveSource.next(incomingMove);
     }
 
     winConfirmed(): void {

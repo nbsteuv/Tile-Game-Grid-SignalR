@@ -12,6 +12,7 @@ export class TimerComponent implements OnInit {
     ngOnInit() {
         interval(10).subscribe(
             data => {
+                // TODO: Fix shaking timer by making each character its own block
                 this.time = this.time + 0.01;
             }
         )
