@@ -7,7 +7,7 @@ import { IncomingMove, Player } from '../../_shared/types';
     templateUrl: './game-watcher.component.html'
 })
 export class GameWatcherComponent {
-    private _players: Player[] = [];
+    players: Player[] = [];
 
     @Input() puzzleArray: string[];
     @Input() wordList: string[];
@@ -15,13 +15,6 @@ export class GameWatcherComponent {
     @Input() set incomingMove(incomingMove: IncomingMove) {
 
     }
-
-    @Input() set players(playerList: string[]) {
-        this._players = playerList.map(username => {
-            return { username: username, incomingMove: null }
-        });
-    }
-
 
     getGameSize(): number {
         return this.wordList.length;
