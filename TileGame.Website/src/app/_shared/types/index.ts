@@ -5,3 +5,4 @@ export * from './tile';
 export * from './move';
 export * from './game-setup';
 export * from './incoming-move';
+export * from './player';
