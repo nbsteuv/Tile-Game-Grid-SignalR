@@ -3,7 +3,7 @@
         <li class="nbs-menu-option-container">
             <a href="https://github.com/nbsteuv/Tile-Game-Grid-SignalR" target="_blank" class="text-white">Github</a>
         </li>
-        <li class="nbs-menu-option-container">
+        <li class="nbs-menu-option-container" *ngIf="isLoggedIn()">
             <a routerLink="" class="text-white" (click)="logout()">Logout</a>
         </li>
     </ul>

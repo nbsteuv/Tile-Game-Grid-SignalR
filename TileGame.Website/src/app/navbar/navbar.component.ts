@@ -22,4 +22,8 @@ export class Navbar {
         );
     }
 
+    isLoggedIn(): boolean {
+        return this.userService.isLoggedIn();
+    }
+
 }
