@@ -135,5 +135,12 @@ namespace TileGame.Business.Game
 
             return connection;
         }
+
+        public void EndAllGamesByConnectionId(string connectionId)
+        {
+            var connections = _connections.Where(connection => connection.Players.Any(player => player.ConnectionId == connectionId)).ToList();
+
+            connections.ForEach(connection => _connections.Remove(connection));
+        }
     }
 }

@@ -168,5 +168,10 @@ namespace TileGame.Business.Game
 
             moveHandler.HandleMove(move);
         }
+
+        public void Disconnect(string connectionId)
+        {
+            _gameData.EndAllGamesByConnectionId(connectionId);
+        }
     }
 }

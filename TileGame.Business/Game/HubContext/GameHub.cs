@@ -24,9 +24,14 @@ namespace TileGame.Business.Game.HubContext
             await Clients.Client(Context.ConnectionId).SendAsync("SetStatus", Enums.ConnectionStatus.Waiting);
         }
 
-        public override async Task OnDisconnectedAsync(Exception ex)
+        public override Task OnDisconnectedAsync(Exception ex)
         {
-            await Clients.All.SendAsync("SendAction", Context.User.Identity.Name, "left");
+            _mediator.Send(new DisconnectRequest
+            {
+                ConnectionId = Context.ConnectionId
+            });
+
+            return Task.CompletedTask;
         }
 
         public async Task Send(string message)

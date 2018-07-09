@@ -11,5 +11,6 @@ namespace TileGame.Business.Game
         Connection AddGameToConnection(Connection connection, List<Word> wordList, char[] key);
         User GetUser(string connectionId, string username);
         Connection GetConnectionByPlayer(User user);
+        void EndAllGamesByConnectionId(string connectionId);
     }
 }

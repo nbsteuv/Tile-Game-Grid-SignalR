@@ -9,5 +9,6 @@ namespace TileGame.Business.Game
     {
         Task MakeConnectionAsync(string username, string connectionId, string password, GameType gameType, int wordLength);
         void Move(string username, string connectionId, Move move);
+        void Disconnect(string connectionId);
     }
 }
