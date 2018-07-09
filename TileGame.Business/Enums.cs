@@ -6,7 +6,8 @@
         {
             Ready = 1,
             Waiting,
-            Watching
+            Watching,
+            Disconnected
         }
 
         public enum GameType

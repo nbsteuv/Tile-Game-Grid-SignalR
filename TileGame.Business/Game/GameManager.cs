@@ -171,7 +171,19 @@ namespace TileGame.Business.Game
 
         public void Disconnect(string connectionId)
         {
-            _gameData.EndAllGamesByConnectionId(connectionId);
+            var connections = _gameData.GetAllConnectionsByPlayerConnectionId(connectionId);
+
+            var users = new List<User>();
+
+            connections.ForEach(connection =>
+            {
+                connection.Players.ForEach(player => users.Add(player));
+                connection.Watchers.ForEach(watcher => users.Add(watcher));
+            });
+
+            users.ForEach(user => _gameHubContext.SendStatus(user.ConnectionId, ConnectionStatus.Disconnected));
+
+            _gameData.EndAllGamesByPlayerConnectionId(connectionId);
         }
     }
 }

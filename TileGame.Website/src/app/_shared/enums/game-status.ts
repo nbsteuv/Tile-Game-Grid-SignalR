@@ -3,6 +3,7 @@ export enum GameStatus{
     Ready,
     Waiting,
     Watching,
+    Disconnected,
     Win,
     Lose
 }

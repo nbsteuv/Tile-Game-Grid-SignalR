@@ -27,6 +27,7 @@ export class GameContainerComponent implements OnInit {
         ready: GameStatus.Ready,
         waiting: GameStatus.Waiting,
         watching: GameStatus.Watching,
+        disconnected: GameStatus.Disconnected,
         win: GameStatus.Win,
         lose: GameStatus.Lose
     }

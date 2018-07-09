@@ -3,7 +3,7 @@
     <nbs-menu-component class="full-width up-third" (gameOptionsSubmitted)="onGameOptionsSubmitted($event)" *ngIf="currentGameStatus == gameStatus.noGame"></nbs-menu-component>
 
     <div *ngIf="currentGameStatus == gameStatus.waiting" class="nbs-center">
-        <h1>Waiting for game to begin.</h1>
+        <h1>Waiting for game to begin</h1>
     </div>
 
     <div *ngIf="currentGameStatus == gameStatus.ready && puzzleArray.length > 0">
@@ -12,8 +12,12 @@
     </div>
 
     <div *ngIf="currentGameStatus == gameStatus.watching" class="nbs-center">
-        <h1>This game is currently full.</h1>
-        <h1>Spectator view will be implemented in the next release.</h1>
+        <h1>This game is currently full</h1>
+        <h1>Spectator view will be implemented in the next release</h1>
+    </div>
+
+    <div *ngIf="currentGameStatus == gameStatus.disconnected" class="nbs-center">
+        <h1>Game Disconnected</h1>
     </div>
 
 </div>
