@@ -1,0 +1,25 @@
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { UserService } from '../_shared/services';
+
+@Component({
+    selector: 'nbs-navbar',
+    templateUrl: './navbar.component.html'
+})
+export class Navbar {
+
+    constructor(private userService: UserService, private router: Router) { }
+
+    logout(): void {
+        this.userService.logout().subscribe(
+            data => {
+                this.router.navigate(['/users/login']);
+            },
+            err => {
+                console.log(err);
+            }
+        );
+    }
+
+}

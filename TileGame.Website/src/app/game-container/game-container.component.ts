@@ -31,7 +31,7 @@ export class GameContainerComponent implements OnInit {
         lose: GameStatus.Lose
     }
 
-    constructor(private userService: UserService, private connectionService: ConnectionService) { }
+    constructor(private connectionService: ConnectionService) { }
 
     ngOnInit(): void {
         this.connectionService.getStatusChanges().subscribe(
@@ -105,10 +105,6 @@ export class GameContainerComponent implements OnInit {
                 console.log(err);
             }
         );
-    }
-
-    logout(): void {
-        this.userService.logout().subscribe(data => console.log(data));
     }
 
     connect(gameOptions: GameOptions): void {

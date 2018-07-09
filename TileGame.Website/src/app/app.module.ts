@@ -10,6 +10,7 @@ import {AppRoutingModule} from './app.routing';
 import {HttpService, SIGNALR_PROVIDER, ConnectionService} from './_shared/services';
 
 import {AppComponent} from './app.component';
+import {Navbar} from './navbar/navbar.component';
 import {GameContainerComponent} from './game-container/game-container.component';
 import {WordDisplayComponent} from './game-container/word-display/word-display.component';
 import {TimerComponent} from './game-container/timer/timer.component';
@@ -26,6 +27,7 @@ import {GameWatcherComponent} from './game-container/game-watcher/game-watcher.c
 @NgModule({
   declarations: [
     AppComponent,
+    Navbar,
     GameContainerComponent,
     WordDisplayComponent,
     TimerComponent,
