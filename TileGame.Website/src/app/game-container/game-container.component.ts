@@ -60,7 +60,10 @@ export class GameContainerComponent implements OnInit {
             data => {
                 console.log('Word list:');
                 console.log(data);
-                this.wordList = data;
+                this.wordList = data.map(word => {
+                    const cleanedWord = word.replace(' ', '');
+                    return cleanedWord;
+                });
             },
             err => {
                 console.log(err);
