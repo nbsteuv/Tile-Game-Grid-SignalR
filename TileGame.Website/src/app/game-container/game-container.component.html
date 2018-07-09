@@ -5,12 +5,18 @@
 
     <nbs-menu-component class="full-width up-third" (gameOptionsSubmitted)="onGameOptionsSubmitted($event)" *ngIf="currentGameStatus == gameStatus.noGame"></nbs-menu-component>
 
-    <div *ngIf="currentGameStatus == gameStatus.waiting">Testing waiting</div>
-
-    <div *ngIf="currentGameStatus == gameStatus.ready && puzzleArray.length > 0">
-        <nbs-game-player [wordList]="wordList" [puzzleArray]="puzzleArray" [currentGameStatus]="playerGameStatus" [currentGameType]="currentGameType" [incomingMove]="incomingMove" (move)="onMove($event)" (tileStartedMoving)="onTileStartedMoving()" (tileStoppedMoving)="onTileStoppedMoving()"></nbs-game-player>
+    <div *ngIf="currentGameStatus == gameStatus.waiting" class="nbs-center">
+        <h1>Waiting for game to begin.</h1>
     </div>
 
-    <div *ngIf="currentGameStatus == gameStatus.watching">Testing watching</div>
+    <div *ngIf="currentGameStatus == gameStatus.ready && puzzleArray.length > 0">
+        <nbs-game-player [wordList]="wordList" [puzzleArray]="puzzleArray" [currentGameStatus]="playerGameStatus" [currentGameType]="currentGameType"
+            [incomingMove]="incomingMove" (move)="onMove($event)" (tileStartedMoving)="onTileStartedMoving()" (tileStoppedMoving)="onTileStoppedMoving()"></nbs-game-player>
+    </div>
+
+    <div *ngIf="currentGameStatus == gameStatus.watching" class="nbs-center">
+        <h1>This game is currently full.</h1>
+        <h1>Spectator view will be implemented in the next release.</h1>
+    </div>
 
 </div>
