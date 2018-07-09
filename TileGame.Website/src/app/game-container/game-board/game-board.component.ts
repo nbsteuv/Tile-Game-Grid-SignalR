@@ -71,7 +71,7 @@ export class GameBoardComponent implements OnInit {
         let coordinateDifferenceX = Math.abs(this.tileArray[tileIndex].coordinates.x - this.tileArray[emptySpaceTileIndex].coordinates.x);
         let coordinateDifferenceY = Math.abs(this.tileArray[tileIndex].coordinates.y - this.tileArray[emptySpaceTileIndex].coordinates.y);
         if (coordinateDifferenceX + coordinateDifferenceY !== 1) {
-            // return;
+            return;
         }
 
         let currentPuzzleEmptySpaceIndex = this.getCurrentPuzzleEmptySpaceIndex();
