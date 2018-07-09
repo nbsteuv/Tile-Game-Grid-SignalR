@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using TileGame.Business.Models;
-using static TileGame.Business.Enums;
-using MediatR;
 using TileGame.Business.Models.Requests;
+using static TileGame.Business.Enums;
 
 namespace TileGame.Business.Game.HubContext
 {
