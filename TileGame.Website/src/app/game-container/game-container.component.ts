@@ -138,4 +138,8 @@ export class GameContainerComponent implements OnInit {
         }
     }
 
+    resetGame(): void {
+        this.currentGameStatus = GameStatus.NoGame;
+    }
+
 }

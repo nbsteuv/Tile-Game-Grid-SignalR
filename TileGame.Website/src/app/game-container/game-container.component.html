@@ -16,8 +16,20 @@
         <h1>Spectator view will be implemented in the next release</h1>
     </div>
 
-    <div *ngIf="currentGameStatus == gameStatus.disconnected" class="nbs-center">
-        <h1>Game Disconnected</h1>
+    <div *ngIf="currentGameStatus == gameStatus.disconnected">
+        
+        <div class="nbs-center">
+            <h1>Game Disconnected</h1>
+        </div>
+
+        <div class="nbs-center">
+            <label>
+                <div class="nbs-menu-option-container" (click)="resetGame()">
+                    Play Again
+                </div>
+            </label>
+        </div>
+
     </div>
 
 </div>
