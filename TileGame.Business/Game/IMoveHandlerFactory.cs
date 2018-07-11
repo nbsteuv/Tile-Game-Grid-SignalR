@@ -5,6 +5,6 @@ namespace TileGame.Business.Game
 {
     public interface IMoveHandlerFactory
     {
-        IMoveHandler CreateMoveHandler(Connection connection, User user, IGameHubContext gameHubContext);
+        IMoveHandler CreateMoveHandler(Connection connection, User user, IGameHubContext gameHubContext, IGameData gameData);
     }
 }

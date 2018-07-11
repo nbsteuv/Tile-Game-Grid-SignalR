@@ -13,5 +13,6 @@ namespace TileGame.Business.Game
         Connection GetConnectionByPlayer(User user);
         List<Connection> GetAllConnectionsByPlayerConnectionId(string connectionId);
         void EndAllGamesByPlayerConnectionId(string connectionId);
+        void EndGame(Connection connection);
     }
 }

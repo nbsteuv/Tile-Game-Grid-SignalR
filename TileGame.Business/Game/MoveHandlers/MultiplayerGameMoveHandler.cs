@@ -9,12 +9,14 @@ namespace TileGame.Business.Game.MoveHandlers
         private readonly Connection _connection;
         private readonly User _user;
         private readonly IGameHubContext _gameHubContext;
+        private readonly IGameData _gameData;
 
-        public MultiplayerGameMoveHandler(Connection connection, User user, IGameHubContext gameHubContext)
+        public MultiplayerGameMoveHandler(Connection connection, User user, IGameHubContext gameHubContext, IGameData gameData)
         {
             _connection = connection;
             _user = user;
             _gameHubContext = gameHubContext;
+            _gameData = gameData;
         }
 
         public void HandleMove(Move move)
@@ -48,6 +50,8 @@ namespace TileGame.Business.Game.MoveHandlers
                         _gameHubContext.SendPlayerWinNotification(user.ConnectionId, _user.Username);
                     }
                 }
+
+                _gameData.EndGame(_connection);
             }
         }
 

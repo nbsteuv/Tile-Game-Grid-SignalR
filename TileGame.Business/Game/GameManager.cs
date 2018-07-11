@@ -164,7 +164,7 @@ namespace TileGame.Business.Game
 
             var connection = _gameData.GetConnectionByPlayer(user);
 
-            var moveHandler = _moveHandlerFactory.CreateMoveHandler(connection, user, _gameHubContext);
+            var moveHandler = _moveHandlerFactory.CreateMoveHandler(connection, user, _gameHubContext, _gameData);
 
             moveHandler.HandleMove(move);
         }

@@ -29,6 +29,7 @@ export class GamePlayerComponent {
     @Output() move: EventEmitter<Move> = new EventEmitter<Move>();
     @Output() tileStartedMoving: EventEmitter<void> = new EventEmitter<void>();
     @Output() tileStoppedMoving: EventEmitter<void> = new EventEmitter<void>();
+    @Output() playAgainClicked: EventEmitter<void> = new EventEmitter<void>();
 
     @Input() set puzzleArray(puzzleArray: string[]) {
         this._puzzleArray = puzzleArray;
@@ -53,5 +54,9 @@ export class GamePlayerComponent {
 
     onTileStoppedMoving(): void {
         this.tileStoppedMoving.emit();
+    }
+
+    onPlayAgainClicked(): void {
+        this.playAgainClicked.emit();
     }
 }

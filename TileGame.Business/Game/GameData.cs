@@ -149,5 +149,10 @@ namespace TileGame.Business.Game
 
             connections.ForEach(connection => _connections.Remove(connection));
         }
+
+        public void EndGame(Connection connection)
+        {
+            _connections.Remove(connection);
+        }
     }
 }

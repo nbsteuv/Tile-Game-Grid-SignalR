@@ -6,13 +6,13 @@ namespace TileGame.Business.Game
 {
     public class MoveHandlerFactory : IMoveHandlerFactory
     {
-        public IMoveHandler CreateMoveHandler(Connection connection, User user, IGameHubContext gameHubContext)
+        public IMoveHandler CreateMoveHandler(Connection connection, User user, IGameHubContext gameHubContext, IGameData gameData)
         {
             IMoveHandler moveHandler;
 
             if (connection.Multiplayer)
             {
-                moveHandler = new MultiplayerGameMoveHandler(connection, user, gameHubContext);
+                moveHandler = new MultiplayerGameMoveHandler(connection, user, gameHubContext, gameData);
             }
             else
             {

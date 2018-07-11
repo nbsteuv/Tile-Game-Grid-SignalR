@@ -8,7 +8,7 @@
 
     <div *ngIf="currentGameStatus == gameStatus.ready && puzzleArray.length > 0">
         <nbs-game-player [wordList]="wordList" [puzzleArray]="puzzleArray" [currentGameStatus]="playerGameStatus" [currentGameType]="currentGameType"
-            [incomingMove]="incomingMove" (move)="onMove($event)" (tileStartedMoving)="onTileStartedMoving()" (tileStoppedMoving)="onTileStoppedMoving()"></nbs-game-player>
+            [incomingMove]="incomingMove" (move)="onMove($event)" (tileStartedMoving)="onTileStartedMoving()" (tileStoppedMoving)="onTileStoppedMoving()" (playAgainClicked)="resetGame()"></nbs-game-player>
     </div>
 
     <div *ngIf="currentGameStatus == gameStatus.watching" class="nbs-center">
