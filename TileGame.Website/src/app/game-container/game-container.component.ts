@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { interval } from 'rxjs';
+import { of, pipe } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 import { UserService, ConnectionService } from '../_shared/services';
 import { GameOptions, Move, IncomingMove } from '../_shared/types';
@@ -132,14 +133,22 @@ export class GameContainerComponent implements OnInit {
         this.movingTiles--;
         //TODO: Put all cosmetic variables like delays and transition speeds into separate constants file for quick adjustment
         if (this.winCondition && this.movingTiles === 0) {
-            interval(500).subscribe(() => {
+            of(0).pipe(delay(500)).subscribe(() => {
                 this.playerGameStatus = GameStatus.Win;
             });
         }
     }
 
     resetGame(): void {
+        this.connectionService.stopConnection();
         this.currentGameStatus = GameStatus.NoGame;
+        this.playerGameStatus = GameStatus.NoGame;
+        this.incomingMove = null;
+        this.puzzleArray = [];
+        this.wordList = [];
+        this.playerList = [];
+        this.movingTiles = 0;
+        this.winCondition = false;
     }
 
 }

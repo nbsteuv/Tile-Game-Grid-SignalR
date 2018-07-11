@@ -65,6 +65,10 @@ export class ConnectionService {
         });
     }
 
+    stopConnection(): void {
+        this.hubConnection.stop();
+    }
+
     makeConnection(gameOptions: GameOptions): void{
         this.hubConnection.send('MakeConnection', gameOptions.password, gameOptions.gameType, gameOptions.gameSize);
     }
