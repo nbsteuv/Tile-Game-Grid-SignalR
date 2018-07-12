@@ -9,12 +9,12 @@ import { HttpService } from './http-service';
 @Injectable()
 export class UserService implements CanActivate {
 
-    loggedIn: boolean = false;
+    loggedIn = false;
 
     constructor(private router: Router, private httpService: HttpService) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-        let url: string = state.url;
+        const url: string = state.url;
         return this.checkAccess(url, true);
     }
 
@@ -22,7 +22,7 @@ export class UserService implements CanActivate {
         if (this.loggedIn) {
             return of(true);
         }
-        let observable = this.httpService.post('/api/account/checkaccess')
+        const observable = this.httpService.post('/api/account/checkaccess')
             .pipe(
                 map(
                     data => {
@@ -46,7 +46,7 @@ export class UserService implements CanActivate {
     }
 
     register(user: User): Observable<void> {
-        let observable = this.httpService.post('/api/account/register', user);
+        const observable = this.httpService.post('/api/account/register', user);
         observable.subscribe(
             data => {
                 this.loggedIn = true;
@@ -60,7 +60,7 @@ export class UserService implements CanActivate {
     }
 
     login(user: User): Observable<void> {
-        let observable = this.httpService.post('/api/account/login', user);
+        const observable = this.httpService.post('/api/account/login', user);
         observable.subscribe(
             data => {
                 this.loggedIn = true;
@@ -75,18 +75,18 @@ export class UserService implements CanActivate {
 
     logout(): Observable<void> {
         console.log('trying to log out');
-        let observable = this.httpService.post('/api/account/logout');
+        const observable = this.httpService.post('/api/account/logout');
         observable.subscribe(
             data => {
                 console.log('success');
                 console.log(data);
                 this.loggedIn = false;
-                this.router.navigate([''])
+                this.router.navigate(['']);
             },
             err => {
                 console.log('error');
                 console.log(err);
-                //TODO: Create error handler that can be injected
+                // TODO: Create error handler that can be injected
             }
         );
         return observable;

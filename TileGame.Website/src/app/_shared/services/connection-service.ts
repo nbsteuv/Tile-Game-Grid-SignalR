@@ -1,12 +1,12 @@
-import {Injectable, Inject} from '@angular/core';
-import {Subject} from 'rxjs';
+import { Injectable, Inject } from '@angular/core';
+import { Subject } from 'rxjs';
 
-import {SIGNALR_TOKEN} from './signalr-provider'
-import {HubConnection} from '@aspnet/signalr';
-import {environment} from '../../../environments/environment';
+import { SIGNALR_TOKEN } from './signalr-provider';
+import { HubConnection } from '@aspnet/signalr';
+import { environment } from '../../../environments/environment';
 
-import {GameOptions, Move, GameSetup, IncomingMove} from '../types';
-import {GameStatus} from '../enums';
+import { GameOptions, Move, GameSetup, IncomingMove } from '../types';
+import { GameStatus } from '../enums';
 
 @Injectable()
 export class ConnectionService {
@@ -25,10 +25,10 @@ export class ConnectionService {
         this.init();
     }
 
-    init(): void{
+    init(): void {
         this.hubConnection = new this.signalR.HubConnectionBuilder()
-        .withUrl(`${this.baseUrl}/hubs/game`)
-        .build();
+            .withUrl(`${this.baseUrl}/hubs/game`)
+            .build();
 
         this.hubConnection.on('SetStatus', status => {
             console.log('Status set to: ' + status);
@@ -43,7 +43,7 @@ export class ConnectionService {
         this.hubConnection.on('PlayerMove', incomingMove => {
             console.log('Player move');
             this.playerMove(incomingMove);
-        })
+        });
 
         this.hubConnection.on('WinConfirmed', () => {
             console.log('You win');
@@ -56,7 +56,7 @@ export class ConnectionService {
         });
     }
 
-    startConnection(gameOptions: GameOptions): void{
+    startConnection(gameOptions: GameOptions): void {
         console.log('starting connection');
         this.hubConnection.stop().then(() => {
             this.hubConnection.start().then(() => {
@@ -69,54 +69,54 @@ export class ConnectionService {
         this.hubConnection.stop();
     }
 
-    makeConnection(gameOptions: GameOptions): void{
+    makeConnection(gameOptions: GameOptions): void {
         this.hubConnection.send('MakeConnection', gameOptions.password, gameOptions.gameType, gameOptions.gameSize);
     }
 
-    move(move: Move): void{
+    move(move: Move): void {
         this.hubConnection.send('Move', move);
     }
 
-    getStatusChanges(): Subject<GameStatus>{
+    getStatusChanges(): Subject<GameStatus> {
         return this.statusSource;
     }
 
-    getPuzzleChanges(): Subject<string[]>{
+    getPuzzleChanges(): Subject<string[]> {
         return this.puzzleSource;
     }
 
-    getWordListChanges(): Subject<string[]>{
+    getWordListChanges(): Subject<string[]> {
         return this.wordListSource;
     }
 
-    getPlayerListChanges(): Subject<string[]>{
+    getPlayerListChanges(): Subject<string[]> {
         return this.playerListSource;
     }
 
-    getPlayerMoveChanges(): Subject<IncomingMove>{
+    getPlayerMoveChanges(): Subject<IncomingMove> {
         return this.playerMoveSource;
     }
 
-    getWinConfirmedChanges(): Subject<void>{
+    getWinConfirmedChanges(): Subject<void> {
         return this.winConfirmedSource;
     }
 
-    getPlayerWinChanges(): Subject<string>{
+    getPlayerWinChanges(): Subject<string> {
         return this.playerWinSource;
     }
 
-    setStatus(status: GameStatus): void{
+    setStatus(status: GameStatus): void {
         this.statusSource.next(status);
     }
 
-    startGame(gameSetup: GameSetup): void{
+    startGame(gameSetup: GameSetup): void {
         this.setStatus(GameStatus.Ready);
         this.puzzleSource.next(gameSetup.puzzleArray);
         this.wordListSource.next(gameSetup.wordList);
         this.playerListSource.next(gameSetup.playerList);
     }
 
-    playerMove(incomingMove: IncomingMove): void{
+    playerMove(incomingMove: IncomingMove): void {
         this.playerMoveSource.next(incomingMove);
     }
 
@@ -124,7 +124,7 @@ export class ConnectionService {
         this.winConfirmedSource.next();
     }
 
-    playerWin(username: string){
+    playerWin(username: string) {
         this.playerWinSource.next(username);
     }
 

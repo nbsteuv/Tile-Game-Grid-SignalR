@@ -7,7 +7,7 @@ import { UserService } from '../_shared/services';
     selector: 'nbs-navbar',
     templateUrl: './navbar.component.html'
 })
-export class Navbar {
+export class NavbarComponent {
 
     constructor(private userService: UserService, private router: Router) { }
 

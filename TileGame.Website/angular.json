@@ -128,11 +128,11 @@
   "defaultProject": "tilegame-website",
   "schematics": {
     "@schematics/angular:component": {
-      "prefix": "app",
+      "prefix": "nbs",
       "styleext": "scss"
     },
     "@schematics/angular:directive": {
-      "prefix": "app"
+      "prefix": "nbs"
     }
   }
 }

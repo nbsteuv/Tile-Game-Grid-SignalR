@@ -20,8 +20,8 @@ export class GameContainerComponent implements OnInit {
     puzzleArray: string[] = [];
     wordList: string[] = [];
     playerList: string[] = [];
-    movingTiles: number = 0;
-    winCondition: boolean = false;
+    movingTiles = 0;
+    winCondition = false;
 
     gameStatus = {
         noGame: GameStatus.NoGame,
@@ -31,7 +31,7 @@ export class GameContainerComponent implements OnInit {
         disconnected: GameStatus.Disconnected,
         win: GameStatus.Win,
         lose: GameStatus.Lose
-    }
+    };
 
     constructor(private connectionService: ConnectionService) { }
 
@@ -71,7 +71,7 @@ export class GameContainerComponent implements OnInit {
                 console.log(err);
             }
         );
-        
+
         this.connectionService.getPlayerListChanges().subscribe(
             data => {
                 console.log('Player list:');
@@ -81,7 +81,7 @@ export class GameContainerComponent implements OnInit {
             err => {
                 console.log(err);
             }
-        )
+        );
 
         this.connectionService.getPlayerMoveChanges().subscribe(
             data => {
@@ -90,7 +90,7 @@ export class GameContainerComponent implements OnInit {
             err => {
                 console.log(err);
             }
-        )
+        );
 
         this.connectionService.getWinConfirmedChanges().subscribe(
             data => {
@@ -104,7 +104,7 @@ export class GameContainerComponent implements OnInit {
         this.connectionService.getPlayerWinChanges().subscribe(
             data => {
                 console.log(data);
-                this.playerGameStatus = GameStatus.Lose
+                this.playerGameStatus = GameStatus.Lose;
             },
             err => {
                 console.log(err);
@@ -131,7 +131,7 @@ export class GameContainerComponent implements OnInit {
 
     onTileStoppedMoving(): void {
         this.movingTiles--;
-        //TODO: Put all cosmetic variables like delays and transition speeds into separate constants file for quick adjustment
+        // TODO: Put all cosmetic variables like delays and transition speeds into separate constants file for quick adjustment
         if (this.winCondition && this.movingTiles === 0) {
             of(0).pipe(delay(500)).subscribe(() => {
                 this.playerGameStatus = GameStatus.Win;

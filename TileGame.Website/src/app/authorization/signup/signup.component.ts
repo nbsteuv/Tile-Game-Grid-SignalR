@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
 
 import { UserService } from '../../_shared/services';
 import { User } from '../../_shared/types';
@@ -9,18 +8,18 @@ import { User } from '../../_shared/types';
 })
 export class SignupComponent {
     user: User = new User();
-    passwordMismatch: boolean = false;
-    requiredFieldsFail: boolean = false;
-    accountCreationFailMessage: string = '';
+    passwordMismatch = false;
+    requiredFieldsFail = false;
+    accountCreationFailMessage = '';
 
     constructor(private userService: UserService) { }
 
     createAccount() {
-        //TODO: Validate password and email
+        // TODO: Validate password and email
 
         this.clearErrorMessages();
 
-        if(!this.user.username || !this.user.email || !this.user.password || !this.user.password2){
+        if (!this.user.username || !this.user.email || !this.user.password || !this.user.password2) {
             this.requiredFieldsFail = true;
             return;
         }
@@ -33,7 +32,7 @@ export class SignupComponent {
         this.userService.register(this.user)
             .subscribe(
                 data => {
-                    console.log("Account creation success.");
+                    console.log('Account creation success.');
                 },
                 err => {
                     this.accountCreationFailMessage = 'Account creation failed.';

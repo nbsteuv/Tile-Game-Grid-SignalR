@@ -1,21 +1,21 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {RouterModule, Routes} from '@angular/router';
-import {FormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
-import {UserService} from '../_shared/services';
+import { UserService } from '../_shared/services';
 
-import {AuthorizationComponent} from './authorization.component';
-import {LoginComponent} from './login/login.component';
-import {SignupComponent} from './signup/signup.component';
+import { AuthorizationComponent } from './authorization.component';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
 
 const AuthorizationRoutes: Routes = [
     {
         path: 'users',
         component: AuthorizationComponent,
         children: [
-            {path: 'login', component: LoginComponent},
-            {path: 'signup', component: SignupComponent}
+            { path: 'login', component: LoginComponent },
+            { path: 'signup', component: SignupComponent }
         ]
     }
 ];
@@ -38,4 +38,4 @@ const AuthorizationRoutes: Routes = [
         UserService
     ]
 })
-export class AuthorizationModule{}
+export class AuthorizationModule { }

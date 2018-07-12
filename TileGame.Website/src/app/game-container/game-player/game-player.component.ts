@@ -9,18 +9,18 @@ import { GameStatus, GameType } from '../../_shared/enums';
 })
 export class GamePlayerComponent {
     private _puzzleArray: string[] = [];
-    moves: number = 0;
-    
+    moves = 0;
+
     gameStatus = {
         ready: GameStatus.Ready,
         win: GameStatus.Win,
         lose: GameStatus.Lose
-    }
+    };
 
     gameType = {
         single: GameType.Single,
         race: GameType.Race
-    }
+    };
 
     @Input() wordList: string[];
     @Input() currentGameStatus: GameStatus;

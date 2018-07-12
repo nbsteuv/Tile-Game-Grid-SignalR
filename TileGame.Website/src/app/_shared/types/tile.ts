@@ -1,6 +1,6 @@
-import {Position} from './position';
+import { Position } from './position';
 
-export class Tile{
+export class Tile {
     position: Position;
     coordinates: Position;
     currentPuzzleIndex: number;

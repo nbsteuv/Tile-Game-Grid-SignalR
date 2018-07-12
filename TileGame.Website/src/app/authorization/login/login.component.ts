@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {NgForm} from '@angular/forms';
 
 import {UserService} from '../../_shared/services';
 import {User} from '../../_shared/types';
@@ -7,18 +6,18 @@ import {User} from '../../_shared/types';
 @Component({
     templateUrl: './login.component.html'
 })
-export class LoginComponent{
+export class LoginComponent {
     user: User = new User();
-    loginFail: boolean = false;
-    requiredFieldsFail: boolean = false;
+    loginFail = false;
+    requiredFieldsFail = false;
 
-    constructor(private userService: UserService){}
+    constructor(private userService: UserService) {}
 
-    login(): void{
+    login(): void {
 
         this.clearErrorMessages();
 
-        if(!this.user.username || !this.user.password){
+        if (!this.user.username || !this.user.password) {
             this.requiredFieldsFail = true;
             return;
         }
@@ -34,7 +33,7 @@ export class LoginComponent{
             );
     }
 
-    clearErrorMessages(): void{
+    clearErrorMessages(): void {
         this.loginFail = false;
         this.requiredFieldsFail = false;
     }

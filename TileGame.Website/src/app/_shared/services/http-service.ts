@@ -1,33 +1,33 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {share} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { share } from 'rxjs/operators';
 
-import {environment} from '../../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
-export class HttpService{
+export class HttpService {
 
     baseUrl: string = environment.baseUrl;
 
-    constructor(private httpClient: HttpClient){}
+    constructor(private httpClient: HttpClient) { }
 
-    get(url: string): Observable<any>{
-        let options = {
+    get(url: string): Observable<any> {
+        const options = {
             withCredentials: true
         };
-        let requestUrl: string = this.baseUrl + url;
-        let observable: Observable<any> = this.httpClient.get(requestUrl, options).pipe(share());
+        const requestUrl: string = this.baseUrl + url;
+        const observable: Observable<any> = this.httpClient.get(requestUrl, options).pipe(share());
         return observable;
     }
 
-    post(url: string, T: any = {}): Observable<any>{
-        let options = {
+    post(url: string, T: any = {}): Observable<any> {
+        const options = {
             withCredentials: true
         };
-        let requestUrl: string = this.baseUrl + url;
-        let observable: Observable<any> = this.httpClient.post(requestUrl, T, options).pipe(share());
+        const requestUrl: string = this.baseUrl + url;
+        const observable: Observable<any> = this.httpClient.post(requestUrl, T, options).pipe(share());
         return observable;
     }
-    
+
 }

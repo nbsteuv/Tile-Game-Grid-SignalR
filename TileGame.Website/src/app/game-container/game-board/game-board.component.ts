@@ -21,7 +21,7 @@ export class GameBoardComponent implements OnInit {
     positionArray: Position[] = [];
     tileArray: Tile[] = [];
     puzzleKey: string[] = [];
-    lockTiles: boolean = false;
+    lockTiles = false;
 
     @Input() set puzzleArray(puzzleArray: string[]) {
         console.log('Setting puzzle array');
@@ -35,11 +35,11 @@ export class GameBoardComponent implements OnInit {
 
     @Input() set incomingMove(incomingMove: IncomingMove) {
         if (incomingMove) {
-            while(incomingMove.moveHistory.length > this.moveIndex){
+            while (incomingMove.moveHistory.length > this.moveIndex) {
                 this.moveTileToEmptySpace(incomingMove.moveHistory[this.moveIndex]);
                 this.moveIndex++;
             }
-            
+
         }
     }
 
@@ -47,13 +47,13 @@ export class GameBoardComponent implements OnInit {
         this.puzzleKey = this.createKey(this.wordList);
 
         this._puzzleArray.forEach((character, index) => {
-            let coordinateX = this.tileArray.length % (this.gameSize);
-            let coordinateY = Math.floor(this.tileArray.length / (this.gameSize));
-            let tile = {
+            const coordinateX = this.tileArray.length % (this.gameSize);
+            const coordinateY = Math.floor(this.tileArray.length / (this.gameSize));
+            const tile = {
                 position: new Position(0, 0),
                 coordinates: new Position(coordinateX, coordinateY),
                 currentPuzzleIndex: index
-            }
+            };
             this.tileArray.push(tile);
         });
     }
@@ -67,21 +67,21 @@ export class GameBoardComponent implements OnInit {
             return;
         }
 
-        let emptySpaceTileIndex = this.getEmptySpaceTileIndex();
-        let coordinateDifferenceX = Math.abs(this.tileArray[tileIndex].coordinates.x - this.tileArray[emptySpaceTileIndex].coordinates.x);
-        let coordinateDifferenceY = Math.abs(this.tileArray[tileIndex].coordinates.y - this.tileArray[emptySpaceTileIndex].coordinates.y);
+        const emptySpaceTileIndex = this.getEmptySpaceTileIndex();
+        const coordinateDifferenceX = Math.abs(this.tileArray[tileIndex].coordinates.x - this.tileArray[emptySpaceTileIndex].coordinates.x);
+        const coordinateDifferenceY = Math.abs(this.tileArray[tileIndex].coordinates.y - this.tileArray[emptySpaceTileIndex].coordinates.y);
         if (coordinateDifferenceX + coordinateDifferenceY !== 1) {
             return;
         }
 
-        let currentPuzzleEmptySpaceIndex = this.getCurrentPuzzleEmptySpaceIndex();
+        const currentPuzzleEmptySpaceIndex = this.getCurrentPuzzleEmptySpaceIndex();
 
         this.currentPuzzle[currentPuzzleEmptySpaceIndex] = this.currentPuzzle[this.tileArray[tileIndex].currentPuzzleIndex];
         this.currentPuzzle[this.tileArray[tileIndex].currentPuzzleIndex] = ' ';
 
         this.checkPuzzle();
 
-        let move = new Move(this.currentPuzzle, tileIndex);
+        const move = new Move(this.currentPuzzle, tileIndex);
         this.move.emit(move);
 
         this.moveTileToEmptySpace(tileIndex);
@@ -96,45 +96,45 @@ export class GameBoardComponent implements OnInit {
     }
 
     getGridStyle(): object {
-        let gridTemplateColumns = `repeat(${this.gameSize}, 1fr)`;
-        let gridStyle = {
+        const gridTemplateColumns = `repeat(${this.gameSize}, 1fr)`;
+        const gridStyle = {
             'grid-template-columns': gridTemplateColumns
-        }
+        };
         return gridStyle;
     }
 
     moveTileToEmptySpace(tileIndex: number): void {
-        let emptySpace = this.getEmptySpace();
-        let tile = this.getTile(tileIndex);
+        const emptySpace = this.getEmptySpace();
+        const tile = this.getTile(tileIndex);
         this.setTile(tileIndex, emptySpace);
         this.setEmptySpace(tile);
     }
 
     getEmptySpaceTileIndex(): number {
-        //TODO: It's confusing to keep track of multiple types of indexes (animation and current puzzle state)
-        //Should be solved in the DDD rewrite
-        let emptySpaceTileIndex = this.tileArray.length - 1;
+        // TODO: It's confusing to keep track of multiple types of indexes (animation and current puzzle state)
+        // Should be solved in the DDD rewrite
+        const emptySpaceTileIndex = this.tileArray.length - 1;
         return emptySpaceTileIndex;
     }
 
     getEmptySpace(): Tile {
-        let emptySpaceTileIndex = this.getEmptySpaceTileIndex();
-        let emptySpacePosition = this.getTile(emptySpaceTileIndex);
+        const emptySpaceTileIndex = this.getEmptySpaceTileIndex();
+        const emptySpacePosition = this.getTile(emptySpaceTileIndex);
         return emptySpacePosition;
     }
 
     setEmptySpace(tile: Tile): void {
-        let emptySpaceTileIndex = this.getEmptySpaceTileIndex();
+        const emptySpaceTileIndex = this.getEmptySpaceTileIndex();
         this.setTile(emptySpaceTileIndex, tile);
     }
 
     getTile(tileIndex: number): Tile {
-        let tile = this.tileArray[tileIndex];
+        const tile = this.tileArray[tileIndex];
         return tile;
     }
 
     setTile(tileIndex: number, tile: Tile): void {
-        let newTile = {
+        const newTile = {
             position: new Position(tile.position.x, tile.position.y),
             coordinates: new Position(tile.coordinates.x, tile.coordinates.y),
             currentPuzzleIndex: tile.currentPuzzleIndex
@@ -151,14 +151,14 @@ export class GameBoardComponent implements OnInit {
     }
 
     createKey(wordList: string[]): string[] {
-        var wordString = wordList.join('').replace(/\s/g, '');
-        var key = wordString.split('');
+        const wordString = wordList.join('').replace(/\s/g, '');
+        const key = wordString.split('');
         key.push(' ');
         return key;
     }
 
     checkPuzzle(): void {
-        //Detect win here to freeze the browser until server confirms
+        // Detect win here to freeze the browser until server confirms
         for (let i = 0; i < this.currentPuzzle.length; i++) {
             if (this.currentPuzzle[i] !== this.puzzleKey[i]) {
                 return;

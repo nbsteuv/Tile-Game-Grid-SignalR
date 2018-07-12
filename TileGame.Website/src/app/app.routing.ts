@@ -13,4 +13,4 @@ import {GameContainerComponent} from './game-container/game-container.component'
     ],
     exports: [RouterModule]
 })
-export class AppRoutingModule{}
+export class AppRoutingModule {}

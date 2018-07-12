@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter} from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'nbs-lose-screen',
@@ -11,5 +11,5 @@ export class LoseScreenComponent {
     onPlayAgainClicked(): void {
         this.playAgainClicked.emit();
     }
-    
+
 }

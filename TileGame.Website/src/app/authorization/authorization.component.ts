@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'authorization-root',
+    selector: 'nbs-authorization-root',
     templateUrl: './authorization.component.html'
 })
 export class AuthorizationComponent implements OnInit {
 
-    currentRoute: string = '';
+    currentRoute = '';
 
     constructor(private router: Router) { }
 

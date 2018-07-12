@@ -1,22 +1,21 @@
-import {Component, Output, EventEmitter} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import { Component, Output, EventEmitter } from '@angular/core';
 
-import {GameOptions} from '../../_shared/types';
-import {GameType} from '../../_shared/enums';
+import { GameOptions } from '../../_shared/types';
+import { GameType } from '../../_shared/enums';
 
 @Component({
     selector: 'nbs-menu-component',
     templateUrl: './menu.component.html'
 })
-export class MenuComponent{
+export class MenuComponent {
     @Output() gameOptionsSubmitted: EventEmitter<GameOptions> = new EventEmitter<GameOptions>();
 
     gameOptions: GameOptions = new GameOptions();
-    requirePassword: boolean = false;
+    requirePassword = false;
     singleGameType: GameType = GameType.Single;
     raceGameType: GameType = GameType.Race;
 
-    submitGameOptions(){
+    submitGameOptions() {
         this.gameOptionsSubmitted.emit(this.gameOptions);
     }
 }

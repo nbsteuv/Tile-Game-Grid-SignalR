@@ -1,4 +1,4 @@
-export enum GameStatus{
+export enum GameStatus {
     NoGame,
     Ready,
     Waiting,
