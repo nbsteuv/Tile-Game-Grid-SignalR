@@ -22,7 +22,7 @@ export class UserService implements CanActivate {
         if (this.loggedIn) {
             return of(true);
         }
-        const observable = this.httpService.post('/account/checkaccess')
+        const observable = this.httpService.post('/api/account/checkaccess')
             .pipe(
                 map(
                     data => {
@@ -33,7 +33,7 @@ export class UserService implements CanActivate {
                 ),
                 catchError(
                     () => {
-                        this.router.navigate(['/users/login']);
+                        this.router.navigate(['/api/users/login']);
                         return of(false);
                     }
                 )
@@ -46,7 +46,7 @@ export class UserService implements CanActivate {
     }
 
     register(user: User): Observable<void> {
-        const observable = this.httpService.post('/account/register', user);
+        const observable = this.httpService.post('/api/account/register', user);
         observable.subscribe(
             data => {
                 this.loggedIn = true;
@@ -60,7 +60,7 @@ export class UserService implements CanActivate {
     }
 
     login(user: User): Observable<void> {
-        const observable = this.httpService.post('/account/login', user);
+        const observable = this.httpService.post('/api/account/login', user);
         observable.subscribe(
             data => {
                 this.loggedIn = true;
@@ -75,7 +75,7 @@ export class UserService implements CanActivate {
 
     logout(): Observable<void> {
         console.log('trying to log out');
-        const observable = this.httpService.post('/account/logout');
+        const observable = this.httpService.post('/api/account/logout');
         observable.subscribe(
             data => {
                 console.log('success');
