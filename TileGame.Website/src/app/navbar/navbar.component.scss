@@ -1,0 +1,19 @@
+a:hover {
+    text-decoration: inherit;
+}
+
+@media (max-width: 844px) {
+    .nbs-menu-option-container {
+        padding: 0.5rem;
+        margin: 0.5rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 380px) {
+    .nbs-menu-option-container {
+        padding: 0.5rem;
+        margin: 0.5rem;
+        font-size: 0.75rem;
+    }
+}
