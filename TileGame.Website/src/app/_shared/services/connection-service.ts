@@ -26,34 +26,34 @@ export class ConnectionService {
     }
 
     init(): void {
-        this.hubConnection = new this.signalR.HubConnectionBuilder()
-            .withUrl(`${this.baseUrl}/hubs/game`)
-            .build();
+        // this.hubConnection = new this.signalR.HubConnectionBuilder()
+        //     .withUrl(`${this.baseUrl}/hubs/game`)
+        //     .build();
 
-        this.hubConnection.on('SetStatus', status => {
-            console.log('Status set to: ' + status);
-            this.setStatus(status);
-        });
+        // this.hubConnection.on('SetStatus', status => {
+        //     console.log('Status set to: ' + status);
+        //     this.setStatus(status);
+        // });
 
-        this.hubConnection.on('StartGame', gameSetup => {
-            console.log('Starting game');
-            this.startGame(gameSetup);
-        });
+        // this.hubConnection.on('StartGame', gameSetup => {
+        //     console.log('Starting game');
+        //     this.startGame(gameSetup);
+        // });
 
-        this.hubConnection.on('PlayerMove', incomingMove => {
-            console.log('Player move');
-            this.playerMove(incomingMove);
-        });
+        // this.hubConnection.on('PlayerMove', incomingMove => {
+        //     console.log('Player move');
+        //     this.playerMove(incomingMove);
+        // });
 
-        this.hubConnection.on('WinConfirmed', () => {
-            console.log('You win');
-            this.winConfirmed();
-        });
+        // this.hubConnection.on('WinConfirmed', () => {
+        //     console.log('You win');
+        //     this.winConfirmed();
+        // });
 
-        this.hubConnection.on('PlayerWin', username => {
-            console.log('Other player win');
-            this.playerWin(username);
-        });
+        // this.hubConnection.on('PlayerWin', username => {
+        //     console.log('Other player win');
+        //     this.playerWin(username);
+        // });
     }
 
     startConnection(gameOptions: GameOptions): void {
