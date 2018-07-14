@@ -14,8 +14,10 @@ export class UserService implements CanActivate {
     constructor(private router: Router, private httpService: HttpService) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+        console.log('Checking canActivate in user service');
         const url: string = state.url;
         // return this.checkAccess(url, true);
+        console.log('Returning observable of true');
         return of(true);
     }
 
