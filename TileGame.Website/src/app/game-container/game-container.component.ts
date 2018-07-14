@@ -117,7 +117,7 @@ export class GameContainerComponent implements OnInit {
         console.log('All subscriptions set up in game container');
     }
 
-    /*connect(gameOptions: GameOptions): void {
+    connect(gameOptions: GameOptions): void {
         this.connectionService.startConnection(gameOptions);
     }
 
@@ -154,6 +154,6 @@ export class GameContainerComponent implements OnInit {
         this.playerList = [];
         this.movingTiles = 0;
         this.winCondition = false;
-    }*/
+    }
 
 }
