@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, AfterViewInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { AnimationBuilder, AnimationPlayer, style, animate } from '@angular/animations';
 
 import { Position } from '../../../_shared/types';
@@ -7,7 +7,7 @@ import { Position } from '../../../_shared/types';
     selector: 'nbs-game-tile',
     templateUrl: './game-tile.component.html'
 })
-export class GameTileComponent implements OnInit, AfterViewInit {
+export class GameTileComponent implements AfterViewInit {
     @Input() character: string;
     @Output() tilePositionRetrieved: EventEmitter<Position> = new EventEmitter<Position>();
     @Output() tileClicked: EventEmitter<void> = new EventEmitter<void>();
@@ -22,34 +22,6 @@ export class GameTileComponent implements OnInit, AfterViewInit {
     translateX = '';
     translateY = '';
     isMoving = false;
-
-    constructor(
-        private elementRef: ElementRef,
-        private changeDectectorRef: ChangeDetectorRef,
-        private animationBuilder: AnimationBuilder
-    ) { }
-
-    ngOnInit(): void {
-        // Register position with parent container
-        const rect = this.elementRef.nativeElement.getBoundingClientRect();
-        const position: Position = {
-            x: rect.left,
-            y: rect.top
-        };
-        this._position = position;
-        this.tilePositionRetrieved.emit(position);
-    }
-
-    ngAfterViewInit(): void {
-        if (!this.tile) {
-            return;
-        }
-        // Set font size relative to tile width -- need to get tile component, since Angular element doesn't have dimensions
-        const tileRect = this.elementRef.nativeElement.children[0].getBoundingClientRect();
-        const tileHeight = tileRect.height;
-        this.fontSize = `${tileHeight / 2}px`;
-        this.changeDectectorRef.detectChanges();
-    }
 
     @Input() set position(position: Position) {
 
@@ -82,6 +54,40 @@ export class GameTileComponent implements OnInit, AfterViewInit {
             this.tileStoppedMoving.emit();
         });
         this.animationPlayer.play();
+    }
+
+    @Input() set emitPosition(emitPosition: boolean) {
+        if(!emitPosition){
+            return;
+        }
+        const rect = this.elementRef.nativeElement.getBoundingClientRect();
+        const position: Position = {
+            x: rect.left,
+            y: rect.top
+        };
+        this._position = position;
+        this.tilePositionRetrieved.emit(position);
+    }
+
+    constructor(
+        private elementRef: ElementRef,
+        private changeDectectorRef: ChangeDetectorRef,
+        private animationBuilder: AnimationBuilder
+    ) { }
+
+    ngAfterViewInit(): void {
+        this.setFontSize();
+    }
+
+    setFontSize(): void {
+        if (!this.tile) {
+            return;
+        }
+        // Set font size relative to tile width -- need to get tile component, since Angular element doesn't have dimensions
+        const tileRect = this.elementRef.nativeElement.children[0].getBoundingClientRect();
+        const tileHeight = tileRect.height;
+        this.fontSize = `${tileHeight / 2}px`;
+        this.changeDectectorRef.detectChanges();
     }
 
     onTileClick(): void {

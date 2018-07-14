@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, Output, EventEmitter, ChangeDetectorRef, ElementRef } from '@angular/core';
 
 import { Position, Tile, Move, IncomingMove } from '../../_shared/types';
 
@@ -6,7 +6,7 @@ import { Position, Tile, Move, IncomingMove } from '../../_shared/types';
     selector: 'nbs-game-board',
     templateUrl: './game-board.component.html'
 })
-export class GameBoardComponent implements OnInit {
+export class GameBoardComponent implements OnInit, AfterViewInit {
     private _puzzleArray: string[] = [];
     private currentPuzzle: string[] = [];
 
@@ -16,6 +16,9 @@ export class GameBoardComponent implements OnInit {
     @Output() move: EventEmitter<Move> = new EventEmitter<Move>();
     @Output() tileStartedMoving: EventEmitter<void> = new EventEmitter<void>();
     @Output() tileStoppedMoving: EventEmitter<void> = new EventEmitter<void>();
+
+    gridGap = 0;
+    readyToAcceptPositions = false;
 
     moveIndex = 0;
     positionArray: Position[] = [];
@@ -43,6 +46,8 @@ export class GameBoardComponent implements OnInit {
         }
     }
 
+    constructor(private elementRef: ElementRef, private changeDectectorRef: ChangeDetectorRef) { }
+
     ngOnInit(): void {
         this.puzzleKey = this.createKey(this.wordList);
 
@@ -56,6 +61,14 @@ export class GameBoardComponent implements OnInit {
             };
             this.tileArray.push(tile);
         });
+    }
+
+    ngAfterViewInit(): void {
+        const gameBoardRect = this.elementRef.nativeElement.children[0].getBoundingClientRect();
+        const gameBoardHeight = gameBoardRect.height;
+        this.gridGap = (gameBoardHeight / 12) / this.gameSize;
+        this.changeDectectorRef.detectChanges();
+        this.readyToAcceptPositions = true;
     }
 
     onTilePositionRetrieved(index: number, position: Position): void {
@@ -97,8 +110,10 @@ export class GameBoardComponent implements OnInit {
 
     getGridStyle(): object {
         const gridTemplateColumns = `repeat(${this.gameSize}, 1fr)`;
+        const gridGap = `${this.gridGap}px`;
         const gridStyle = {
-            'grid-template-columns': gridTemplateColumns
+            'grid-template-columns': gridTemplateColumns,
+            'grid-gap': gridGap
         };
         return gridStyle;
     }
