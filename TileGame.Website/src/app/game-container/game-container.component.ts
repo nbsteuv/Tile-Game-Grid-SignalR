@@ -39,7 +39,7 @@ export class GameContainerComponent implements OnInit {
 
     ngOnInit(): void {
         console.log('Running ngOnInit of game container');
-        /*this.connectionService.getStatusChanges().subscribe(
+        this.connectionService.getStatusChanges().subscribe(
             data => {
                 console.log('Status changed to ' + data);
                 this.currentGameStatus = data;
@@ -112,7 +112,7 @@ export class GameContainerComponent implements OnInit {
             err => {
                 console.log(err);
             }
-        );*/
+        );
 
         console.log('All subscriptions set up in game container');
     }
