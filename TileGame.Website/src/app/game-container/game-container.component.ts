@@ -33,7 +33,7 @@ export class GameContainerComponent implements OnInit {
         lose: GameStatus.Lose
     };
 
-    constructor(/*private connectionService: ConnectionService*/) { 
+    constructor(private connectionService: ConnectionService) { 
         console.log('Running constructor for game container');
     }
 
