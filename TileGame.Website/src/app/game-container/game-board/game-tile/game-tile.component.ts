@@ -39,7 +39,7 @@ export class GameTileComponent implements AfterViewInit {
 
         const factory = this.animationBuilder.build([
             style({ transform: '*' }),
-            animate('500ms ease-out', style({ transform: `translate(${translateX}px, ${translateY}px)` }))
+            animate('300ms ease-out', style({ transform: `translate(${translateX}px, ${translateY}px)` }))
         ]);
 
         this.isMoving = true;

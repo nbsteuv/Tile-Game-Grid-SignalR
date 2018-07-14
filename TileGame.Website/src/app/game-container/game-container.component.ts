@@ -138,7 +138,7 @@ export class GameContainerComponent implements OnInit {
         this.movingTiles--;
         // TODO: Put all cosmetic variables like delays and transition speeds into separate constants file for quick adjustment
         if (this.winCondition && this.movingTiles === 0) {
-            of(0).pipe(delay(500)).subscribe(() => {
+            of(0).pipe(delay(300)).subscribe(() => {
                 this.playerGameStatus = GameStatus.Win;
             });
         }
