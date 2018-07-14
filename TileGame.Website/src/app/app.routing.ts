@@ -8,7 +8,7 @@ import { GameContainerComponent } from './game-container/game-container.componen
 @NgModule({
     imports: [
         RouterModule.forRoot([
-            { path: '', component: GameContainerComponent, canActivate: [UserService] }
+            { path: '', component: GameContainerComponent/*, canActivate: [UserService]*/ }
         ])
     ],
     exports: [RouterModule]
