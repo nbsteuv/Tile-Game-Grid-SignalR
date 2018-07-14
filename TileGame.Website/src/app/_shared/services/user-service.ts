@@ -15,7 +15,8 @@ export class UserService implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
         const url: string = state.url;
-        return this.checkAccess(url, true);
+        // return this.checkAccess(url, true);
+        return of(true);
     }
 
     checkAccess(url: string, redirect: boolean): Observable<boolean> {
