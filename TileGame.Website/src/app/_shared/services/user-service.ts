@@ -16,9 +16,7 @@ export class UserService implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
         console.log('Checking canActivate in user service');
         const url: string = state.url;
-        // return this.checkAccess(url, true);
-        console.log('Returning observable of true');
-        return of(true);
+        return this.checkAccess(url, true);
     }
 
     checkAccess(url: string, redirect: boolean): Observable<boolean> {
@@ -36,7 +34,7 @@ export class UserService implements CanActivate {
                 ),
                 catchError(
                     () => {
-                        this.router.navigate(['/api/users/login']);
+                        this.router.navigate(['/users/login']);
                         return of(false);
                     }
                 )
