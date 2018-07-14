@@ -33,13 +33,13 @@ export class GameContainerComponent implements OnInit {
         lose: GameStatus.Lose
     };
 
-    constructor(private connectionService: ConnectionService) { 
+    constructor(/*private connectionService: ConnectionService*/) { 
         console.log('Running constructor for game container');
     }
 
     ngOnInit(): void {
         console.log('Running ngOnInit of game container');
-        this.connectionService.getStatusChanges().subscribe(
+        /*this.connectionService.getStatusChanges().subscribe(
             data => {
                 console.log('Status changed to ' + data);
                 this.currentGameStatus = data;
@@ -112,12 +112,12 @@ export class GameContainerComponent implements OnInit {
             err => {
                 console.log(err);
             }
-        );
+        );*/
 
         console.log('All subscriptions set up in game container');
     }
 
-    connect(gameOptions: GameOptions): void {
+    /*connect(gameOptions: GameOptions): void {
         this.connectionService.startConnection(gameOptions);
     }
 
@@ -154,6 +154,6 @@ export class GameContainerComponent implements OnInit {
         this.playerList = [];
         this.movingTiles = 0;
         this.winCondition = false;
-    }
+    }*/
 
 }
