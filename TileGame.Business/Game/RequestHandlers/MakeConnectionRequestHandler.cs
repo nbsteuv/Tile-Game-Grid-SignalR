@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using Serilog;
+using System;
 using TileGame.Business.Models.Requests;
 
 namespace TileGame.Business.Game.RequestHandlers
@@ -14,7 +16,14 @@ namespace TileGame.Business.Game.RequestHandlers
 
         protected override void HandleCore(MakeConnectionRequest request)
         {
-            _gameManager.MakeConnectionAsync(request.Username, request.ConnectionId, request.Password, request.GameType, request.WordLength);
+            try
+            {
+                _gameManager.MakeConnectionAsync(request.Username, request.ConnectionId, request.Password, request.GameType, request.WordLength);
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, e.Message);
+            }
         }
     }
 }

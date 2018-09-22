@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using Serilog;
 using System;
 using System.Threading.Tasks;
 using TileGame.Business.Models;
@@ -21,44 +22,77 @@ namespace TileGame.Business.Game.HubContext
         [Authorize]
         public override async Task OnConnectedAsync()
         {
-            await Clients.Client(Context.ConnectionId).SendAsync("SetStatus", Enums.ConnectionStatus.Waiting);
+            try
+            {
+                await Clients.Client(Context.ConnectionId).SendAsync("SetStatus", Enums.ConnectionStatus.Waiting);
+            }
+            catch(Exception e)
+            {
+                Log.Error(e, e.Message);
+            }
         }
 
-        public override Task OnDisconnectedAsync(Exception ex)
+        public override async Task OnDisconnectedAsync(Exception ex)
         {
-            _mediator.Send(new DisconnectRequest
+            try
             {
-                ConnectionId = Context.ConnectionId
-            });
-
-            return Task.CompletedTask;
+                await _mediator.Send(new DisconnectRequest
+                {
+                    ConnectionId = Context.ConnectionId
+                });
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, e.Message);
+            }
         }
 
         public async Task Send(string message)
         {
-            await Clients.All.SendAsync("SendMessage", Context.User.Identity.Name, message);
+            try
+            {
+                await Clients.All.SendAsync("SendMessage", Context.User.Identity.Name, message);
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, e.Message);
+            }
         }
 
         public void MakeConnection(string password, GameType gameType, int wordLength)
         {
-            _mediator.Send(new MakeConnectionRequest
+            try
             {
-                GameType = gameType,
-                Username = Context.User.Identity.Name,
-                ConnectionId = Context.ConnectionId,
-                Password = password,
-                WordLength = wordLength
-            });
+                _mediator.Send(new MakeConnectionRequest
+                {
+                    GameType = gameType,
+                    Username = Context.User.Identity.Name,
+                    ConnectionId = Context.ConnectionId,
+                    Password = password,
+                    WordLength = wordLength
+                });
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, e.Message);
+            }
         }
 
         public void Move(Move move)
         {
-            _mediator.Send(new MoveRequest
+            try
             {
-                Username = Context.User.Identity.Name,
-                ConnectionId = Context.ConnectionId,
-                Move = move
-            });
+                _mediator.Send(new MoveRequest
+                {
+                    Username = Context.User.Identity.Name,
+                    ConnectionId = Context.ConnectionId,
+                    Move = move
+                });
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, e.Message);
+            }
         }
     }
 }

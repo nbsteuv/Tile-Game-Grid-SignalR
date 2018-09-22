@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using Serilog;
+using System;
 using TileGame.Business.Models.Requests;
 
 namespace TileGame.Business.Game.RequestHandlers
@@ -14,7 +16,14 @@ namespace TileGame.Business.Game.RequestHandlers
 
         protected override void HandleCore(DisconnectRequest request)
         {
-            _gameManager.Disconnect(request.ConnectionId);
+            try
+            {
+                _gameManager.Disconnect(request.ConnectionId);
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, e.Message);
+            }
         }
     }
 }
