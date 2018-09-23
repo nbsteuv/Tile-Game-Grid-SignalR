@@ -24,7 +24,7 @@ namespace TileGame.Business.Game
 
         public async Task MakeConnectionAsync(string username, string connectionId, string password, GameType gameType, int wordLength)
         {
-            var connection = _gameData.MakeConnection(username, connectionId, password, gameType);
+            var connection = _gameData.MakeConnection(username, connectionId, password, gameType, wordLength);
 
             var users = GetConnectionUsers(connection);
 
@@ -37,10 +37,10 @@ namespace TileGame.Business.Game
 
             await Task.WhenAll(sendStatusTasks);
 
-            await TryStartGameAsync(connection, wordLength);
+            await TryStartGameAsync(connection);
         }
 
-        private async Task TryStartGameAsync(Connection connection, int wordLength)
+        private async Task TryStartGameAsync(Connection connection)
         {
             if (!connection.Players.Any())
             {
@@ -52,7 +52,7 @@ namespace TileGame.Business.Game
                 return;
             }
 
-            CreateGame(connection, wordLength);
+            CreateGame(connection);
 
             var users = GetConnectionUsers(connection);
 
@@ -99,14 +99,14 @@ namespace TileGame.Business.Game
             return users;
         }
 
-        public void CreateGame(Connection connection, int wordLength)
+        public void CreateGame(Connection connection)
         {
-            if(wordLength != 4 && wordLength != 5)
+            if(connection.WordLength != 4 && connection.WordLength != 5)
             {
                 throw new Exception("Invalid game size");
             }
 
-            var wordList = _gameData.GetWordList(wordLength);
+            var wordList = _gameData.GetWordList(connection.WordLength);
 
             var key = BuildCharArray(wordList);
 

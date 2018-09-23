@@ -6,7 +6,7 @@ namespace TileGame.Business.Game
 {
     public interface IGameData
     {
-        Connection MakeConnection(string username, string connectionId, string password, GameType gameType);
+        Connection MakeConnection(string username, string connectionId, string password, GameType gameType, int wordLength);
         List<Word> GetWordList(int baseLength);
         Connection AddGameToConnection(Connection connection, List<Word> wordList, char[] key);
         User GetUser(string connectionId, string username);

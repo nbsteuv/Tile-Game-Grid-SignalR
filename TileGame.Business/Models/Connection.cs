@@ -10,5 +10,6 @@ namespace TileGame.Business.Models
         public List<User> Watchers { get; set; }
         public List<Word> WordList { get; set; }
         public char[] Key { get; set; }
+        public int WordLength { get; set; }
     }
 }

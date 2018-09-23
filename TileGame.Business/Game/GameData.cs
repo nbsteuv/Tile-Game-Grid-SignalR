@@ -21,7 +21,7 @@ namespace TileGame.Business.Game
             _users = new List<User>();
         }
 
-        public Connection MakeConnection(string username, string connectionId, string password, GameType gameType)
+        public Connection MakeConnection(string username, string connectionId, string password, GameType gameType, int wordLength)
         {
             var user = new User
             {
@@ -59,7 +59,7 @@ namespace TileGame.Business.Game
                 return requestedConnection;
             }
 
-            if(string.IsNullOrEmpty(password) && _connections.Any(connection => connection.Players.Count == 1 && connection.Multiplayer == true))
+            if(string.IsNullOrEmpty(password) && _connections.Any(connection => connection.Players.Count == 1 && connection.Multiplayer == true && connection.WordLength == wordLength))
             {
                 //Connect request to the next waiting player
 
@@ -85,6 +85,8 @@ namespace TileGame.Business.Game
             newConnection.Password = password;
 
             newConnection.Multiplayer = gameType == GameType.Race;
+
+            newConnection.WordLength = wordLength;
 
             _connections.Add(newConnection);
 
