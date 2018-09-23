@@ -8,88 +8,82 @@ import { HttpService } from './http-service';
 
 @Injectable()
 export class UserService implements CanActivate {
+	loggedIn = false;
 
-    loggedIn = false;
+	constructor(private router: Router, private httpService: HttpService) {}
 
-    constructor(private router: Router, private httpService: HttpService) { }
+	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+		console.log('Checking canActivate in user service');
+		const url: string = state.url;
+		return this.checkAccess(url, true);
+	}
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-        console.log('Checking canActivate in user service');
-        const url: string = state.url;
-        return this.checkAccess(url, true);
-    }
+	checkAccess(url: string, redirect: boolean): Observable<boolean> {
+		if (this.loggedIn) {
+			return of(true);
+		}
+		const observable = this.httpService.post('/api/account/checkaccess').pipe(
+			map((data) => {
+				console.log(data);
+				this.loggedIn = true;
+				return true;
+			}),
+			catchError(() => {
+				this.router.navigate([ '/users/login' ]);
+				return of(false);
+			})
+		);
+		return observable;
+	}
 
-    checkAccess(url: string, redirect: boolean): Observable<boolean> {
-        if (this.loggedIn) {
-            return of(true);
-        }
-        const observable = this.httpService.post('/api/account/checkaccess')
-            .pipe(
-                map(
-                    data => {
-                        console.log(data);
-                        this.loggedIn = true;
-                        return true;
-                    }
-                ),
-                catchError(
-                    () => {
-                        this.router.navigate(['/users/login']);
-                        return of(false);
-                    }
-                )
-            );
-        return observable;
-    }
+	isLoggedIn() {
+		return this.loggedIn;
+	}
 
-    isLoggedIn() {
-        return this.loggedIn;
-    }
+	register(user: User): Observable<void> {
+		const observable = this.httpService.post('/api/account/register', user);
+		observable.subscribe(
+			(data) => {
+				this.loggedIn = true;
+				this.router.navigate([ '/' ]);
+			},
+			(err) => {
+				console.log(err);
+			}
+		);
+		return observable;
+	}
 
-    register(user: User): Observable<void> {
-        const observable = this.httpService.post('/api/account/register', user);
-        observable.subscribe(
-            data => {
-                this.loggedIn = true;
-                this.router.navigate(['/']);
-            },
-            err => {
-                console.log(err);
-            }
-        );
-        return observable;
-    }
+	login(user: User): Observable<void> {
+		const observable = this.httpService.post('/api/account/login', user);
+		observable.subscribe(
+			(data) => {
+				this.loggedIn = true;
+				this.router.navigate([ '/' ]);
+			},
+			(err) => {
+				console.log(err);
+			}
+		);
+		return observable;
+	}
 
-    login(user: User): Observable<void> {
-        const observable = this.httpService.post('/api/account/login', user);
-        observable.subscribe(
-            data => {
-                this.loggedIn = true;
-                this.router.navigate(['/']);
-            },
-            err => {
-                console.log(err);
-            }
-        );
-        return observable;
-    }
-
-    logout(): Observable<void> {
-        console.log('trying to log out');
-        const observable = this.httpService.post('/api/account/logout');
-        observable.subscribe(
-            data => {
-                console.log('success');
-                console.log(data);
-                this.loggedIn = false;
-                this.router.navigate(['']);
-            },
-            err => {
-                console.log('error');
-                console.log(err);
-                // TODO: Create error handler that can be injected
-            }
-        );
-        return observable;
-    }
+	logout(): Observable<void> {
+		console.log('trying to log out');
+		const observable = this.httpService.post('/api/account/logout');
+		observable.subscribe(
+			(data) => {
+				console.log('success');
+				console.log(data);
+				this.loggedIn = false;
+				this.router.navigate([ '' ]);
+			},
+			(err) => {
+				console.log('error');
+				console.log(err);
+				// TODO: Create error handler that can be injected
+			}
+		);
+		return observable;
+	}
 }

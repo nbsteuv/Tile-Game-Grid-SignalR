@@ -1,4 +1,4 @@
 export class IncomingMove {
-    moveHistory: number[];
-    username: string;
+	moveHistory: number[];
+	username: string;
 }

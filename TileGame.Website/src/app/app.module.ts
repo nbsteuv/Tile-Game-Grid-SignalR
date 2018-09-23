@@ -23,36 +23,31 @@ import { WinScreenComponent } from './game-container/win-screen/win-screen.compo
 import { LoseScreenComponent } from './game-container/lose-screen/lose-screen.component';
 import { GameWatcherComponent } from './game-container/game-watcher/game-watcher.component';
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    GameContainerComponent,
-    WordDisplayComponent,
-    TimerComponent,
-    MoveCounterComponent,
-    MenuComponent,
-    GameTileComponent,
-    GameBoardComponent,
-    GamePlayerComponent,
-    WinScreenComponent,
-    LoseScreenComponent,
-    GameWatcherComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    AuthorizationModule,
-    AppRoutingModule
-  ],
-  providers: [
-    HttpService,
-    SIGNALR_PROVIDER,
-    ConnectionService
-  ],
-  bootstrap: [AppComponent]
+	declarations: [
+		AppComponent,
+		NavbarComponent,
+		GameContainerComponent,
+		WordDisplayComponent,
+		TimerComponent,
+		MoveCounterComponent,
+		MenuComponent,
+		GameTileComponent,
+		GameBoardComponent,
+		GamePlayerComponent,
+		WinScreenComponent,
+		LoseScreenComponent,
+		GameWatcherComponent
+	],
+	imports: [
+		BrowserModule,
+		FormsModule,
+		HttpClientModule,
+		BrowserAnimationsModule,
+		AuthorizationModule,
+		AppRoutingModule
+	],
+	providers: [ HttpService, SIGNALR_PROVIDER, ConnectionService ],
+	bootstrap: [ AppComponent ]
 })
-export class AppModule { }
+export class AppModule {}

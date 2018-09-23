@@ -10,32 +10,17 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 
 const AuthorizationRoutes: Routes = [
-    {
-        path: 'users',
-        component: AuthorizationComponent,
-        children: [
-            { path: 'login', component: LoginComponent },
-            { path: 'signup', component: SignupComponent }
-        ]
-    }
+	{
+		path: 'users',
+		component: AuthorizationComponent,
+		children: [ { path: 'login', component: LoginComponent }, { path: 'signup', component: SignupComponent } ]
+	}
 ];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        RouterModule.forChild(AuthorizationRoutes),
-    ],
-    exports: [
-        RouterModule
-    ],
-    declarations: [
-        AuthorizationComponent,
-        LoginComponent,
-        SignupComponent
-    ],
-    providers: [
-        UserService
-    ]
+	imports: [ CommonModule, FormsModule, RouterModule.forChild(AuthorizationRoutes) ],
+	exports: [ RouterModule ],
+	declarations: [ AuthorizationComponent, LoginComponent, SignupComponent ],
+	providers: [ UserService ]
 })
-export class AuthorizationModule { }
+export class AuthorizationModule {}
