@@ -117,6 +117,8 @@ export class GameContainerComponent implements OnInit {
 	}
 
 	connect(gameOptions: GameOptions): void {
+		this.currentGameStatus = GameStatus.Waiting;
+		this.playerGameStatus = GameStatus.Waiting;
 		this.connectionService.startConnection(gameOptions);
 	}
 
