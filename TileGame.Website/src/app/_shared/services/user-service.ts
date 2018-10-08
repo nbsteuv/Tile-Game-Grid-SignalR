@@ -71,7 +71,7 @@ export class UserService implements CanActivate {
 		observable.subscribe(
 			(data) => {
 				this.loggedIn = false;
-				this.router.navigate([ '' ]);
+				this.router.navigate([ '/' ]);
 			},
 			(err) => {
 				console.log(err);
