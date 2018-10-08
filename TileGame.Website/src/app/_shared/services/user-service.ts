@@ -8,7 +8,7 @@ import { HttpService } from './http-service';
 
 @Injectable()
 export class UserService implements CanActivate {
-	loggedIn = false;
+	private loggedIn = false;
 
 	constructor(private router: Router, private httpService: HttpService) {}
 
