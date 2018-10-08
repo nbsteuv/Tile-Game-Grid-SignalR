@@ -13,7 +13,6 @@ export class UserService implements CanActivate {
 	constructor(private router: Router, private httpService: HttpService) {}
 
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-		console.log('Checking canActivate in user service');
 		const url: string = state.url;
 		return this.checkAccess(url, true);
 	}
@@ -69,17 +68,14 @@ export class UserService implements CanActivate {
 	}
 
 	logout(): Observable<void> {
-		console.log('trying to log out');
 		const observable = this.httpService.post('/api/account/logout');
 		observable.subscribe(
 			(data) => {
-				console.log('success');
 				console.log(data);
 				this.loggedIn = false;
 				this.router.navigate([ '' ]);
 			},
 			(err) => {
-				console.log('error');
 				console.log(err);
 				// TODO: Create error handler that can be injected
 			}
