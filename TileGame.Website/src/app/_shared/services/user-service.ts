@@ -23,7 +23,6 @@ export class UserService implements CanActivate {
 		}
 		const observable = this.httpService.post('/api/account/checkaccess').pipe(
 			map((data) => {
-				console.log(data);
 				this.loggedIn = true;
 				return true;
 			}),
@@ -71,7 +70,6 @@ export class UserService implements CanActivate {
 		const observable = this.httpService.post('/api/account/logout');
 		observable.subscribe(
 			(data) => {
-				console.log(data);
 				this.loggedIn = false;
 				this.router.navigate([ '' ]);
 			},
