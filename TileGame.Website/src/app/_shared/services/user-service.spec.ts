@@ -9,6 +9,8 @@ import { UserService } from './user-service';
 describe('UserService', () => {
 	const mockRouter = jasmine.createSpyObj([ 'navigate' ]);
 	const mockHttpService = jasmine.createSpyObj([ 'post' ]);
+	const checkAccessUrl = '/api/account/checkaccess'; // TODO: Put endpoints in application constants to avoid repetition of strings
+	const loginUrl = '/users/login';
 	beforeEach(
 		async(() => {
 			TestBed.configureTestingModule({
@@ -42,7 +44,6 @@ describe('UserService', () => {
 		// Arrange
 		mockHttpService.post.and.returnValue(of(true));
 		const userService = TestBed.get(UserService);
-		const checkAccessUrl = '/api/account/checkaccess'; // TODO: Put endpoints in constants to avoid repetition of strings
 
 		// Act
 		const canActivate = userService.canActivate({}, { url: '/test' });
@@ -55,7 +56,6 @@ describe('UserService', () => {
 		// Arrange
 		mockHttpService.post.and.returnValue(of(true));
 		const userService = TestBed.get(UserService);
-		const checkAccessUrl = '/api/account/checkaccess';
 
 		// Act
 		const canActivate = userService.canActivate({}, { url: '/test' });
@@ -64,16 +64,63 @@ describe('UserService', () => {
 		canActivate.subscribe((result) => expect(result).toEqual(true));
 	});
 
+	it('should set isLoggedIn to true if check access endpoint returns true', () => {
+		// Arrange
+		mockHttpService.post.and.returnValue(of(true));
+		const userService = TestBed.get(UserService);
+
+		// Act
+		const canActivate = userService.canActivate({}, { url: '/test' });
+
+		// Assert
+		canActivate.subscribe((result) => expect(userService.isLoggedIn()).toEqual(true));
+	});
+
+	it('should not redirect if check access endpoint returns true', () => {
+		// Arrange
+		mockHttpService.post.and.returnValue(of(true));
+		const userService = TestBed.get(UserService);
+
+		// Act
+		const canActivate = userService.canActivate({}, { url: '/test' });
+
+		// Assert
+		canActivate.subscribe((result) => expect(mockRouter.navigate).not.toHaveBeenCalled());
+	});
+
 	it('should not allow access to the route if check access endpoint returns an error', () => {
 		// Arrange
 		mockHttpService.post.and.returnValue(throwError('Test error'));
 		const userService = TestBed.get(UserService);
-		const checkAccessUrl = '/api/account/checkaccess';
 
 		// Act
 		const canActivate = userService.canActivate({}, { url: '/test' });
 
 		// Assert
 		canActivate.subscribe((result) => expect(result).toEqual(false));
+	});
+
+	it('should not set isLoggedIn to true if check access endpoint returns an error', () => {
+		// Arrange
+		mockHttpService.post.and.returnValue(throwError('Test Error'));
+		const userService = TestBed.get(UserService);
+
+		// Act
+		const canActivate = userService.canActivate({}, { url: '/test' });
+
+		// Assert
+		canActivate.subscribe((result) => expect(userService.isLoggedIn()).toEqual(false));
+	});
+
+	it('should redirect to the login route if the check access endpoint returns an error', () => {
+		// Arrange
+		mockHttpService.post.and.returnValue(throwError('Test Error'));
+		const userService = TestBed.get(UserService);
+
+		// Act
+		const canActivate = userService.canActivate({}, { url: '/test' });
+
+		// Assert
+		canActivate.subscribe((result) => expect(mockRouter.navigate).toHaveBeenCalledWith([ loginUrl ]));
 	});
 });
