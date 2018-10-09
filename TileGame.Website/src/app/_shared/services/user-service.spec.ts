@@ -9,9 +9,10 @@ import { UserService } from './user-service';
 describe('UserService', () => {
 	let mockRouter;
 	let mockHttpService;
-	const checkAccessApiUrl = '/api/account/checkaccess'; // TODO: Put endpoints in application constants to avoid repetition of strings
 	const loginUrl = '/users/login';
+	const checkAccessApiUrl = '/api/account/checkaccess'; // TODO: Put endpoints in application constants to avoid repetition of strings
 	const registerApiUrl = '/api/account/register';
+	const loginApiUrl = '/api/account/login';
 	beforeEach(
 		async(() => {
 			mockRouter = jasmine.createSpyObj([ 'navigate' ]);
@@ -190,5 +191,72 @@ describe('UserService', () => {
 
 		// Assert
 		register.subscribe((result) => {}, (error) => expect(mockRouter.navigate).not.toHaveBeenCalled());
+	});
+
+	//-----------------------------------------------------------------------------------------------------------------
+
+	it('should call login endpoint and pass created user object', () => {
+		// Arrange
+		mockHttpService.post.and.returnValue(of(true));
+		const userService = TestBed.get(UserService);
+		const user = { username: 'testUser' };
+
+		// Act
+		const login = userService.login(user);
+
+		// Assert
+		login.subscribe((result) => expect(mockHttpService.post).toHaveBeenCalledWith(loginApiUrl, user));
+	});
+
+	it('should set isLoggedIn to true on login success', () => {
+		// Arrange
+		mockHttpService.post.and.returnValue(of(true));
+		const userService = TestBed.get(UserService);
+		const user = { username: 'testUser' };
+
+		// Act
+		const login = userService.login(user);
+
+		// Assert
+		login.subscribe((result) => expect(userService.isLoggedIn()).toEqual(true));
+	});
+
+	it('should redirect to the home page on login success', () => {
+		// Arrange
+		mockHttpService.post.and.returnValue(of(true));
+		const userService = TestBed.get(UserService);
+		const user = { username: 'testUser' };
+
+		// Act
+		const login = userService.login(user);
+
+		// Assert
+		login.subscribe((result) => expect(mockRouter.navigate).toHaveBeenCalledWith([ '/' ]));
+	});
+
+	it('should not set isLoggedIn to true on login failure', () => {
+		// Arrange
+		mockHttpService.post.and.returnValue(throwError('Test Error'));
+		const userService = TestBed.get(UserService);
+		const user = { username: 'testUser' };
+
+		// Act
+		const login = userService.login(user);
+
+		// Assert
+		login.subscribe((result) => {}, (error) => expect(userService.isLoggedIn()).toEqual(false));
+	});
+
+	it('should not redirect on login failure', () => {
+		// Arrange
+		mockHttpService.post.and.returnValue(throwError('Test Error'));
+		const userService = TestBed.get(UserService);
+		const user = { username: 'testUser' };
+
+		// Act
+		const login = userService.login(user);
+
+		// Assert
+		login.subscribe((result) => {}, (error) => expect(mockRouter.navigate).not.toHaveBeenCalled());
 	});
 });
