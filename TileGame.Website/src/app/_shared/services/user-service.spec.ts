@@ -7,13 +7,15 @@ import { HttpService } from './http-service';
 import { UserService } from './user-service';
 
 describe('UserService', () => {
-	const mockRouter = jasmine.createSpyObj([ 'navigate' ]);
-	const mockHttpService = jasmine.createSpyObj([ 'post' ]);
+	let mockRouter;
+	let mockHttpService;
 	const checkAccessApiUrl = '/api/account/checkaccess'; // TODO: Put endpoints in application constants to avoid repetition of strings
 	const loginUrl = '/users/login';
 	const registerApiUrl = '/api/account/register';
 	beforeEach(
 		async(() => {
+			mockRouter = jasmine.createSpyObj([ 'navigate' ]);
+			mockHttpService = jasmine.createSpyObj([ 'post' ]);
 			TestBed.configureTestingModule({
 				providers: [
 					UserService,
