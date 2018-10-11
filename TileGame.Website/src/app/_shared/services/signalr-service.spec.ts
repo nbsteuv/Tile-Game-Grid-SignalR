@@ -10,7 +10,11 @@ function signalRFactory() {
 			return {
 				withUrl: (url) => {
 					return {
-						build: () => {}
+						build: () => {
+							return {
+								testProperty: 'Test123'
+							};
+						}
 					};
 				}
 			};
@@ -18,7 +22,7 @@ function signalRFactory() {
 	};
 }
 
-describe('ConnectionService', () => {
+describe('SignalrService', () => {
 	beforeEach(
 		async(() => {
 			TestBed.configureTestingModule({
@@ -28,7 +32,13 @@ describe('ConnectionService', () => {
 	);
 
 	it('should exist', () => {
-		const connectionService = TestBed.get(SignalrService);
-		expect(connectionService).toBeTruthy();
+		const signalrService = TestBed.get(SignalrService);
+		expect(signalrService).toBeTruthy();
+	});
+
+	it('should return HubConnection instance', () => {
+		const signalrService = TestBed.get(SignalrService);
+		const hubConnection = signalrService.getHubConnection();
+		expect(hubConnection.testProperty).toEqual('Test123');
 	});
 });
