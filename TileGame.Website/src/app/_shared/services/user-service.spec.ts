@@ -4,16 +4,13 @@ import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 
 import { HttpService } from './http-service';
+import { UserHttpService } from './user-http-service';
 import { UserService } from './user-service';
 
 describe('UserService', () => {
 	const mockRouter = jasmine.createSpyObj([ 'navigate' ]);
 	const mockHttpService = jasmine.createSpyObj([ 'post' ]);
 	const loginUrl = '/users/login';
-	const checkAccessApiUrl = '/api/account/checkaccess'; // TODO: Put endpoints in application constants to avoid repetition of strings
-	const registerApiUrl = '/api/account/register';
-	const loginApiUrl = '/api/account/login';
-	const logoutApiUrl = '/api/account/logout';
 	beforeEach(
 		async(() => {
 			mockRouter.navigate.calls.reset();
@@ -22,7 +19,8 @@ describe('UserService', () => {
 				providers: [
 					UserService,
 					{ provide: Router, useValue: mockRouter },
-					{ provide: HttpService, useValue: mockHttpService }
+					{ provide: HttpService, useValue: mockHttpService },
+					UserHttpService
 				]
 			});
 		})
@@ -54,17 +52,6 @@ describe('UserService', () => {
 				userService = TestBed.get(UserService);
 			})
 		);
-
-		it('should call the check access endpoint when canActivate is called', () => {
-			// Arrange
-			mockHttpService.post.and.returnValue(of(true));
-
-			// Act
-			const canActivate = userService.canActivate({}, { url: '/test' });
-
-			// Assert
-			expect(mockHttpService.post).toHaveBeenCalledWith(checkAccessApiUrl);
-		});
 
 		it('should allow access to the route if check access endpoint returns true', () => {
 			// Arrange
@@ -143,18 +130,6 @@ describe('UserService', () => {
 			})
 		);
 
-		it('should call registration endpoint and pass created user object', () => {
-			// Arrange
-			mockHttpService.post.and.returnValue(of(true));
-			const user = { username: 'testUser' };
-
-			// Act
-			const register = userService.register(user);
-
-			// Assert
-			register.subscribe((result) => expect(mockHttpService.post).toHaveBeenCalledWith(registerApiUrl, user));
-		});
-
 		it('should set isLoggedIn to true on registration success', () => {
 			// Arrange
 			mockHttpService.post.and.returnValue(of(true));
@@ -213,18 +188,6 @@ describe('UserService', () => {
 				userService = TestBed.get(UserService);
 			})
 		);
-
-		it('should call login endpoint and pass created user object', () => {
-			// Arrange
-			mockHttpService.post.and.returnValue(of(true));
-			const user = { username: 'testUser' };
-
-			// Act
-			const login = userService.login(user);
-
-			// Assert
-			login.subscribe((result) => expect(mockHttpService.post).toHaveBeenCalledWith(loginApiUrl, user));
-		});
 
 		it('should set isLoggedIn to true on login success', () => {
 			// Arrange
@@ -291,17 +254,6 @@ describe('UserService', () => {
 				mockHttpService.post.calls.reset();
 			})
 		);
-
-		it('should call logout endpoint when logout method is called', () => {
-			// Arrange
-			mockHttpService.post.and.returnValue(of(true));
-
-			// Act
-			const logout = userService.logout();
-
-			// Assert
-			logout.subscribe((result) => expect(mockHttpService.post).toHaveBeenCalledWith(logoutApiUrl));
-		});
 
 		it('should set isLoggedIn to false on logout success', () => {
 			// Arrange
