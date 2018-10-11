@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
-import { UserService } from '../_shared/services';
+import { UserHttpService, UserService } from '../_shared/services';
 
 import { AuthorizationComponent } from './authorization.component';
 import { LoginComponent } from './login/login.component';
@@ -21,6 +21,6 @@ const AuthorizationRoutes: Routes = [
 	imports: [ CommonModule, FormsModule, RouterModule.forChild(AuthorizationRoutes) ],
 	exports: [ RouterModule ],
 	declarations: [ AuthorizationComponent, LoginComponent, SignupComponent ],
-	providers: [ UserService ]
+	providers: [ UserHttpService, UserService ]
 })
 export class AuthorizationModule {}

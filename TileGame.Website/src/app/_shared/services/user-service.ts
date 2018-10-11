@@ -4,13 +4,13 @@ import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { User } from '../types';
-import { HttpService } from './http-service';
+import { UserHttpService } from './user-http-service';
 
 @Injectable()
 export class UserService implements CanActivate {
 	private loggedIn = false;
 
-	constructor(private router: Router, private httpService: HttpService) {}
+	constructor(private router: Router, private userHttpService: UserHttpService) {}
 
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
 		const url: string = state.url;
@@ -21,7 +21,7 @@ export class UserService implements CanActivate {
 		if (this.loggedIn) {
 			return of(true);
 		}
-		const observable = this.httpService.post('/api/account/checkaccess').pipe(
+		const observable = this.userHttpService.checkAccess().pipe(
 			map((data) => {
 				this.loggedIn = true;
 				return true;
@@ -39,7 +39,7 @@ export class UserService implements CanActivate {
 	}
 
 	register(user: User): Observable<void> {
-		const observable = this.httpService.post('/api/account/register', user);
+		const observable = this.userHttpService.register(user);
 		observable.subscribe(
 			(data) => {
 				this.loggedIn = true;
@@ -53,7 +53,7 @@ export class UserService implements CanActivate {
 	}
 
 	login(user: User): Observable<void> {
-		const observable = this.httpService.post('/api/account/login', user);
+		const observable = this.userHttpService.login(user);
 		observable.subscribe(
 			(data) => {
 				this.loggedIn = true;
@@ -67,7 +67,7 @@ export class UserService implements CanActivate {
 	}
 
 	logout(): Observable<void> {
-		const observable = this.httpService.post('/api/account/logout');
+		const observable = this.userHttpService.logout();
 		observable.subscribe(
 			(data) => {
 				this.loggedIn = false;
