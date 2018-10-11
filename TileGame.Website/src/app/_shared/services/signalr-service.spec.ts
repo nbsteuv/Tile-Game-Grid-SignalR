@@ -1,35 +1,34 @@
-// import { TestBed, async } from '@angular/core/testing';
-// import { InjectionToken } from '@angular/core';
+import { TestBed, async } from '@angular/core/testing';
 
-// import { SignalrService } from './signalr-service';
+import { SignalrService } from './signalr-service';
 
-// const SIGNALR_TOKEN = new InjectionToken('signalR');
+import { SIGNALR_TOKEN } from './signalr-provider';
 
-// function signalRFactory() {
-// 	return {
-// 		HubConnectionBuilder: () => {
-// 			return {
-// 				withUrl: (url) => {
-// 					return {
-// 						build: () => {}
-// 					};
-// 				}
-// 			};
-// 		}
-// 	};
-// }
+function signalRFactory() {
+	return {
+		HubConnectionBuilder: () => {
+			return {
+				withUrl: (url) => {
+					return {
+						build: () => {}
+					};
+				}
+			};
+		}
+	};
+}
 
-// describe('ConnectionService', () => {
-// 	beforeEach(
-// 		async(() => {
-// 			TestBed.configureTestingModule({
-// 				providers: [ { provide: SIGNALR_TOKEN, useFactory: signalRFactory }, SignalrService ]
-// 			});
-// 		})
-// 	);
+describe('ConnectionService', () => {
+	beforeEach(
+		async(() => {
+			TestBed.configureTestingModule({
+				providers: [ { provide: SIGNALR_TOKEN, useFactory: signalRFactory }, SignalrService ]
+			});
+		})
+	);
 
-// 	it('should exist', () => {
-// 		const connectionService = TestBed.get(SignalrService);
-// 		expect(connectionService).toBeTruthy();
-// 	});
-// });
+	it('should exist', () => {
+		const connectionService = TestBed.get(SignalrService);
+		expect(connectionService).toBeTruthy();
+	});
+});
