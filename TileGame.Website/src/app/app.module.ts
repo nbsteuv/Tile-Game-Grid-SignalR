@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthorizationModule } from './authorization/authorization.module';
 import { AppRoutingModule } from './app.routing';
 
-import { HttpService, SIGNALR_PROVIDER, ConnectionService } from './_shared/services';
+import { HttpService, SIGNALR_PROVIDER, ConnectionService, SignalrService } from './_shared/services';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -47,7 +47,7 @@ import { GameWatcherComponent } from './game-container/game-watcher/game-watcher
 		AuthorizationModule,
 		AppRoutingModule
 	],
-	providers: [ HttpService, SIGNALR_PROVIDER, ConnectionService ],
+	providers: [ HttpService, SIGNALR_PROVIDER, ConnectionService, SignalrService ],
 	bootstrap: [ AppComponent ]
 })
 export class AppModule {}

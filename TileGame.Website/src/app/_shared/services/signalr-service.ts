@@ -14,7 +14,7 @@ export class SignalrService {
 	}
 
 	init(): void {
-		this.hubConnection = new this.signalR.HubConnectionBuilder().withUrl(`${this.baseUrl}/hubs/test`).build();
+		this.hubConnection = new this.signalR.HubConnectionBuilder().withUrl(`${this.baseUrl}/hubs/game`).build();
 	}
 
 	getHubConnection() {

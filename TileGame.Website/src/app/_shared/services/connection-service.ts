@@ -1,9 +1,8 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { SIGNALR_TOKEN } from './signalr-provider';
+import { SignalrService } from './signalr-service';
 import { HubConnection } from '@aspnet/signalr';
-import { environment } from '../../../environments/environment';
 
 import { GameOptions, Move, GameSetup, IncomingMove } from '../types';
 import { GameStatus } from '../enums';
@@ -11,7 +10,6 @@ import { GameStatus } from '../enums';
 @Injectable()
 export class ConnectionService {
 	private hubConnection: HubConnection;
-	private baseUrl: string = environment.baseUrl;
 	private statusSource: Subject<GameStatus> = new Subject<GameStatus>();
 	private puzzleSource: Subject<string[]> = new Subject<string[]>();
 	private wordListSource: Subject<string[]> = new Subject<string[]>();
@@ -20,12 +18,12 @@ export class ConnectionService {
 	private winConfirmedSource: Subject<void> = new Subject<void>();
 	private playerWinSource: Subject<string> = new Subject<string>();
 
-	constructor(@Inject(SIGNALR_TOKEN) private signalR: any) {
+	constructor(private signalrService: SignalrService) {
 		this.init();
 	}
 
 	init(): void {
-		this.hubConnection = new this.signalR.HubConnectionBuilder().withUrl(`${this.baseUrl}/hubs/game`).build();
+		this.hubConnection = this.signalrService.getHubConnection();
 
 		this.hubConnection.on('SetStatus', (status) => {
 			console.log('Status set to: ' + status);
